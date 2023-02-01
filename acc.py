@@ -22,7 +22,6 @@ def getacc(QUERY_SEQUENCE_FILE):
     sourmash.save_signatures([ss], buf, compression=True)
 
     # POST to mastiff
-
     http = urllib3.PoolManager()
     r = http.request('POST',
                      'https://mastiff.sourmash.bio/search',
@@ -30,23 +29,16 @@ def getacc(QUERY_SEQUENCE_FILE):
                      headers={'Content-Type': 'application/json'})
     query_results_text = r.data.decode('utf-8')
 
-    # currently loads results to panda df
-    # here change to .json
-
     results_wrap_fp = io.StringIO(query_results_text)
     mastiff0_df = pd.read_csv(results_wrap_fp)
     print(f"Loaded {len(mastiff0_df)} mastiff results into a dataframe!")
 
-    # filter for containment
+    # filter for containment; potential to pass this from user
     THRESHOLD = 0.2
     mastiff_df = mastiff0_df[mastiff0_df['containment'] >= THRESHOLD]
 
-    mastiff2_df = mastiff_df.set_index('SRA accession').join(
-        run_info.set_index('Run')['ScientificName'])
-    mastiff2_df.head()
+    # acc column to string to pass to big query
+    mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]
 
-    null_df = mastiff2_df[mastiff2_df['ScientificName'].isnull()]
-
-    mastiff3_df = mastiff2_df[~mastiff2_df['ScientificName'].isnull()]
-
-    print(f"Of {len(mastiff2_df)} MAGsearch results, {len(mastiff3_df)} have non-null ScientificName")
+    acc_t = tuple(mastiff_df.SRA_accession.tolist())
+    return acc_t

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
 from flask_wtf import FlaskForm
 
 
@@ -10,7 +10,8 @@ from forms import *
 # from routes import *
 
 import os
-from acc import getacc
+from acc import *
+from bigquery import *
 
 
 app = Flask(__name__)  # create flask/app instance
@@ -38,10 +39,18 @@ def home():
         filepath = os.path.join(
             app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
 
-        getacc(filepath)
+        acc_t = getacc(filepath)
+        meta_list = f"acc, assay_type, organism"
 
-        return render_template('index2.html', form=form)
-        return f'Uploaded:{file.filename}'
+        meta_df = getmeta(acc_t, meta_list)
+
+        # the following may return a CSV; add commented out lines to make it export the csv
+        resp = make_response(meta_df.to_csv())
+        resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        resp.headers["Content-Type"] = "text/csv"
+        return resp
+        # return render_template('index2.html')
+        # return f'Uploaded:{file.filename}'
 
     # returns index.html when home is visited
     return render_template('index.html', form=form)
