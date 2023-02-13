@@ -31,11 +31,12 @@ def getacc(QUERY_SEQUENCE_FILE):
 
     results_wrap_fp = io.StringIO(query_results_text)
     mastiff0_df = pd.read_csv(results_wrap_fp)
-    print(f"Loaded {len(mastiff0_df)} mastiff results into a dataframe!")
 
     # filter for containment; potential to pass this from user
     THRESHOLD = 0.2
     mastiff_df = mastiff0_df[mastiff0_df['containment'] >= THRESHOLD]
+    print(
+        f"Filtered to {len(mastiff_df)} mastiff acc results!")
 
     # acc column to string to pass to big query
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]

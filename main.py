@@ -4,10 +4,9 @@ from flask_wtf import FlaskForm
 
 from wtforms import FileField, SubmitField
 from wtforms.validators import InputRequired
-from werkzeug.utils import secure_filename  # installed with flasks
+from werkzeug.utils import secure_filename
 
 from forms import *
-# from routes import *
 
 import os
 from acc import *
@@ -28,6 +27,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # max 16mb
 @app.route('/home', methods=['GET', "POST"])
 def home():
     form = UploadFileForm()  # this uploads the file after the post request from index.html
+
+    # https://stackoverflow.com/questions/20015550/read-file-data-without-saving-it-in-flask
 # following is the code to actually upload the file
     if form.validate_on_submit():
         file = form.file.data  # first grab the file and make it equal to file varible
@@ -42,7 +43,7 @@ def home():
         acc_t = getacc(filepath)
         meta_list = f"acc, assay_type, organism"
 
-        meta_df = getmeta(acc_t, meta_list)
+        meta_df = getmeta3(acc_t, meta_list)
 
         # the following may return a CSV; add commented out lines to make it export the csv
         resp = make_response(meta_df.to_csv())
