@@ -6,22 +6,51 @@
 />
 
 <!DOCTYPE html>
-<html lang="en">
+
+<!-- Github demo 
+src="static/mgnify-sourmash-component-gh-pages/mgnify-sourmash-component.js"
+
+show_directory_checkbox
+      show_signatures
+-->
+
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <!-- insert title here -->
+    <meta charset="utf-8" />
+    <title>Mastiff-Metadata-Query</title>
+    <script
+      defer="defer"
+      src="static/files/mgnify-sourmash-component/dist/mgnify-sourmash-component.js"
+    ></script>
   </head>
   <body>
-    <h1>Mastiff File Upload</h1>
-    <!-- method = post means whernever button clicked, 
-        enctype =... allows a file to be uploaded
-         1) hidden tag protects against CRSF
-        2) "choose file" and 3)  submit button-->
-    <form method="post" enctype="multipart/form-data">
-      {{form.hidden_tag()}} {{form.file()}} {{form.submit()}}
-    </form>
+    <h1>Mastiff-Metadata-Query</h1>
+    <hr />
+    <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
+
+    <!-- FETCH API (AJAX call)-->
+    <script>
+      document.addEventListener("sketched", (evt) =>
+        fetch("/home", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: evt.detail.signature,
+        })
+          .then(function (response) {
+            if (response.ok) {
+              response.json().then(function (response) {
+                console.log(response);
+              });
+            } else {
+              throw Error("Something went wrong");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      );
+    </script>
   </body>
 </html>

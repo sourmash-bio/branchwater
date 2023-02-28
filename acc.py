@@ -4,22 +4,18 @@ import sourmash
 import screed
 import io
 import urllib3
+import json
+import zlib
+import gzip
 
 
-def getacc(QUERY_SEQUENCE_FILE):
-    run_info = pd.read_csv('sra.runinfo.csv.gz')
-
-    # here replace with EBI?
-    total_bp = 0
-    sketch = sourmash.MinHash(0, 21, scaled=1000)
-    with screed.open(QUERY_SEQUENCE_FILE) as records:
-        for record in records:
-            sketch.add_sequence(record.sequence, force=True)
-            total_bp += len(record.sequence)
-
-    ss = sourmash.SourmashSignature(sketch)
+def getacc(signatures):
+    # compress signatures to gzipped bytes
+    json_str = json.dumps(signatures, separators=(',', ':'))
+    json_bytes = json_str.encode('utf-8')
     buf = io.BytesIO()
-    sourmash.save_signatures([ss], buf, compression=True)
+    with gzip.open(buf, 'w') as fout:
+        fout.write(json_bytes)
 
     # POST to mastiff
     http = urllib3.PoolManager()
