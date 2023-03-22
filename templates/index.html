@@ -6,51 +6,72 @@
 />
 
 <!DOCTYPE html>
-
-<!-- Github demo 
-src="static/mgnify-sourmash-component-gh-pages/mgnify-sourmash-component.js"
-
-show_directory_checkbox
-      show_signatures
--->
-
 <html>
   <head>
-    <meta charset="utf-8" />
-    <title>Mastiff-Metadata-Query</title>
+    <title>SRA Metadata Query</title>
     <script
       defer="defer"
       src="static/files/mgnify-sourmash-component/dist/mgnify-sourmash-component.js"
     ></script>
   </head>
   <body>
-    <h1>Mastiff-Metadata-Query</h1>
-    <hr />
-    <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
+    <h1>SRA Metadata Query</h1>
+    <br />
+    <h2>1) Upload your genome (fasta format)</h2>
+    <div>
+      <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
+    </div>
+    <br />
 
-    <!-- FETCH API (AJAX call)-->
+    <h2>2) Once the genome is uploaded, submit metadata options</h2>
+
+    <form id="myForm">
+      <label>
+        <input type="checkbox" name="organism" value="organism" />
+        Organism </label
+      ><br />
+      <label>
+        <input type="checkbox" name="option2" value="Option 2" /> Option 2 </label
+      ><br />
+      <label>
+        <input type="checkbox" name="option3" value="Option 3" /> Option 3 </label
+      ><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <!--Needs a way to ensure genome is uploaded and signatures created before metadata is submitted-->
     <script>
-      document.addEventListener("sketched", (evt) =>
-        fetch("/home", {
+      var signature;
+      document.addEventListener("sketched", (evt) => {
+        evt.preventDefault();
+        signature = evt.detail.signature;
+      });
+
+      const form = document.getElementById("myForm");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const data = {
+          signatures: signature,
+          metadata: {
+            organism: form.elements.organism.checked,
+            option2: form.elements.option2.checked,
+            option3: form.elements.option3.checked,
+          },
+        };
+
+        fetch("/", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          method: "POST",
-          body: evt.detail.signature,
+          body: JSON.stringify(data),
         })
-          .then(function (response) {
-            if (response.ok) {
-              response.json().then(function (response) {
-                console.log(response);
-              });
-            } else {
-              throw Error("Something went wrong");
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-      );
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
+      });
     </script>
   </body>
 </html>

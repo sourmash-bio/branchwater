@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <link
+      href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div>
+      <h1>Test Table Rendering</h1>
+      <hr />
+    </div>
+    <div id="wrapper"></div>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+  </body>
+</html>
+
+<script>
+  new gridjs.Grid({
+    columns: [
+      { id: "acc", name: "Accession ID" },
+      { id: "assay_type", name: "Assay type" },
+      { id: "organism", name: "Organism" },
+      { id: "lat_lon_sam", name: "Geo location", sort: false },
+    ],
+    server: {
+      url: "/api/data",
+      then: (results) => results.data,
+    },
+    search: {
+      selector: (cell, rowIndex, cellIndex) =>
+        [0, 1, 4].includes(cellIndex) ? cell : null,
+    },
+    sort: true,
+    pagination: true,
+  }).render(document.getElementById("wrapper"));
+</script>

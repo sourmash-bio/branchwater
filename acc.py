@@ -1,18 +1,14 @@
 import pandas as pd
-import os
-import sourmash
-import screed
 import io
 import urllib3
-import json
-import zlib
 import gzip
+import string
 
 
 def getacc(signatures):
-    # compress signatures to gzipped bytes
-    json_str = json.dumps(signatures, separators=(',', ':'))
-    json_bytes = json_str.encode('utf-8')
+    # remove whitespace from string and compress signatures to gzipped bytes
+    sig_str = signatures.translate({ord(c): None for c in string.whitespace})
+    json_bytes = sig_str.encode('utf-8')
     buf = io.BytesIO()
     with gzip.open(buf, 'w') as fout:
         fout.write(json_bytes)
@@ -37,5 +33,4 @@ def getacc(signatures):
     # acc column to string to pass to big query
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]
 
-    acc_t = tuple(mastiff_df.SRA_accession.tolist())
-    return acc_t
+    return mastiff_df
