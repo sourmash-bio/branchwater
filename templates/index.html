@@ -31,47 +31,223 @@
         Organism </label
       ><br />
       <label>
-        <input type="checkbox" name="option2" value="Option 2" /> Option 2 </label
+        <input
+          type="checkbox"
+          name="collection_date_sam"
+          value="collection_date_sam"
+        />
+        Date of sample collection </label
       ><br />
       <label>
-        <input type="checkbox" name="option3" value="Option 3" /> Option 3 </label
-      ><br /><br />
-      <input type="submit" value="Submit" />
+        <input
+          type="checkbox"
+          name="geo_loc_name_country_calc"
+          value="geo_loc_name_country_calc"
+        />
+        Country where sample collected </label
+      ><br />
+      <label>
+        <input
+          type="checkbox"
+          name="geo_loc_name_sam"
+          value="geo_loc_name_sam"
+        />
+        Country where sample collected </label
+      ><br />
+      <label>
+        <input type="checkbox" name="lat_lon_sam" value="lat_lon_sam" />
+        Latitude and longitude of sample location </label
+      ><br />
+      <label>
+        <input type="checkbox" name="env_biome_sam" value="env_biome_sam" />
+        env_biome_sam </label
+      ><br />
+      <label>
+        <input type="checkbox" name="experiment" value="experiment" />
+        experiment </label
+      ><br />
+      <label>
+        <input type="checkbox" name="age_sam" value="age_sam" />
+        age_sam </label
+      ><br />
+      <br />
+      <button type="submit" id="myButton" disabled>Submit</button>
     </form>
 
-    <!--Needs a way to ensure genome is uploaded and signatures created before metadata is submitted-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
     <script>
       var signature;
+
+      //once sketeched, signatures saved and submit button enabled
       document.addEventListener("sketched", (evt) => {
         evt.preventDefault();
         signature = evt.detail.signature;
+        document.querySelector("#myButton").disabled = false;
       });
 
+      //form event listener
       const form = document.getElementById("myForm");
-
       form.addEventListener("submit", (event) => {
         event.preventDefault();
+        document.querySelector("#myButton").disabled = true;
 
-        const data = {
+        const formdata = {
           signatures: signature,
           metadata: {
             organism: form.elements.organism.checked,
-            option2: form.elements.option2.checked,
-            option3: form.elements.option3.checked,
+            collection_date_sam: form.elements.collection_date_sam.checked,
+            lat_lon_sam: form.elements.lat_lon_sam.checked,
+            geo_loc_name_country_calc:
+              form.elements.geo_loc_name_country_calc.checked,
+            env_biome_sam: form.elements.env_biome_sam.checked,
+            experiment: form.elements.experiment.checked,
+            age_sam: form.elements.age_sam.checked,
+            geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,
           },
         };
 
+        const startTime = performance.now();
+        var data = {};
+
+        //POSTS signatures and receives metadata
         fetch("/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(formdata),
         })
           .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error(error));
+          .then((jsonData) => {
+            console.log(jsonData);
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            console.log(`Fetch request took ${duration} milliseconds.`);
+
+            //create table from 'commonKeys' as headers and 'values' formmated as rows
+            const commonKeys = Object.keys(jsonData[0]);
+            const values = Array.from({ length: commonKeys.length }, () => []);
+            commonKeys.forEach((key, j) => {
+              values[j] = jsonData.map((obj) => obj[key]);
+            });
+
+            //Table parameters
+            const tableTrace = {
+              type: "table",
+              header: {
+                values: commonKeys,
+                align: ["left", "center"],
+                line: { width: 1, color: "black" },
+                fill: { color: "grey" },
+                font: { family: "Arial", size: 12, color: "white" },
+              },
+              cells: {
+                values: values,
+                align: ["left", "center"],
+                line: { color: "black", width: 1 },
+                font: { family: "Arial", size: 11, color: ["black"] },
+              },
+            };
+
+            //function to count values for barplots
+            function countValues(arr) {
+              const counts = {};
+              for (let i = 0; i < arr.length; i++) {
+                const val = arr[i];
+                counts[val] = counts[val] ? counts[val] + 1 : 1;
+              }
+              const result = [];
+              for (const [key, value] of Object.entries(counts)) {
+                result.push({ [key]: value });
+              }
+              return result;
+            }
+            const countKeys = values[1];
+            const uniqueVals = [...new Set(countKeys)];
+            const countVal = uniqueVals.map(
+              (key) =>
+                countValues(countKeys.filter((val) => val === key)).pop()[key]
+            );
+
+            ///layout
+            const tableLayout = {
+              title: "Your query had ## accessions",
+              width: 1000,
+              height: 300,
+              margin: { t: 0 },
+            };
+
+            // create a container div for both plots
+            const containerDiv = document.createElement("div");
+            containerDiv.setAttribute("id", "containerDiv");
+            document.body.appendChild(containerDiv);
+
+            // create div for the table and add it to the container
+            const tableDiv = document.createElement("div");
+            tableDiv.setAttribute("id", "tableDiv");
+            containerDiv.appendChild(tableDiv);
+            Plotly.newPlot("tableDiv", [tableTrace], tableLayout);
+
+            // create div for the barplots and add them to the container
+            const barDiv = document.createElement("div");
+            barDiv.setAttribute("id", "barDiv");
+            containerDiv.appendChild(barDiv);
+
+            //loop over categorical data, create barplot and add it to div
+            for (let i = 0; i < values.length; i++) {
+              const valueName = commonKeys[i];
+              if (
+                valueName === "geo_loc_name_country_calc" ||
+                valueName === "organism"
+              ) {
+                const countKeys = values[i];
+                const uniqueVals = [...new Set(countKeys)];
+                const countVal = uniqueVals.map(
+                  (key) =>
+                    countValues(countKeys.filter((val) => val === key)).pop()[
+                      key
+                    ]
+                );
+
+                console.log(uniqueVals);
+                console.log(countVal);
+
+                const bar = [
+                  {
+                    x: uniqueVals,
+                    y: countVal,
+                    type: "bar",
+                    marker: { color: "blue" },
+                  },
+                ];
+
+                var plotLayout = {
+                  title: values[i],
+                  xaxis: { automargin: true },
+                  yaxis: {
+                    automargin: true,
+                    title: { text: "Counts" },
+                  },
+                  height: 250,
+                  margin: { t: 30, l: 10, r: 10 },
+                };
+
+                const barPlotDiv = document.createElement("div");
+                barPlotDiv.setAttribute("class", "bar-plot");
+                barDiv.appendChild(barPlotDiv);
+                Plotly.newPlot(barPlotDiv, bar, plotLayout, {
+                  scrollZoom: true,
+                  displaylogo: false,
+                });
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error sending data to Flask server:", error);
+          });
       });
     </script>
+    <div id="plotly-grid"></div>
   </body>
 </html>
