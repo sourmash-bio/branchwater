@@ -11,37 +11,26 @@ import plotly.express as px
 
 
 app = Flask(__name__)  # create flask/app instance
-app.config['SECRET_KEY'] = 'gibberish'
-app.config['UPLOAD_FOLDER'] = 'static/files'
+app.config['SECRET_KEY'] = 'gibberish'  # may not be needed/not yet integrated
+app.config['UPLOAD_FOLDER'] = 'static/files'  # may not be needed?
 
 
-def generate_json_chunks(data):
-    chunk_size = 100  # number of items to send in each chunk
-    num_chunks = len(data) // chunk_size + 1
-    for i in range(num_chunks):
-        start_index = i * chunk_size
-        end_index = min(start_index + chunk_size, len(data))
-        chunk_data = data[start_index:end_index]
-        chunk_json = json.dumps({'data': chunk_data})
-        yield f"data: {chunk_json}\n\n"
-
-
-# add ability to access html templates for form with form = +return
-# decorator to tell what URL triggers function
+# define '/' and 'home' route
 @app.route('/', methods=['GET', "POST"])
 @app.route('/home', methods=['GET', "POST"])
 def home():
     if request.method == 'POST':
+        # get signatures from fetch/promise API clientside
         form_data = request.get_json()
         print(f"JSON is {sys.getsizeof(form_data)} bytes!")
         print(form_data)
 
-        # get acc from imported functions
+        # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
         mastiff_df = getacc(signatures)
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
-        # get metadata from imported function
+        # get metadata from mongodb (imported from mongoquery.py)
         meta_dic = form_data['metadata']
         meta_list = tuple([key for key, value in meta_dic.items() if value])
         result_list = getmongo(acc_t, meta_list)
@@ -57,8 +46,7 @@ def home():
                     r['ANI_est'] = 0.9984*m['containment']**0.0456
                     break
         print(result_list)
-
-        return jsonify(result_list)
+        return jsonify(result_list)  # return metadata results to clientside
     return render_template('index.html')
 
 
