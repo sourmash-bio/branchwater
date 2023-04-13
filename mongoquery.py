@@ -6,7 +6,7 @@ def getmongo(acc_t, meta_list):
     db = client["sradb"]  # get db
     sradb_col = db["sradb_list"]  # get collection
 
-    meta_dict = {'_id': 0}
+    meta_dict = {'_id': 0, 'acc': 1}
     for item in meta_list:
         meta_dict[item] = 1
 

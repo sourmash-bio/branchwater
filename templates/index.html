@@ -1,7 +1,7 @@
 <link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
   rel="stylesheet"
-  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+  href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css"
+  integrity="sha256-+omx7xYvI+/C0kfnQmjAIW8dDbTweWpbYHWzveX4ii4="
   crossorigin="anonymous"
 />
 
@@ -15,70 +15,107 @@
     ></script>
   </head>
   <body>
-    <h1>SRA Metadata Query</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <h2 style="margin: 10px">SRA Metadata Query</h2>
+    </nav>
     <br />
-    <h2>1) Upload your genome (fasta format)</h2>
-    <div>
+    <h3 style="margin: 20px">1) Upload your genome (fasta format)</h3>
+    <div style="margin: 50px">
       <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
     </div>
     <br />
 
-    <h2>2) Once the genome is uploaded, submit metadata options</h2>
+    <h3 style="margin: 20px">2) Submit metadata options</h3>
+    <p style="margin: 20px">
+      Note that accessions vary greatly in which metadata categories have
+      information available and estimates below may not be current. Details
+      regarding the curated metadata available here can be found on the
+      XXXlinkXXX page. Further details on accessions and their associated
+      metadata can be found on the
+      <a href="https://www.ncbi.nlm.nih.gov/sra/docs/submitmeta/"
+        >NCBI website</a
+      >.
+    </p>
 
-    <form id="myForm">
+    <!--Here it would be better to have loop that creates form and output-->
+    <form
+      id="myForm"
+      style="
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        margin: 40px;
+      "
+    >
       <label>
         <input type="checkbox" name="organism" value="organism" />
-        Organism </label
-      ><br />
+        <strong>Organism</strong> (available for all accessions)
+      </label>
       <label>
         <input
           type="checkbox"
           name="collection_date_sam"
           value="collection_date_sam"
         />
-        Date of sample collection </label
-      ><br />
+        <strong>Date of sample collection</strong> (available for 62% of
+        accessions)
+      </label>
       <label>
         <input
           type="checkbox"
           name="geo_loc_name_country_calc"
           value="geo_loc_name_country_calc"
         />
-        Country where sample collected </label
-      ><br />
+        <strong>Country of sample</strong> (available for 77% of accessions)
+      </label>
+      <label>
+        <input type="checkbox" name="lat_lon_sam" value="lat_lon_sam" />
+        <strong>Latitude and longitude</strong> (available for 40% of
+        accessions)
+      </label>
+      <label>
+        <input type="checkbox" name="env_biome_sam" value="env_biome_sam" />
+        <strong>env_biome_sam</strong> (available for 33% of accessions)
+      </label>
+      <label>
+        <input type="checkbox" name="experiment" value="experiment" />
+        <strong>experiment</strong> (available for all accessions)
+      </label>
       <label>
         <input
           type="checkbox"
-          name="geo_loc_name_sam"
-          value="geo_loc_name_sam"
+          name="run_file_create_date"
+          value="run_file_create_date"
         />
-        Country where sample collected </label
-      ><br />
-      <label>
-        <input type="checkbox" name="lat_lon_sam" value="lat_lon_sam" />
-        Latitude and longitude of sample location </label
-      ><br />
-      <label>
-        <input type="checkbox" name="env_biome_sam" value="env_biome_sam" />
-        env_biome_sam </label
-      ><br />
-      <label>
-        <input type="checkbox" name="experiment" value="experiment" />
-        experiment </label
-      ><br />
-      <label>
-        <input type="checkbox" name="age_sam" value="age_sam" />
-        age_sam </label
-      ><br />
+        <strong>run_file_create_date</strong> (available for all accessions)
+      </label>
       <br />
-      <button type="submit" id="myButton" disabled>Submit</button>
+      <!--<div style="text-align: left">-->
+      <button type="submit" id="myButton" class="btn btn-light" disabled>
+        <strong>Submit</strong>
+      </button>
     </form>
+    <div></div>
+    <br />
+    <br />
+
+    <!-- Tabulator CSS file https://cdnjs.com/libraries/tabulator-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
+      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/css/tabulator_bootstrap.min.css">-->
+    <!-- Tabulator JavaScript file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script>
       var signature;
-
       //once sketeched, signatures saved and submit button enabled
       document.addEventListener("sketched", (evt) => {
         evt.preventDefault();
@@ -91,6 +128,28 @@
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         document.querySelector("#myButton").disabled = true;
+        // Create a new <nav> element
+        const navElement = document.createElement("nav");
+        navElement.classList.add(
+          "navbar",
+          "navbar-expand-lg",
+          "navbar-light",
+          "bg-light"
+        );
+        navElement.style.textAlign = "center"; // Add the text-align style
+
+        // Create a new <p> element and add it to the <nav> element
+        const paragraphElement = document.createElement("h2");
+        paragraphElement.contentEditable = true; // Make the text editable
+        paragraphElement.textContent =
+          "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
+        navElement.appendChild(paragraphElement);
+        // Add an event listener to the <p> element to handle text changes
+        paragraphElement.addEventListener("input", (event) => {
+          console.log(`New text: ${event.target.textContent}`);
+        });
+        // Add the <nav> element to the DOM
+        document.body.appendChild(navElement);
 
         const formdata = {
           signatures: signature,
@@ -102,8 +161,8 @@
               form.elements.geo_loc_name_country_calc.checked,
             env_biome_sam: form.elements.env_biome_sam.checked,
             experiment: form.elements.experiment.checked,
-            age_sam: form.elements.age_sam.checked,
-            geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,
+            run_file_create_date: form.elements.run_file_create_date.checked,
+            //geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,            age_sam: form.elements.age_sam.checked,
           },
         };
 
@@ -120,134 +179,420 @@
         })
           .then((response) => response.json())
           .then((jsonData) => {
-            console.log(jsonData);
             const endTime = performance.now();
             const duration = endTime - startTime;
             console.log(`Fetch request took ${duration} milliseconds.`);
+            paragraphElement.textContent = `Your query returned ${
+              Object.keys(jsonData).length
+            } accession IDs.`;
 
-            //create table from 'commonKeys' as headers and 'values' formmated as rows
+            const textElement = document.createElement("p");
+            textElement.contentEditable = true; // Make the text editable
+            textElement.textContent = `You can filter data for a .csv download or to alter the plots below plotting using the table. Your filtered dataset currently includes ###IDs`;
+            navElement.appendChild(textElement);
+
+            // Download button////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+
+            // add a break and then a button to trigger the CSV download
+            // Create a new <br> element
+            const lineBreak = document.createElement("br");
+            // Append the <br> element to the document's <body> element
+            document.body.appendChild(lineBreak);
+
+            var downloadButton = document.createElement("button");
+            downloadButton.innerHTML = "Download CSV";
+            downloadButton.className = "btn btn-success";
+            downloadButton.addEventListener("click", function () {
+              table.download("csv", "SRAmetadata.csv");
+            });
+            downloadButton.style.width = "200px";
+            downloadButton.style.height = "50px";
+
+            document.body.appendChild(downloadButton);
+
+            // Divs for elements////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+
+            // TableDiv setup
+            const tableDiv = document.createElement("div");
+            // Set the <div>'s attributes and styles
+            tableDiv.id = "my-table";
+            tableDiv.style.margin = "30px";
+            // Append the <div> to the document's <body> element
+            document.body.appendChild(tableDiv);
+
+            // Plot container and div setup
+            const containerDiv = document.createElement("div");
+            containerDiv.setAttribute("id", "containerDiv");
+            document.body.appendChild(containerDiv);
+
+            // create div for the containment and add them to the container
+            const contDiv = document.createElement("div");
+            contDiv.setAttribute("id", "contDiv");
+            containerDiv.appendChild(contDiv);
+
+            // create div for the count barplots and add them to the container
+            const barDiv = document.createElement("div");
+            barDiv.setAttribute("id", "barDiv");
+            containerDiv.appendChild(barDiv);
+
+            // create div for the maps and add them to the container
+            const mapDiv = document.createElement("div");
+            mapDiv.setAttribute("id", "mapDiv");
+            containerDiv.appendChild(mapDiv);
+
+            // Functions  ////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+
+            //Table filters
+            var minMaxFilterEditor = function (
+              cell,
+              onRendered,
+              success,
+              cancel,
+              editorParams
+            ) {
+              var end;
+              var container = document.createElement("span");
+              //create and style start input for table filters
+              var start = document.createElement("input");
+              start.setAttribute("type", "number");
+              start.setAttribute("placeholder", "Min");
+              start.setAttribute("min", 0);
+              start.setAttribute("max", 100);
+              start.style.padding = "4px";
+              start.style.width = "50%";
+              start.style.boxSizing = "border-box";
+              start.value = cell.getValue();
+              function buildValues() {
+                success({
+                  start: start.value,
+                  end: end.value,
+                });
+              }
+              function keypress(e) {
+                if (e.keyCode == 13) {
+                  buildValues();
+                }
+                if (e.keyCode == 27) {
+                  cancel();
+                }
+              }
+              end = start.cloneNode();
+              end.setAttribute("placeholder", "Max");
+
+              start.addEventListener("change", buildValues);
+              start.addEventListener("blur", buildValues);
+              start.addEventListener("keydown", keypress);
+
+              end.addEventListener("change", buildValues);
+              end.addEventListener("blur", buildValues);
+              end.addEventListener("keydown", keypress);
+
+              container.appendChild(start);
+              container.appendChild(end);
+
+              return container;
+            };
+
+            //custom max min filter function
+            function minMaxFilterFunction(
+              headerValue,
+              rowValue,
+              rowData,
+              filterParams
+            ) {
+              //headerValue - the value of the header filter element
+              //rowValue - the value of the column in this row
+              //rowData - the data for the row being filtered
+              //filterParams - params object passed to the headerFilterFuncParams property
+              if (rowValue) {
+                if (headerValue.start != "") {
+                  if (headerValue.end != "") {
+                    return (
+                      rowValue >= headerValue.start &&
+                      rowValue <= headerValue.end
+                    );
+                  } else {
+                    return rowValue >= headerValue.start;
+                  }
+                } else {
+                  if (headerValue.end != "") {
+                    return rowValue <= headerValue.end;
+                  }
+                }
+              }
+              return true; //must return a boolean, true if it passes the filter.
+            }
+            ///funtion to count values for barplots
+            function countUniqueValuesAndOccurrences(valueList) {
+              const counts = {};
+              const uniqueValues = [...new Set(valueList)];
+
+              for (let i = 0; i < uniqueValues.length; i++) {
+                const val = uniqueValues[i];
+                counts[val] = valueList.filter((value) => value === val).length;
+              }
+
+              const countVal = uniqueValues.map((key) => counts[key]);
+
+              return {
+                uniqueValues,
+                countVal,
+              };
+            }
+
+            // Data prep for plots  ////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+            const keys = Object.keys(jsonData[0]);
+
+            // Create column attributes; filter based on numeric vs string
+            const columns = Object.keys(jsonData[0]).map((key) => {
+              const isNumericColumn = jsonData.every(
+                (row) => !isNaN(parseFloat(row[key]))
+              ); // check if all values in the column are numeric
+              const headerFilterOptions = isNumericColumn
+                ? {
+                    headerFilter: minMaxFilterEditor,
+                    headerFilterFunc: minMaxFilterFunction,
+                  }
+                : {
+                    headerFilter: "input",
+                  };
+
+              return {
+                title: key,
+                field: key,
+                sorter: isNumericColumn ? "number" : "string",
+                ...headerFilterOptions,
+                headerFilterLiveFilter: false,
+              };
+            });
+
+            //common keys and values
             const commonKeys = Object.keys(jsonData[0]);
             const values = Array.from({ length: commonKeys.length }, () => []);
             commonKeys.forEach((key, j) => {
               values[j] = jsonData.map((obj) => obj[key]);
             });
 
-            //Table parameters
-            const tableTrace = {
-              type: "table",
-              header: {
-                values: commonKeys,
-                align: ["left", "center"],
-                line: { width: 1, color: "black" },
-                fill: { color: "grey" },
-                font: { family: "Arial", size: 12, color: "white" },
-              },
-              cells: {
-                values: values,
-                align: ["left", "center"],
-                line: { color: "black", width: 1 },
-                font: { family: "Arial", size: 11, color: ["black"] },
-              },
+            // Create Table  ////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////
+            // Define the data for the table
+            const data = jsonData;
+
+            // Set up the table options
+            const options = {
+              pagination: "local",
+              paginationSize: 10,
+              paginationSizeSelector: [10, 25, 50, 100],
             };
 
-            //function to count values for barplots
-            function countValues(arr) {
-              const counts = {};
-              for (let i = 0; i < arr.length; i++) {
-                const val = arr[i];
-                counts[val] = counts[val] ? counts[val] + 1 : 1;
-              }
-              const result = [];
-              for (const [key, value] of Object.entries(counts)) {
-                result.push({ [key]: value });
-              }
-              return result;
-            }
-            const countKeys = values[1];
-            const uniqueVals = [...new Set(countKeys)];
-            const countVal = uniqueVals.map(
-              (key) =>
-                countValues(countKeys.filter((val) => val === key)).pop()[key]
-            );
-
-            ///layout
-            const tableLayout = {
-              title: "Your query had ## accessions",
-              width: 1000,
-              height: 300,
-              margin: { t: 0 },
+            // Create the table
+            const table = new Tabulator("#my-table", {
+              columns: columns,
+              data: data,
+              layout: "fitColumns",
+              pagination: "local",
+              paginationSize: 10,
+              paginationSizeSelector: [10, 25, 50, 100],
+            });
+            // Barplot setup////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+            ///add in containment histogram
+            var hist = {
+              x: values[commonKeys.indexOf("containment")],
+              type: "histogram",
+              autobinx: false,
+              xbins: { size: 0.1 },
+              marker: {
+                color: "rgba(100, 200, 102, 0.7)",
+                line: {
+                  color: "rgba(100, 200, 102, 1)",
+                  width: 1,
+                },
+              },
             };
+            var cont_hist = [hist];
+            var cont_layout = {
+              bargap: 0.05,
+              bargroupgap: 0.2,
+              barmode: "overlay",
+              title: "Containment scores",
+              xaxis: { title: "Score" },
+              yaxis: { title: "Count" },
+            };
+            Plotly.newPlot("contDiv", cont_hist, cont_layout, {
+              scrollZoom: true,
+              displaylogo: false,
+              responsive: true,
+            });
 
-            // create a container div for both plots
-            const containerDiv = document.createElement("div");
-            containerDiv.setAttribute("id", "containerDiv");
-            document.body.appendChild(containerDiv);
-
-            // create div for the table and add it to the container
-            const tableDiv = document.createElement("div");
-            tableDiv.setAttribute("id", "tableDiv");
-            containerDiv.appendChild(tableDiv);
-            Plotly.newPlot("tableDiv", [tableTrace], tableLayout);
-
-            // create div for the barplots and add them to the container
-            const barDiv = document.createElement("div");
-            barDiv.setAttribute("id", "barDiv");
-            containerDiv.appendChild(barDiv);
-
-            //loop over categorical data, create barplot and add it to div
+            ////Loop to create plots for counts of common strings///////////
+            const plots = [];
             for (let i = 0; i < values.length; i++) {
-              const valueName = commonKeys[i];
+              const valueKey = commonKeys[i];
               if (
-                valueName === "geo_loc_name_country_calc" ||
-                valueName === "organism"
+                valueKey === "geo_loc_name_country_calc" ||
+                valueKey === "organism" ||
+                valueKey === "age_sam" ||
+                valueKey === "env_biome_sam" ||
+                valueKey === "experiment"
               ) {
-                const countKeys = values[i];
-                const uniqueVals = [...new Set(countKeys)];
-                const countVal = uniqueVals.map(
-                  (key) =>
-                    countValues(countKeys.filter((val) => val === key)).pop()[
-                      key
-                    ]
-                );
-
-                console.log(uniqueVals);
-                console.log(countVal);
-
-                const bar = [
+                const { uniqueValues, countVal } =
+                  countUniqueValuesAndOccurrences(values[i]);
+                var bar = [
                   {
-                    x: uniqueVals,
+                    x: uniqueValues,
                     y: countVal,
                     type: "bar",
-                    marker: { color: "blue" },
+                    width: 0.2,
+                    marker: {
+                      color: "rgba(100, 200, 102, 0.7)",
+                      line: {
+                        color: "rgba(100, 200, 102, 1)",
+                        width: 1,
+                      },
+                    },
                   },
                 ];
-
                 var plotLayout = {
-                  title: values[i],
-                  xaxis: { automargin: true },
+                  title: commonKeys[i],
                   yaxis: {
                     automargin: true,
                     title: { text: "Counts" },
                   },
-                  height: 250,
-                  margin: { t: 30, l: 10, r: 10 },
+                  height: 350,
+                  margin: { t: 50, l: 100, r: 100, b: 200, pad: 4 },
                 };
 
                 const barPlotDiv = document.createElement("div");
+                barPlotDiv.setAttribute("id", `plot-${valueKey}`);
                 barPlotDiv.setAttribute("class", "bar-plot");
                 barDiv.appendChild(barPlotDiv);
-                Plotly.newPlot(barPlotDiv, bar, plotLayout, {
+                const plot = Plotly.newPlot(barPlotDiv, bar, plotLayout, {
                   scrollZoom: true,
                   displaylogo: false,
+                  responsive: true,
                 });
+                plots.push(plot);
               }
             }
+
+            // FILTER LISTENER ////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////
+            table.on("dataFiltered", function (filters, rows) {
+              //update keys
+              var filteredData = rows.map(function (row) {
+                return row.getData();
+              });
+              const FiltcommonKeys = Object.keys(filteredData[0]);
+              const Filtvalues = Array.from(
+                { length: FiltcommonKeys.length },
+                () => []
+              );
+              FiltcommonKeys.forEach((key, j) => {
+                Filtvalues[j] = filteredData.map((obj) => obj[key]);
+              });
+
+              //update histogram plot
+
+              //update map
+
+              //update barplots
+              for (let i = 0; i < Filtvalues.length; i++) {
+                const FiltvalueKey = FiltcommonKeys[i];
+                if (
+                  FiltvalueKey === "organism" ||
+                  FiltvalueKey === "age_sam" ||
+                  FiltvalueKey === "env_biome_sam" ||
+                  FiltvalueKey === "env_biome_sam" ||
+                  FiltvalueKey === "experiment"
+                ) {
+                  let filtuniqueValues, filtcountVal;
+                  ({ uniqueValues: filtuniqueValues, countVal: filtcountVal } =
+                    countUniqueValuesAndOccurrences(Filtvalues[i]));
+                  Plotly.update(`plot-${FiltcommonKeys[i]}`, {
+                    x: [filtuniqueValues],
+                    y: [filtcountVal],
+                  });
+                }
+              }
+            });
+
+            //MAPS
+
+            // Extract country names and their counts from the data
+            const countryCounts = {};
+            jsonData.forEach(function (d) {
+              const country = d.geo_loc_name_country_calc;
+              if (countryCounts[country]) {
+                countryCounts[country]++;
+              } else {
+                countryCounts[country] = 1;
+              }
+            });
+
+            const countryData = Object.keys(countryCounts).map(function (
+              country
+            ) {
+              return {
+                country: country,
+                count: countryCounts[country],
+              };
+            });
+
+            //https://plotly.com/javascript/choropleth-maps/
+            const Mapdata = [
+              {
+                type: "choropleth",
+                locationmode: "country names",
+                locations: countryData.map(function (d) {
+                  return d.country;
+                }),
+                z: countryData.map(function (d) {
+                  return d.count;
+                }),
+                text: countryData.map(function (d) {
+                  return d.country + ": " + d.count;
+                }),
+                autocolorscale: true,
+                marker: {
+                  line: {
+                    color: "rgb(255,255,255)",
+                    width: 2,
+                  },
+                },
+              },
+            ];
+
+            console.log(countryData);
+
+            var Maplayout = {
+              title: "Countries",
+              geo: {
+                projection: {
+                  type: "robinson",
+                },
+              },
+              width: 800,
+              height: 600,
+            };
+
+            Plotly.newPlot(mapDiv, Mapdata, Maplayout, {
+              scrollZoom: true,
+              displaylogo: false,
+              responsive: true,
+            });
+            Plotly.update("contDiv", {
+              x: [Filtvalues[FiltcommonKeys.indexOf("containment")]],
+            });
           })
           .catch((error) => {
             console.error("Error sending data to Flask server:", error);
           });
       });
     </script>
-    <div id="plotly-grid"></div>
   </body>
 </html>
