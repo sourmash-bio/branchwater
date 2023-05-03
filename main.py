@@ -27,7 +27,10 @@ def home():
 
         # get metadata from mongodb (imported from mongoquery.py)
         meta_dic = form_data['metadata']
-        meta_list = tuple([key for key, value in meta_dic.items() if value])
+        meta_list = tuple([
+                          key for key, value in meta_dic.items() if value])
+        print(meta_list)
+
         result_list = getmongo(acc_t, meta_list)
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
@@ -40,19 +43,19 @@ def home():
                     r['containment'] = round(m['containment'], 2)
                     r['ANI_est'] = round(0.9984*m['containment']**0.0456, 2)
                     break
-        # temporary fix, replace none with 'not provided'
 
-        # for item in result_list:
-        #     for key in item:
-        #         if type(item[key]) == list and len(item[key]) == 0:
-        #             item[key] = 'NA'
-        #         elif item[key] == None:
-        #             item[key] = 'NA'
-
-        print(result_list)
-
-        return jsonify(result_list)  # return metadata results to clientside
+        return jsonify(result_list)  # return metadata results to client
     return render_template('index.html')
+
+
+@app.route('/about', methods=['GET', "POST"])
+def metadata():
+    return render_template('about.html')
+
+
+@app.route('/examples', methods=['GET', "POST"])
+def examples():
+    return render_template('examples.html')
 
 
 if __name__ == '__main__':

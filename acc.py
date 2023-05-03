@@ -30,7 +30,7 @@ def getacc(signatures):
     print(
         f"Filtered to {len(mastiff_df)} mastiff acc results!")
 
-    # acc column to string to pass to big query
+    # remove spaces from columns
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]
 
     return mastiff_df
