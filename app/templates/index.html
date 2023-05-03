@@ -1,0 +1,54 @@
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Tabulator CSS file options: https://cdnjs.com/libraries/tabulator-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
+      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <script
+      defer="defer"
+      src="static/mgnify-component/mgnify-sourmash-component.js"
+    ></script>
+    <script src="static/formdata.js"></script>
+
+    <!-- Tabulator and plotly libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <br />
+    <h3 style="margin: 20px">1) Upload your genome (fasta format only)</h3>
+    <div style="margin: 50px">
+      <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
+    </div>
+    <h3 style="margin: 20px">2) Submit metadata options</h3>
+    <p style="margin: 20px">
+      Note that accessions vary greatly in which metadata categories have
+      information available and estimates below may not be current. Further
+      details regarding the curated metadata available here can be found on the
+      <a href="/about">about page</a>. Further details on accessions and their
+      associated metadata can be found on the
+      <a href="https://www.ncbi.nlm.nih.gov/sra/">NCBI SRA website</a>.
+    </p>
+    <!-- Create form -->
+    <div id="form-container"></div>
+    <form id="form" style="margin: 40px"></form>
+    <script>
+      document.getElementById("form").innerHTML =
+        html +
+        "<br /><br /><button type='submit' id='myButton' class='btn btn-light' disabled><strong>Submit</strong></button>";
+    </script>
+
+    <!-- Import plotting scripts form -->
+    <script src="static/fetchandplot.js"></script>
+  </body>
+</html>
+
+{% include 'footer.html' %}

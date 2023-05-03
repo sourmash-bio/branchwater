@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"/><title>MGnify Sourmash Component - EBI</title><script defer="defer" src="mgnify-sourmash-component.js"></script></head><body><h1><code>mgnify-sourmash-component</code></h1><hr/><mgnify-sourmash-component id="sourmash" show_directory_checkbox show_signatures/><script>document
+        .getElementById('sourmash')
+        .addEventListener('sketched', (evt) =>
+          console.log(
+            `The signature for ${evt.detail.filename} has been created`,
+            JSON.parse(evt.detail.signature)
+          )
+        );
+      document
+        .getElementById('sourmash')
+        .addEventListener('sketchedall', (evt) =>
+          console.log(
+            `Processing of all these files have finished: ${Object.keys(
+              evt.detail.signatures
+            )}`
+          )
+        );</script></body></html>
