@@ -1,4 +1,4 @@
-# sra-search
+# MastiffMeta-query
 This webapp takes a geonome of interest and rapidly searches for publically available metagenomes within NCBI's <a href="https://www.ncbi.nlm.nih.gov/sra" target="_blank">sequence read archive</a> with <a href="https://github.com/sourmash-bio/mastiff" target="_blank">mastiff</a>. Metadata associated with the metagenome accessions are summarized in interactive tables, plots, and maps.
 
 
