@@ -65,7 +65,7 @@ for item in attr_list_nosam:
     attr_col = attr_col + \
         f'''json_query(jattr,'$.{item}') as {item}, '''
 
-## note LIMIT for initial build #
+## note LIMIT for initial build ##
 query = f""" SELECT {column_col}, {attr_col} FROM `nih-sra-datastore.sra.metadata` as metadata INNER JOIN `{table_id}` as mastacc ON metadata.acc = mastacc.accID LIMIT 140000; """
 
 query_job = client.query(query)
@@ -118,6 +118,9 @@ for d in meta_dic:
 
 
 # connect to mongodb client, clear collection, and insert
+# For now default client settings, needs to be changed for app deployment with port
+# client = pm.MongoClient(, 27017)  # in first location insert the port
+
 client = pm.MongoClient("mongodb://localhost:27017/")
 db = client["sradb"]
 sradb_col = db["sradb_list"]
@@ -141,5 +144,5 @@ for document in sradb_col.find():
 print(f'{sradb_col.count_documents({})} acc documents imported to mongoDB collection')
 
 
-print(sradb_col.find_one({}))
-print(db.command("collstats", "sradb_list"))
+#print(sradb_col.find_one({}))
+#print(db.command("collstats", "sradb_list"))

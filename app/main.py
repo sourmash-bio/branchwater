@@ -1,13 +1,9 @@
-from flask import Flask, render_template, request, jsonify, Response
-import pandas as pd
-
+from flask import Flask, render_template, request, jsonify
 from functions import *
 import sys
 
 app = Flask(__name__)  # create flask/app instance
-app.config['SECRET_KEY'] = 'gibberish'  # may not be needed/not yet integrated
-app.config['UPLOAD_FOLDER'] = 'static/files'  # may not be needed?
-
+app.config['SECRET_KEY'] = 'my-secret-key'  # may not be needed/not yet integrated
 
 # define '/' and 'home' route
 @app.route('/', methods=['GET', "POST"])
@@ -54,6 +50,8 @@ def metadata():
 def examples():
     return render_template('examples.html')
 
-
+# in production this changes:
+#
 if __name__ == '__main__':
     app.run(debug=True)
+
