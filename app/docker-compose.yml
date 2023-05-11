@@ -2,7 +2,7 @@ version: '3.4'
 services:
   
   mastiffwebapp:
-    image: mastiffwebapp
+    image: mastiffwebapp # may only work if image is already built locally
     container_name: mastiffwebapp
     build:
       context: .
@@ -14,11 +14,11 @@ services:
     APP_DEBUG: "False"
     APP_PORT: 5000
     MONGODB_DATABASE: db
-    MONGODB_USERNAME: flaskuser
-    MONGODB_PASSWORD: your_mongodb_password
+    MONGODB_USERNAME: root
+    MONGODB_PASSWORD: example
     MONGODB_HOSTNAME: mongodb
     links:
-      -db
+      -db:
     depends_on:
       -db
     networks:
@@ -27,13 +27,15 @@ services:
 
 
   db:
-    image: mongo:4.0.8 #check mongoversion
+    image: mongo #check mongoversion
     container_name: db
     restart: unless-stopped
     command: mongod --auth
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongodbuser
-      MONGO_INITDB_ROOT_PASSWORD: your_mongodb_root_password
+#These variables, used in conjunction, create a new user and set that user's password. 
+#This user is created in the admin authentication database and given the role of root, which is a "superuser" role.
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: db
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
@@ -42,6 +44,8 @@ services:
     networks:
       - backend
 
+
+#in deployment, add nginx container
 # webserver:
 #     build:
 #       context: nginx

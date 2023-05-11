@@ -1,28 +1,25 @@
-# For more information, please refer to https://aka.ms/vscode-docker-python
-
-FROM continuumio/miniconda:latest
-
-EXPOSE 5000
+FROM continuumio/miniconda3:4.10.3
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
-
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+
+ENV PATH /opt/conda/bin:$PATH
 WORKDIR /app
+#install packages
+RUN conda install -c conda-forge flask=2.3.2 pandas=1.3.3 pymongo=4.3.3 urllib3=1.26.7 && \
+    conda clean -afy && \
+    rm -rf /opt/conda/pkgs/* && \
+    rm -rf /root/.cache/pip/* /root/.cache/conda/*
+
 COPY . /app
 
+EXPOSE 8000
 
-# Install conda environment
-RUN Conda env create -f environment.yml
-RUN echo "source activate env" > ~/.bashrc
-ENV PATH /opt/conda/envs/env/bin:$PATH
-
-
-
-
-CMD ["python", "main.py"]
+#run app
+CMD ["python3", "main.py"]
 
 
 
@@ -30,11 +27,3 @@ CMD ["python", "main.py"]
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
 #RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 #USER appuser
-
-#for connection/deployment to gunicorn
-# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-#CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app.main:app"]
-
-
-#CMD python ./index.py #runs entry point for others
-
