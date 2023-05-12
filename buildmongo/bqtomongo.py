@@ -17,6 +17,7 @@ key_path = os.path.join(dir_path, 'bqKey.json')
 
 # Connect to client
 # bq key to service account with the roles: BigQuery Job User; BigQuery Data Owner; BigQuery Read Sessions User
+#use custom project ID
 credentials = service_account.Credentials.from_service_account_file(
     key_path)
 project_id = 'sraproject-384718'
