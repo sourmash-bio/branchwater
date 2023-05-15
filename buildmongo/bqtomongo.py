@@ -17,7 +17,6 @@ key_path = os.path.join(dir_path, 'bqKey.json')
 
 # Connect to client
 # bq key to service account with the roles: BigQuery Job User; BigQuery Data Owner; BigQuery Read Sessions User
-#use custom project ID
 credentials = service_account.Credentials.from_service_account_file(
     key_path)
 project_id = 'sraproject-384718'
@@ -72,17 +71,14 @@ for item in attr_list_nosam:
     attr_col = attr_col + \
         f'''json_query(jattr,'$.{item}') as {item}, '''
 
-## note LIMIT for initial build ##
-query = f""" SELECT {column_col}, {attr_col} FROM `nih-sra-datastore.sra.metadata` as metadata INNER JOIN `{table_id}` as mastacc ON metadata.acc = mastacc.accID LIMIT 140000; """
+## note LIMIT of 150,000 for initial build ##
+query = f""" SELECT {column_col}, {attr_col} FROM `nih-sra-datastore.sra.metadata` as metadata INNER JOIN `{table_id}` as mastacc ON metadata.acc = mastacc.accID LIMIT 150000; """
 
 query_job = client.query(query)
 time.sleep(30)  # potentially better as a a "while" loop
 meta_dic = []
 for row in query_job:
     meta_dic.append(dict(row.items()))
-
-meta_dic_cp = meta_dic  # make copy for troubleshooting
-
 
 # iterate over each dictionary in the list
 for d in meta_dic:
@@ -117,35 +113,14 @@ for d in meta_dic:
         if isinstance(value, datetime.date):
             d[key] = str(value)
 
-
-for d in meta_dic:
-    for key, value in d.items():
-        if isinstance(value, datetime.date):
-            d[key] = str(value)
-
-
 # connect to mongodb client, clear collection, and insert
 # For now default client settings, needs to be changed for app deployment with port
 # client = pm.MongoClient(, 27017)  # in first location insert the port
-
 client = pm.MongoClient("mongodb://localhost:27017/")
 db = client["sradb"]
 sradb_col = db["sradb_list"]
-sradb_col.drop()  # delete current collection
+sradb_col.drop()  # delete current collection if already present
 res = sradb_col.insert_many(meta_dic)
-
-
-# update mongodb with biosample link
-# needs to be added sooner
-
-# Loop through each document in the collection
-# SLOW - do prior to document insertion in the final build
-for document in sradb_col.find():
-    biosample_value = document['biosample']
-    biosample_link_value = 'https://www.ncbi.nlm.nih.gov/biosample/{}'.format(
-        biosample_value)
-    document['biosample_link'] = biosample_link_value
-    sradb_col.replace_one({'_id': document['_id']}, document)
 
 
 print(f'{sradb_col.count_documents({})} acc documents imported to mongoDB collection')
