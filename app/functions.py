@@ -39,7 +39,7 @@ def getacc(signatures):
 def getmongo(acc_t, meta_list):
     # connect to client and get collection
     #client = pm.MongoClient("mongodb://localhost:27017/")
-    client = pm.MongoClient("mongodb://mastiff_webapp-mongo-readonly-1")
+    client = pm.MongoClient("mongodb://mastiffmeta-query-mongo-readonly-1")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 
