@@ -1,0 +1,68 @@
+Name,HarmonizedName,metadata_category,NCBI_provided_description,Format,not_sam,data_origin,in_jattr,Unnamed: 7,counts,percentage
+not_provided,organism,environmental,Scientific name of the organism that was sequenced (as found in the NCBI Taxonomy Browser),STRING,1,sra_cloudmeta,,,700740,100
+altitude,altitude,environmental,The altitude of the sample is the vertical distance between Earth's surface above Sea Level and the sampled position in the air.,{float} m,,sra_attr,1,,38115,5.439249936
+depth,depth,environmental,"Depth is defined as the vertical distance below surface, e.g. for sediment or soil samples depth is measured from sediment or soil surface, respectivly. Depth can be reported as an interval for subsurface samples.",{float} m,,sra_attr,1,,87725,12.51890858
+not_provided,env_biome,environmental,not_provided,not_provided,,sra_attr,1,,234917,33.52413163
+broad-scale environmental context,env_broad_scale,environmental,Add terms that identify the major environment type(s) where your sample was collected. Recommend subclasses of biome [ENVO:00000428]. Multiple terms can be separated by one or more pipes e.g.:  mangrove biome [ENVO:01000181]|estuarine biome [ENVO:01000020],{term},,sra_attr,1,,49671,7.08836373
+not_provided,env_feature,environmental,not_provided,not_provided,,sra_attr,1,,234168,33.41724463
+local-scale environmental context,env_local_scale,environmental,"Add terms that identify environmental entities having causal influences upon the entity at time of sampling, multiple terms can be separated by pipes, e.g.:  shoreline [ENVO:00000486]|intertidal zone [ENVO:00000316]",{term},,sra_attr,1,,48888,6.976624711
+not_provided,env_material,environmental,not_provided,not_provided,,sra_attr,1,,217071,30.97739532
+environmental medium,env_medium,environmental,Add terms that identify the material displaced by the entity at time of sampling. Recommend subclasses of environmental material [ENVO:00010483]. Multiple terms can be separated by pipes e.g.: estuarine water [ENVO:01000301]|estuarine mud [ENVO:00002160],{term},,sra_attr,1,,49464,7.058823529
+environmental package,env_package,environmental,"MIGS/MIMS/MIENS extension for reporting of measurements and observations obtained from one or more of the environments where the sample was obtained. All environmental packages listed here are further defined in separate subtables. By giving the name of the environmental package, a selection of fields can be made from the subtables and can be reported","'air', 'host-associated', 'human-associated', 'human-skin', 'human-oral', 'human-gut', 'human-vaginal', 'microbial', 'miscellaneous', 'plant-associated', 'sediment', 'soil', 'wastewater', 'water'",,sra_attr,1,,175660,25.06778548
+collection date,collection_date,experimental_design,"the date on which the sample was collected; date/time ranges are supported by providing two dates from among the supported value formats, delimited by a forward-slash character; collection times are supported by adding ""T"", then the hour and minute after the date, and must be in Coordinated Universal Time (UTC), otherwise known as ""Zulu Time"" (Z); supported formats include ""DD-Mmm-YYYY"", ""Mmm-YYYY"", ""YYYY"" or ISO 8601 standard ""YYYY-mm-dd"", ""YYYY-mm"", ""YYYY-mm-ddThh:mm:ss""; e.g., 30-Oct-1990, Oct-1990, 1990, 1990-10-30, 1990-10, 21-Oct-1952/15-Feb-1953, 2015-10-11T17:53:03Z; valid non-ISO dates will be automatically transformed to ISO format",{timestamp},,sra_attr,1,,432970,61.78753889
+sample type,sample_type,experimental_design,"Sample type, such as cell culture, mixed culture, tissue sample, whole organism, single cell, metagenomic assembly",,,sra_attr,1,,216467,30.89120073
+source material identifiers,source_material_id,experimental_design,"unique identifier assigned to a material sample used for extracting nucleic acids, and subsequent sequencing. The identifier can refer either to the original material collected or to any derived sub-samples.",{text},,sra_attr,1,,34769,4.961754716
+not_provided,bases,file_info,not_provided,not_provided,1,bq,1,,697208,99.49596141
+not_provided,bytes,file_info,not_provided,not_provided,1,bq,1,,700207,99.92393755
+not_provided,run_file_create_date,file_info,not_provided,not_provided,1,bq,1,,700197,99.92251049
+not_provided,run_file_version,file_info,not_provided,not_provided,1,bq,1,,700197,99.92251049
+not_provided,primary_search,file_info,not_provided,not_provided,1,bq,1,,700740,100
+not_provided,loaddate,file_info,The date when the data was loaded into SRA,TIMESTAMP,1,sra_cloudmeta,,,700740,100
+not_provided,mbases,file_info,Number of mega bases in the SRA Runs,INTEGER,1,sra_cloudmeta,,,700740,100
+not_provided,mbytes,file_info,Number of mega bytes of data in the SRA Run,INTEGER,1,sra_cloudmeta,,,700740,100
+not_provided,releasedate,file_info,The date on which the data was released,TIMESTAMP,1,sra_cloudmeta,,,700740,100
+not_provided,geo_loc_name_country_calc,geographic,Name of the country where the sample was collected,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,geo_loc_name_country_continent_calc,geographic,Name of the continent where the sample was collected,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,geo_loc_name_sam,geographic,Full location of collection,STRING,1,sra_cloudmeta,,,700740,100
+latitude and longitude,lat_lon,geographic,"The geographical coordinates of the location where the sample was collected. Specify as degrees latitude and longitude in format ""d[d.dddd] N|S d[dd.dddd] W|E"", eg, 38.98 N 77.11 W",{float} {float},,sra_attr,1,,282525,40.3180923
+age,age,host,"age at the time of sampling; relevant scale depends on species and study, e.g. could be seconds for amoebae or centuries for trees",{float} {unit},,sra_attr,1,,60738,8.667694152
+body habitat,body_habitat,host,original body habitat where the sample was obtained from,{term},,sra_attr,1,,64222,9.164882838
+body product,body_product,host,"substance produced by the body, e.g. stool, mucus, where the sample was obtained from",{text},,sra_attr,1,,66342,9.467420156
+host,host,host,"The natural (as opposed to laboratory) host to the organism from which the sample was obtained. Use the full taxonomic name, eg, ""Homo sapiens"".",,,sra_attr,1,,221976,31.67736964
+host age,host_age,host,Age of host at the time of sampling,,,sra_attr,1,,67490,9.631246967
+host body habitat,host_body_habitat,host,original body habitat where the sample was obtained from,{term},,sra_attr,1,,53236,7.597111625
+host body product,host_body_product,host,"substance produced by the host, e.g. stool, mucus, where the sample was obtained from",{text},,sra_attr,1,,66147,9.439592431
+host common name,host_common_name,host,"The natural language (non-taxonomic) name of the host organism, e.g., mouse",{text},,sra_attr,1,,135625,19.35453949
+host sex,host_sex,host,Gender or physical sex of the host,"['', 'male', 'female', 'pooled male and female', 'neuter', 'hermaphrodite', 'intersex', 'not determined', 'missing', 'not applicable', 'not collected', 'not provided', 'restricted access']",,sra_attr,1,,41572,5.932585552
+host subject id,host_subject_id,host,"a unique identifier by which each subject can be referred to, de-identified, e.g. #131",{text},,sra_attr,1,,227740,32.49992865
+host taxonomy ID,host_taxid,host,"NCBI taxonomy ID of the host, e.g. 9606",{integer},,sra_attr,1,,152332,21.73873334
+race,race,host,not_provided,,,sra_attr,1,,31840,4.543768017
+sample name,sample_name,sra_information,sample name in source database,,1,sra_cloudmeta,,,700740,100
+not_provided,sample_name_sam,sra_information,INSDC sample name,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,acc,sra_information,SRA Run accession in the form of SRR######## (ERR or DRR for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+not_provided,bioproject,sra_information,BioProject accession in the form of PRJNA######## (PRJEB####### or PRJDB###### for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+not_provided,biosample,sra_information,BioSample accession in the form of SAMN######## (SAMEA##### or SAMD##### for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+not_provided,biosamplemodel_sam,sra_information,The BioSample package/model that was picked,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,collection_date_sam,experimental_design,The collection date of the sample,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,consent,sra_information,"Type of consent need to access the data (i.e. public is available to all, others are for dbGaP)",STRING,1,sra_cloudmeta,,,700740,100
+not_provided,datastore_filetype,sra_information,Type of files available to download from SRA,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,datastore_provider,sra_information,Locations of where the files are available to download from,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,datastore_region,sra_information,Regions of where the data is located,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,ena_first_public_run,sra_information,Date when INSDC partner record was public,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,ena_last_update_run,sra_information,Date when INSDC partner record was updated,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,experiment,sra_information,The accession in the form of SRX######## (ERX or DRX for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+not_provided,sample_acc,sra_information,SRA Sample accession in the form of SRS######## (ERS or DRS for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+not_provided,sra_study,sra_information,SRA Study accession in the form of SRP######## (ERP or DRP for INSDC partners),STRING,1,sra_cloudmeta,,,700740,100
+investigation type,investigation_type,experimental_design,"Nucleic Acid Sequence Report is the root element of all MIGS/MIMS compliant reports as standardized by Genomic Standards Consortium. This field is either eukaryote,bacteria,virus,plasmid,organelle, metagenome, miens-survey or miens-culture","['', 'eukaryote', 'bacteria_archaea', 'plasmid', 'virus', 'organelle', 'metagenome', 'miens-survey', 'miens-culture']",,sra_attr,1,,93656,13.36529954
+isolate,isolate,experimental_design,identification or description of the specific individual from which this sample was obtained,,,sra_attr,1,,71675,10.22847276
+project name,project_name,sra_information,"A concise name that describes the overall project, for example ""Analysis of sequences collected from Antarctic soil""",{text},,sra_attr,1,,111852,15.96198305
+not_provided,assay_type,sequencing_information,"Type of library (i.e. AMPLICON, RNA-Seq, WGS, etc)",STRING,1,sra_cloudmeta,,,700740,100
+not_provided,avgspotlen,sequencing_information,Calculated average read length,INTEGER,1,sra_cloudmeta,,,700740,100
+not_provided,center_name,sequencing_information,Name of the sequencing center,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,insertsize,sequencing_information,Submitter provided insert size,INTEGER,1,sra_cloudmeta,,,700740,100
+not_provided,instrument,sequencing_information,Name of the sequencing instrument model,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,library_name,sequencing_information,The name of the library,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,librarylayout,sequencing_information,Whether the data is SINGLE or PAIRED,STRING,1,sra_cloudmeta,,,700740,100
+not_provided,libraryselection,sequencing_information,"Library selection methodology (i.e. PCR, RANDOM, etc)",STRING,1,sra_cloudmeta,,,700740,100
+not_provided,librarysource,sequencing_information,"Source of the biological data (i.e. GENOMIC, METAGENOMIC, etc)",STRING,1,sra_cloudmeta,,,700740,100
+not_provided,platform,sequencing_information,Name of the sequencing platform (i.e. ILLUMINA),STRING,1,sra_cloudmeta,,,700740,100

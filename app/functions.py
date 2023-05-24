@@ -37,15 +37,16 @@ def getacc(signatures):
 
 
 def getmongo(acc_t, meta_list):
-    # connect to client and get collection
-    #client = pm.MongoClient("mongodb://localhost:27017/")
-    client = pm.MongoClient("mongodb://mastiffmeta-query-mongo-readonly-1")
+    # connection to run locally
+    client = pm.MongoClient("mongodb://localhost:27017/")
+
+    # connection for docker container
+    # client = pm.MongoClient("mongodb://mastiffmeta-query-mongo-readonly-1")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 
     print(f'{sradb_col.count_documents({})} acc documents imported to mongoDB collection')
     print(sradb_col.find_one({}))
-
 
     # deselect ID; return acc and biosample html for every query
     meta_dict = {'_id': 0, 'acc': 1, 'biosample_link': 1}

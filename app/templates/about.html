@@ -1,3 +1,83 @@
-{% include 'header.html' %} {% include 'footer.html' %}
+{% include 'header.html' %}
 
-<h1>About page is in development</h1>
+<link
+  href="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/css/tabulator.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+
+<div class="container mt-3">
+  <h2>About</h2>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title">How the search works</h4>
+      <ol class="card-text">
+        <li>
+          When you upload a genome to Mastiff-Meta Query, it is processed into
+          <a href="https://sourmash.readthedocs.io/en/latest/#"
+            >sourmash signatures</a
+          >.
+        </li>
+        <li>
+          Metagenomes in the SRA (identified by their SRA accession ID) are
+          searched for matches with
+          <a href="https://github.com/sourmash-bio/mastiff">Mastiff</a>.
+        </li>
+        <li>
+          Selected metadata is pulled for each of the accessions from a curated
+          database.
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title">Metadata Options</h4>
+      <p class="card-text">
+        The metadata options available in Meta-Mastiff Query are based on . The
+        database includes that had attributes filled in the submission in >4.5%
+        of the accessions in Mastiff. The
+      </p>
+
+      <script>
+        // Load the CSV file
+        var url = "static/attrcounts_4.5percent_manualcategories.csv";
+        fetch(url)
+          .then((response) => response.text())
+          .then((csvData) => {
+            // Parse CSV data
+            var tableData = Papa.parse(csvData, { header: true }).data;
+
+            // Create the Tabulator table
+            var table = new Tabulator("#table", {
+              data: tableData,
+              layout: "fitColumns",
+              columns: Object.keys(tableData[0]).map((column) => ({
+                title: column,
+                field: column,
+              })),
+            });
+
+            // Render the table
+            table.render();
+          });
+      </script>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title">Who we are</h4>
+      <p class="card-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+        vehicula, tortor a aliquam fermentum, velit lacus euismod nisl, et
+        consectetur lectus arcu et metus.
+      </p>
+    </div>
+  </div>
+</div>
+
+{% include 'footer.html' %}

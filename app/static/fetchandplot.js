@@ -217,6 +217,7 @@ form.addEventListener("submit", (event) => {
         start.setAttribute("placeholder", "Min");
         start.setAttribute("min", 0);
         start.setAttribute("max", 100);
+        start.setAttribute("step", 0.01); // Set the step increment to 0.01
         start.style.padding = "4px";
         start.style.width = "50%";
         start.style.boxSizing = "border-box";
