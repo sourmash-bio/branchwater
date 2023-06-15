@@ -1,5 +1,229 @@
 {% include 'header.html' %}
 
-<h1>Page is in development</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Tabulator CSS file options: https://cdnjs.com/libraries/tabulator-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
+      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
+    <script
+      defer="defer"
+      src="static/mgnify-component/mgnify-sourmash-component.js"
+    ></script>
+
+    <!-- Custom scripts and functions -->
+    <script src="static/dashboard.js"></script>
+    <script src="static/ex_sig.js"></script>
+
+    <!-- Tabulator and plotly libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <br />
+    <br />
+
+    <!-- Intro/header -->
+
+    <div class="parent-element" style="text-align: center">
+      <h3>Try out the search!</h3>
+      <h6>
+        Submit one of the genomes below to examine its potential SRA metagenome
+        matches and explore the default metadata options.
+      </h6>
+      <h6>Refresh the page to try a different genome.</h6>
+    </div>
+    <hr style="border-width: 3px; border-color: black" />
+
+    <!-- Create form -->
+    <style>
+      .form-row {
+        display: flex;
+        align-items: center;
+      }
+      .form-row input[type="radio"] {
+        margin-right: 20px;
+      }
+    </style>
+    <div id="form-container"></div>
+    <form id="form" style="margin: 80px">
+      <div class="form-row">
+        <input type="radio" id="Ralso" name="options" value="option1" />
+        <label for="id1">
+          <em>Ralstonia solanacearum</em>: a soilborne bacterial pathogen that
+          causes bacterial wilt in several crops.
+          <a href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/305/"
+            >RefSeq:GCF_021117135.1</a
+          >
+        </label>
+      </div>
+      <br />
+      <div class="form-row">
+        <input type="radio" id="Sal" name="options" value="option2" />
+        <label for="id2">
+          <em>Salmonella enterica</em> subsp. <em>enterica</em>: a widespread
+          bacterial pathogen that causes salmonellosis in humans. (<a
+            href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/59201/"
+            >RefSeq:GCF_000006945.2</a
+          >)
+        </label>
+      </div>
+      <br />
+      <div class="form-row">
+        <input type="radio" id="Promar" name="options" value="option3" />
+        <label for="id3">
+          <em>Prochlorococcus marinus</em>: a widespread and abundant marine
+          cyanobacteria. (<a
+            href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/1219/"
+            >RefSeq:GCF_000015665.1</a
+          >)
+        </label>
+      </div>
+      <br />
+
+      <div class="form-row">
+        <input type="radio" id="Canal" name="options" value="option4" />
+        <label for="id4">
+          <em>Candida albicans </em>: a fungi common in the human gut and other
+          parts of the body. It is an opportunistic pathogen and causes
+          infection under certain conditions. (<a
+            href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/5476/"
+            >RefSeq:GCF_000182965.3</a
+          >)
+        </label>
+      </div>
+      <br />
+
+      <div class="form-row">
+        <input type="radio" id="Aspsyd" name="options" value="option5" />
+        <label for="id5">
+          <em>Aspergillus sydowii </em>: a fungal pathogen that can cause
+          disease in humans and sea fan corals. (<a
+            href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/75750/"
+            >RefSeq:GCF_001890705.1</a
+          >)
+        </label>
+      </div>
+      <br />
+      <br />
+
+      <button type="submit" id="myButton" class="btn btn-light">
+        <strong>Submit</strong>
+      </button>
+    </form>
+
+    <!-- Create container for dashboard -->
+    <div id="dashboard" style="margin: 30px"></div>
+
+    <script>
+      //Once data submitted, add notification and send data to flask app
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.querySelector("#myButton").disabled = true;
+        // Create a new <nav> element
+        const navElement = document.createElement("nav");
+        navElement.classList.add(
+          "navbar",
+          "navbar-expand-lg",
+          "navbar-light",
+          "bg-light"
+        );
+        navElement.style.textAlign = "center"; // Add the text-align style
+
+        // Create a new <p> element and add it to the <nav> element
+        const paragraphElement = document.createElement("h2");
+        paragraphElement.contentEditable = true; // Make the text editable
+        paragraphElement.textContent =
+          "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
+        navElement.appendChild(paragraphElement);
+        // Add an event listener to the <p> element to handle text changes
+        paragraphElement.addEventListener("input", (event) => {
+          console.log(`New text: ${event.target.textContent}`);
+        });
+        // Add the <nav> element to the DOM
+        dashboard.appendChild(navElement);
+
+        //select signatures from 'ex_sig.js' based on form
+        const selectedOption = form.querySelector(
+          "input[name='options']:checked"
+        );
+        let formdata;
+        if (selectedOption.id === "Ralso") {
+          formdata = Ralso_sig;
+        } else if (selectedOption.id === "Sal") {
+          formdata = Sal_sig;
+        } else if (selectedOption.id === "Promar") {
+          formdata = Promar_sig;
+        } else if (selectedOption.id === "Canal") {
+          formdata = Canal_sig;
+        } else if (selectedOption.id === "Aspsyd") {
+          formdata = Aspsyd_sig;
+        }
+
+        //Do fetch request to proper route and create dashboard
+        fetch("/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formdata),
+        })
+          .then((response) => response.json())
+          .then((jsonData) =>
+            createdashboard(jsonData, paragraphElement, navElement)
+          )
+          .catch((error) => {
+            console.error("Error sending data to Flask server:", error);
+          });
+      });
+    </script>
+
+    <br />
+    <br />
+    <div
+      class="card border-primary mb-3"
+      style="margin-left: 50px; margin-right: 50px"
+    >
+      <!-- <div class="card-header">Header</div> -->
+      <div class="card-body">
+        <!-- <h4 class="card-title">Primary card title</h4> -->
+        <p class="card-text"></p>
+
+        <p style="margin: 20px">
+          This example search allows you to try out the our
+          <a href="/home"><b>default search</b></a
+          >, which rapidly searches over 700,000 metagenomes deposited in NCBI's
+          <a href="https://www.ncbi.nlm.nih.gov/sra/"
+            >sequence read archive (SRA)</a
+          >
+          and bypasses additional steps for metadata collation. Just select a
+          genome of interest and within 5 minutes potential matches and
+          high-interest metadata will be presented in a table, maps, and summary
+          plots. If you'd like to have greater control over your metadata
+          options, an
+          <a href="/advanced">advanced search</a> is available. Please note that
+          SRA run accessions vary greatly in which metadata categories have
+          information available. Further details regarding the curated metadata
+          can be found on the <a href="/about">about page</a>.
+        </p>
+      </div>
+    </div>
+    <!-- Script for tooltips -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+  </body>
+</html>
 {% include 'footer.html' %}

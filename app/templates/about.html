@@ -21,12 +21,14 @@
           >.
         </li>
         <li>
-          Metagenomes in the SRA (identified by their SRA accession ID) are
-          searched for matches with
-          <a href="https://github.com/sourmash-bio/mastiff">Mastiff</a>.
+          Metagenomes in the SRA (identified by their SRA run accession) are
+          searched for matches with the
+          <a href="https://github.com/sourmash-bio/mastiff">mastiff</a>
+          implementation of
+          <a href="https://github.com/sourmash-bio/mastiff">branchwater</a>. The quality of the match is represented by containment and containment-based Average Nucleotide Identity (cANI).
         </li>
         <li>
-          Selected metadata is pulled for each of the accessions from a curated
+          Select SRA metadata is pulled for each of the accessions from a curated
           database.
         </li>
       </ol>
@@ -35,49 +37,30 @@
 
   <div class="card mb-3">
     <div class="card-body">
-      <h4 class="card-title">Metadata Options</h4>
+      <h4 class="card-title">SRA metadata options</h4>
       <p class="card-text">
-        The metadata options available in Meta-Mastiff Query are based on . The
-        database includes that had attributes filled in the submission in >4.5%
-        of the accessions in Mastiff. The
+        The list of SRA metadata options and their definitions are a subset of over 900 potential metadata options that are listed in the <a href="https://www.ncbi.nlm.nih.gov/biosample/docs/attributes/">SRA biosample attribute list </a>  and the <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sra-cloud-based-metadata-table/">SRA cloud-based metadata tables</a> .
+        The options presented in Mastiff-Meta query were selected based on a >4.5% availability cutoff. Some metadata names are similar but represent distinct options, such as the sampling date, because they were derived from information submitted for the SRA run and some are derived from information submitted for the SRA sample (denoted with the '_sam' suffix). Other than minor data reformatting, the metadata provided are directly representative of what is available in the SRA, including missing information or any errors in the SRA submission.
       </p>
+    </div>
+   </div>
 
-      <script>
-        // Load the CSV file
-        var url = "static/attrcounts_4.5percent_manualcategories.csv";
-        fetch(url)
-          .then((response) => response.text())
-          .then((csvData) => {
-            // Parse CSV data
-            var tableData = Papa.parse(csvData, { header: true }).data;
-
-            // Create the Tabulator table
-            var table = new Tabulator("#table", {
-              data: tableData,
-              layout: "fitColumns",
-              columns: Object.keys(tableData[0]).map((column) => ({
-                title: column,
-                field: column,
-              })),
-            });
-
-            // Render the table
-            table.render();
-          });
-      </script>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h4 class="card-title">Who we are</h4>
+        <p class="card-text">
+          This tool is powered by sourmash and the result of a collaboration
+          between the Data Intensive Biology lab at UC Davis, the USDA-ARS
+          Genomics and Bioinformatics Research Unit, and the Joint Genome
+          Institute. Any issues, questions, or comments can be directed to the
+          <a href="https://github.com/sourmash-bio/mastiff/issues"
+            >mastiff issue tracker on github</a
+          >.
+        </p>
+      </div>
     </div>
   </div>
 
-  <div class="card mb-3">
-    <div class="card-body">
-      <h4 class="card-title">Who we are</h4>
-      <p class="card-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-        vehicula, tortor a aliquam fermentum, velit lacus euismod nisl, et
-        consectetur lectus arcu et metus.
-      </p>
-    </div>
+    {% include 'footer.html' %}
   </div>
 </div>
-
-{% include 'footer.html' %}

@@ -31,82 +31,90 @@ form.addEventListener("submit", (event) => {
     console.log(`New text: ${event.target.textContent}`);
   });
   // Add the <nav> element to the DOM
-  document.body.appendChild(navElement);
+  dashboard.appendChild(navElement);
+
   //formdata copied and pasted from prepscripts/createform.py
-  const formdata = {
-    signatures: signature,
-    metadata: {
-      bases: form.elements.bases.checked,
-      bytes: form.elements.bytes.checked,
-      run_file_create_date: form.elements.run_file_create_date.checked,
-      run_file_version: form.elements.run_file_version.checked,
-      primary_search: form.elements.primary_search.checked,
-      sample_name: form.elements.sample_name.checked,
-      sample_name_sam: form.elements.sample_name_sam.checked,
-      acc: form.elements.acc.checked,
-      assay_type: form.elements.assay_type.checked,
-      avgspotlen: form.elements.avgspotlen.checked,
-      bioproject: form.elements.bioproject.checked,
-      biosample: form.elements.biosample.checked,
-      biosamplemodel_sam: form.elements.biosamplemodel_sam.checked,
-      center_name: form.elements.center_name.checked,
-      collection_date_sam: form.elements.collection_date_sam.checked,
-      consent: form.elements.consent.checked,
-      datastore_filetype: form.elements.datastore_filetype.checked,
-      datastore_provider: form.elements.datastore_provider.checked,
-      datastore_region: form.elements.datastore_region.checked,
-      ena_first_public_run: form.elements.ena_first_public_run.checked,
-      ena_last_update_run: form.elements.ena_last_update_run.checked,
-      experiment: form.elements.experiment.checked,
-      geo_loc_name_country_calc:
-        form.elements.geo_loc_name_country_calc.checked,
-      geo_loc_name_country_continent_calc:
-        form.elements.geo_loc_name_country_continent_calc.checked,
-      geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,
-      insertsize: form.elements.insertsize.checked,
-      instrument: form.elements.instrument.checked,
-      library_name: form.elements.library_name.checked,
-      librarylayout: form.elements.librarylayout.checked,
-      libraryselection: form.elements.libraryselection.checked,
-      librarysource: form.elements.librarysource.checked,
-      loaddate: form.elements.loaddate.checked,
-      mbases: form.elements.mbases.checked,
-      mbytes: form.elements.mbytes.checked,
-      organism: form.elements.organism.checked,
-      platform: form.elements.platform.checked,
-      releasedate: form.elements.releasedate.checked,
-      sample_acc: form.elements.sample_acc.checked,
-      sra_study: form.elements.sra_study.checked,
-      age: form.elements.age.checked,
-      altitude: form.elements.altitude.checked,
-      body_habitat: form.elements.body_habitat.checked,
-      body_product: form.elements.body_product.checked,
-      collection_date: form.elements.collection_date.checked,
-      depth: form.elements.depth.checked,
-      env_biome: form.elements.env_biome.checked,
-      env_broad_scale: form.elements.env_broad_scale.checked,
-      env_feature: form.elements.env_feature.checked,
-      env_local_scale: form.elements.env_local_scale.checked,
-      env_material: form.elements.env_material.checked,
-      env_medium: form.elements.env_medium.checked,
-      env_package: form.elements.env_package.checked,
-      host: form.elements.host.checked,
-      host_age: form.elements.host_age.checked,
-      host_body_habitat: form.elements.host_body_habitat.checked,
-      host_body_product: form.elements.host_body_product.checked,
-      host_common_name: form.elements.host_common_name.checked,
-      host_sex: form.elements.host_sex.checked,
-      host_subject_id: form.elements.host_subject_id.checked,
-      host_taxid: form.elements.host_taxid.checked,
-      investigation_type: form.elements.investigation_type.checked,
-      isolate: form.elements.isolate.checked,
-      lat_lon: form.elements.lat_lon.checked,
-      project_name: form.elements.project_name.checked,
-      race: form.elements.race.checked,
-      sample_type: form.elements.sample_type.checked,
-      source_material_id: form.elements.source_material_id.checked,
-    },
-  };
+  let formdata;
+  if (typeof form.elements.bases === "undefined") {
+    formdata = {
+      signatures: signature,
+    };
+  } else {
+    formdata = {
+      signatures: signature,
+      metadata: {
+        bases: form.elements.bases.checked,
+        bytes: form.elements.bytes.checked,
+        run_file_create_date: form.elements.run_file_create_date.checked,
+        run_file_version: form.elements.run_file_version.checked,
+        primary_search: form.elements.primary_search.checked,
+        sample_name: form.elements.sample_name.checked,
+        sample_name_sam: form.elements.sample_name_sam.checked,
+        acc: form.elements.acc.checked,
+        assay_type: form.elements.assay_type.checked,
+        avgspotlen: form.elements.avgspotlen.checked,
+        bioproject: form.elements.bioproject.checked,
+        biosample: form.elements.biosample.checked,
+        biosamplemodel_sam: form.elements.biosamplemodel_sam.checked,
+        center_name: form.elements.center_name.checked,
+        collection_date_sam: form.elements.collection_date_sam.checked,
+        consent: form.elements.consent.checked,
+        datastore_filetype: form.elements.datastore_filetype.checked,
+        datastore_provider: form.elements.datastore_provider.checked,
+        datastore_region: form.elements.datastore_region.checked,
+        ena_first_public_run: form.elements.ena_first_public_run.checked,
+        ena_last_update_run: form.elements.ena_last_update_run.checked,
+        experiment: form.elements.experiment.checked,
+        geo_loc_name_country_calc:
+          form.elements.geo_loc_name_country_calc.checked,
+        geo_loc_name_country_continent_calc:
+          form.elements.geo_loc_name_country_continent_calc.checked,
+        geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,
+        insertsize: form.elements.insertsize.checked,
+        instrument: form.elements.instrument.checked,
+        library_name: form.elements.library_name.checked,
+        librarylayout: form.elements.librarylayout.checked,
+        libraryselection: form.elements.libraryselection.checked,
+        librarysource: form.elements.librarysource.checked,
+        loaddate: form.elements.loaddate.checked,
+        mbases: form.elements.mbases.checked,
+        mbytes: form.elements.mbytes.checked,
+        organism: form.elements.organism.checked,
+        platform: form.elements.platform.checked,
+        releasedate: form.elements.releasedate.checked,
+        sample_acc: form.elements.sample_acc.checked,
+        sra_study: form.elements.sra_study.checked,
+        age: form.elements.age.checked,
+        altitude: form.elements.altitude.checked,
+        body_habitat: form.elements.body_habitat.checked,
+        body_product: form.elements.body_product.checked,
+        collection_date: form.elements.collection_date.checked,
+        depth: form.elements.depth.checked,
+        env_biome: form.elements.env_biome.checked,
+        env_broad_scale: form.elements.env_broad_scale.checked,
+        env_feature: form.elements.env_feature.checked,
+        env_local_scale: form.elements.env_local_scale.checked,
+        env_material: form.elements.env_material.checked,
+        env_medium: form.elements.env_medium.checked,
+        env_package: form.elements.env_package.checked,
+        host: form.elements.host.checked,
+        host_age: form.elements.host_age.checked,
+        host_body_habitat: form.elements.host_body_habitat.checked,
+        host_body_product: form.elements.host_body_product.checked,
+        host_common_name: form.elements.host_common_name.checked,
+        host_sex: form.elements.host_sex.checked,
+        host_subject_id: form.elements.host_subject_id.checked,
+        host_taxid: form.elements.host_taxid.checked,
+        investigation_type: form.elements.investigation_type.checked,
+        isolate: form.elements.isolate.checked,
+        lat_lon: form.elements.lat_lon.checked,
+        project_name: form.elements.project_name.checked,
+        race: form.elements.race.checked,
+        sample_type: form.elements.sample_type.checked,
+        source_material_id: form.elements.source_material_id.checked,
+      },
+    };
+  }
 
   const startTime = performance.now();
   var data = {};
@@ -140,7 +148,7 @@ form.addEventListener("submit", (event) => {
         console.log(`New text: ${event.target.textContent}`);
       });
       // Add the <nav> element to the DOM
-      document.body.appendChild(navElement);
+      dashboard.appendChild(navElement);
 
       // Download button////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////
@@ -149,7 +157,7 @@ form.addEventListener("submit", (event) => {
       // Create a new <br> element
       const lineBreak = document.createElement("br");
       // Append the <br> element to the document's <body> element
-      document.body.appendChild(lineBreak);
+      dashboard.appendChild(lineBreak);
 
       var downloadButton = document.createElement("button");
       downloadButton.innerHTML = "Download CSV";
@@ -160,43 +168,39 @@ form.addEventListener("submit", (event) => {
       downloadButton.style.width = "200px";
       downloadButton.style.height = "50px";
 
-      document.body.appendChild(downloadButton);
+      dashboard.appendChild(downloadButton);
 
       // Divs for elements////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////
 
       // TableDiv setup
       const tableDiv = document.createElement("div");
+
       // Set the <div>'s attributes and styles
       tableDiv.id = "my-table";
       tableDiv.style.margin = "30px";
       // Append the <div> to the document's <body> element
-      document.body.appendChild(tableDiv);
+      dashboard.appendChild(tableDiv);
 
-      // Plot container and div setup
-      const containerDiv = document.createElement("div");
-      containerDiv.setAttribute("id", "containerDiv");
-      document.body.appendChild(containerDiv);
+      // create div for the maps and add them to the dashboard
+      const mapDiv = document.createElement("div");
+      mapDiv.setAttribute("id", "mapDiv");
+      dashboard.appendChild(mapDiv);
+
+      // create div for the maps and add them to the container
+      const mapDiv2 = document.createElement("div");
+      mapDiv.setAttribute("id", "mapDiv2");
+      dashboard.appendChild(mapDiv2);
 
       // create div for the containment and add them to the container
       const contDiv = document.createElement("div");
       contDiv.setAttribute("id", "contDiv");
-      containerDiv.appendChild(contDiv);
+      dashboard.appendChild(contDiv);
 
       // create div for the count barplots and add them to the container
       const barDiv = document.createElement("div");
       barDiv.setAttribute("id", "barDiv");
-      containerDiv.appendChild(barDiv);
-
-      // create div for the maps and add them to the container
-      const mapDiv = document.createElement("div");
-      mapDiv.setAttribute("id", "mapDiv");
-      containerDiv.appendChild(mapDiv);
-
-      // create div for the mapsll and add them to the container
-      const mapDiv2 = document.createElement("div");
-      mapDiv.setAttribute("id", "mapDiv2");
-      containerDiv.appendChild(mapDiv2);
+      dashboard.appendChild(barDiv);
 
       // Functions  ////////////////////////////////////////////////
       //////////////////////////////////////////////////////////////////
@@ -409,11 +413,11 @@ form.addEventListener("submit", (event) => {
       };
 
       var ANI_hist = {
-        x: values[commonKeys.indexOf("ANI_est")],
+        x: values[commonKeys.indexOf("cANI_est")],
         type: "histogram",
         autobinx: false,
         xbins: { size: 0.02 },
-        name: "ANI_est", // Add a name to identify this trace
+        name: "cANI_est", // Add a name to identify this trace
         visible: false, // Set the visibility of this trace to false initially
         marker: {
           color: "rgba(100, 200, 102, 0.7)",
@@ -438,7 +442,7 @@ form.addEventListener("submit", (event) => {
           {
             method: "update",
             args: [{ visible: [false, true] }],
-            label: "ANI_est",
+            label: "cANI_est",
           },
         ],
         direction: "down",
@@ -687,7 +691,7 @@ form.addEventListener("submit", (event) => {
         Plotly.update("contDiv", {
           x: [
             Filtvalues[FiltcommonKeys.indexOf("containment")],
-            Filtvalues[FiltcommonKeys.indexOf("ANI_est")],
+            Filtvalues[FiltcommonKeys.indexOf("cANI_est")],
           ],
         });
 

@@ -16,7 +16,9 @@
       defer="defer"
       src="static/mgnify-component/mgnify-sourmash-component.js"
     ></script>
-    <script src="static/formdata.js"></script>
+
+    <!-- Custom scripts and functions -->
+    <script src="static/dashboard.js"></script>
 
     <!-- Tabulator and plotly libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
@@ -24,34 +26,126 @@
   </head>
   <body>
     <br />
-    <h3 style="margin: 20px">1) Upload your genome (fasta format only)</h3>
+    <br />
+
+    <!-- Intro/header -->
+
+    <div class="parent-element" style="text-align: center">
+      <h4>
+        Curious what publically available metagenomes contain an organism you're
+        interested in?
+      </h4>
+      <h6>
+        Start by uploading your genome below (fasta format only) or checking out
+        our <a href="/examples">examples</a>.
+      </h6>
+    </div>
+    <hr style="border-width: 3px; border-color: black" />
+
     <div style="margin: 50px">
       <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
     </div>
-    <h3 style="margin: 20px">2) Submit metadata options</h3>
-    <p style="margin: 20px">
-      Metadata options below and their percent (%) availability were curated
-      from information provided by NCBI. Where possible, definitions of metadata
-      are available on the <a href="/about">about page</a> and can be seen by
-      hovering your mouse over the metadata option in the form below. Please
-      note that accessions vary greatly in which metadata categories have
-      information available and estimates below may not be current. Further
-      details regarding the curated metadata available here can be found on the
-      <a href="/about">about page</a>. Further details on accessions and their
-      associated metadata can be found on the
-      <a href="https://www.ncbi.nlm.nih.gov/sra/">NCBI SRA website</a>.
-    </p>
+
     <!-- Create form -->
     <div id="form-container"></div>
-    <form id="form" style="margin: 40px"></form>
-    <script>
-      document.getElementById("form").innerHTML =
-        html +
-        "<br /><br /><button type='submit' id='myButton' class='btn btn-light' disabled><strong>Submit</strong></button>";
-    </script>
-    <!-- Import plotting scripts form -->
-    <script src="static/fetchandplot.js"></script>
+    <form id="form" style="margin: 40px">
+      <button type="submit" id="myButton" class="btn btn-light" disabled>
+        <strong>Submit</strong>
+      </button>
+    </form>
 
+    <!-- Create container for dashboard -->
+    <div id="dashboard" style="margin: 30px"></div>
+
+    <script>
+      var signature;
+      //once sketeched, signatures saved and submit button enabled
+      document.addEventListener("sketched", (evt) => {
+        evt.preventDefault();
+        signature = evt.detail.signature;
+        document.querySelector("#myButton").disabled = false;
+      });
+
+      //Once data submitted, add notification and send data to flask app
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.querySelector("#myButton").disabled = true;
+        // Create a new <nav> element
+        const navElement = document.createElement("nav");
+        navElement.classList.add(
+          "navbar",
+          "navbar-expand-lg",
+          "navbar-light",
+          "bg-light"
+        );
+        navElement.style.textAlign = "center"; // Add the text-align style
+
+        // Create a new <p> element and add it to the <nav> element
+        const paragraphElement = document.createElement("h2");
+        paragraphElement.contentEditable = true; // Make the text editable
+        paragraphElement.textContent =
+          "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
+        navElement.appendChild(paragraphElement);
+        // Add an event listener to the <p> element to handle text changes
+        paragraphElement.addEventListener("input", (event) => {
+          console.log(`New text: ${event.target.textContent}`);
+        });
+        // Add the <nav> element to the DOM
+        dashboard.appendChild(navElement);
+        const formdata = {
+          signatures: signature,
+        };
+        const startTime = performance.now();
+        var data = {};
+
+        //Do fetch request to proper route and create dashboard
+        fetch("/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formdata),
+        })
+          .then((response) => response.json())
+          .then((jsonData) =>
+            createdashboard(jsonData, paragraphElement, navElement)
+          )
+          .catch((error) => {
+            console.error("Error sending data to Flask server:", error);
+          });
+      });
+    </script>
+
+    <br />
+    <br />
+    <div
+      class="card border-primary mb-3"
+      style="margin-left: 50px; margin-right: 50px"
+    >
+      <!-- <div class="card-header">Header</div> -->
+      <div class="card-body">
+        <!-- <h4 class="card-title">Primary card title</h4> -->
+        <p class="card-text"></p>
+
+        <p style="margin: 20px">
+          This
+          <a href="/home"><b>simple search</b></a> allows you to rapidly search
+          over 700,000 metagenomes deposited in NCBI's
+          <a href="https://www.ncbi.nlm.nih.gov/sra/"
+            >sequence read archive (SRA)</a
+          >
+          and bypass additional steps for metadata collation. Just upload your
+          genome of interest and within 5 minutes potential matches and
+          high-interest metadata will be presented in a table, maps, and summary
+          plots. If you'd like to have greater control over your metadata
+          options, an
+          <a href="/advanced">advanced search</a> is available. Please note that
+          SRA run accessions vary greatly in which metadata categories have
+          information available. Further details regarding the curated metadata
+          can be found on the <a href="/about">about page</a>.
+        </p>
+      </div>
+    </div>
     <!-- Script for tooltips -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -64,5 +158,4 @@
     </script>
   </body>
 </html>
-
 {% include 'footer.html' %}

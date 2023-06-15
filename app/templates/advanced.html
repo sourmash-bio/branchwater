@@ -1,0 +1,209 @@
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Tabulator CSS file options: https://cdnjs.com/libraries/tabulator-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
+      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <script
+      defer="defer"
+      src="static/mgnify-component/mgnify-sourmash-component.js"
+    ></script>
+    <!-- Custom scripts and functions -->
+    <script src="static/formdata.js"></script>
+    <script src="static/dashboard.js"></script>
+
+    <!-- Tabulator and plotly libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div class="parent-element" style="text-align: center">
+      <h3>Advanced Search</h3>
+    </div>
+    <hr style="border-width: 3px; border-color: black" />
+    <br />
+    <h3 style="margin: 20px">1) Upload your genome (fasta format only)</h3>
+    <div style="margin: 50px">
+      <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
+    </div>
+    <h3 style="margin: 20px">2) Select metadata</h3>
+    <p style="margin: 20px">
+      Metadata options below and their percent (%) availability were curated
+      from information provided by NCBI. Where possible, definitions of metadata
+      can be seen by hovering your mouse over the name of the metadata option in
+      the form below. Please note that accessions vary greatly in which metadata
+      categories have information available and estimates below may not be
+      current. Further details regarding the curated metadata available here can
+      be found on the
+      <a href="/about">about page</a>. Further details on accessions and their
+      associated metadata can be found on the
+      <a href="https://www.ncbi.nlm.nih.gov/sra/">NCBI SRA website</a>.
+    </p>
+    <!-- Create form -->
+    <div id="form-container"></div>
+    <form id="form" style="margin: 40px"></form>
+    <script>
+      document.getElementById("form").innerHTML =
+        html +
+        "<br /><br /><button type='submit' id='myButton' class='btn btn-light' disabled><strong>Submit</strong></button>";
+    </script>
+
+    <!-- Create container for dashboard -->
+    <div id="dashboard" style="margin: 30px"></div>
+
+    <!-- Import plotting scripts form -->
+
+    <script>
+      var signature;
+      //once sketeched, signatures saved and submit button enabled
+      document.addEventListener("sketched", (evt) => {
+        evt.preventDefault();
+        signature = evt.detail.signature;
+        document.querySelector("#myButton").disabled = false;
+      });
+
+      //Once data submitted, add notification and send data to flask app
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.querySelector("#myButton").disabled = true;
+        // Create a new <nav> element
+        const navElement = document.createElement("nav");
+        navElement.classList.add(
+          "navbar",
+          "navbar-expand-lg",
+          "navbar-light",
+          "bg-light"
+        );
+        navElement.style.textAlign = "center"; // Add the text-align style
+
+        // Create a new <p> element and add it to the <nav> element
+        const paragraphElement = document.createElement("h2");
+        paragraphElement.contentEditable = true; // Make the text editable
+        paragraphElement.textContent =
+          "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
+        navElement.appendChild(paragraphElement);
+        // Add an event listener to the <p> element to handle text changes
+        paragraphElement.addEventListener("input", (event) => {
+          console.log(`New text: ${event.target.textContent}`);
+        });
+        // Add the <nav> element to the DOM
+        dashboard.appendChild(navElement);
+        const formdata = {
+          signatures: signature,
+          metadata: {
+            bases: form.elements.bases.checked,
+            bytes: form.elements.bytes.checked,
+            run_file_create_date: form.elements.run_file_create_date.checked,
+            run_file_version: form.elements.run_file_version.checked,
+            primary_search: form.elements.primary_search.checked,
+            sample_name: form.elements.sample_name.checked,
+            sample_name_sam: form.elements.sample_name_sam.checked,
+            acc: form.elements.acc.checked,
+            assay_type: form.elements.assay_type.checked,
+            avgspotlen: form.elements.avgspotlen.checked,
+            bioproject: form.elements.bioproject.checked,
+            biosample: form.elements.biosample.checked,
+            biosamplemodel_sam: form.elements.biosamplemodel_sam.checked,
+            center_name: form.elements.center_name.checked,
+            collection_date_sam: form.elements.collection_date_sam.checked,
+            consent: form.elements.consent.checked,
+            datastore_filetype: form.elements.datastore_filetype.checked,
+            datastore_provider: form.elements.datastore_provider.checked,
+            datastore_region: form.elements.datastore_region.checked,
+            ena_first_public_run: form.elements.ena_first_public_run.checked,
+            ena_last_update_run: form.elements.ena_last_update_run.checked,
+            experiment: form.elements.experiment.checked,
+            geo_loc_name_country_calc:
+              form.elements.geo_loc_name_country_calc.checked,
+            geo_loc_name_country_continent_calc:
+              form.elements.geo_loc_name_country_continent_calc.checked,
+            geo_loc_name_sam: form.elements.geo_loc_name_sam.checked,
+            insertsize: form.elements.insertsize.checked,
+            instrument: form.elements.instrument.checked,
+            library_name: form.elements.library_name.checked,
+            librarylayout: form.elements.librarylayout.checked,
+            libraryselection: form.elements.libraryselection.checked,
+            librarysource: form.elements.librarysource.checked,
+            loaddate: form.elements.loaddate.checked,
+            mbases: form.elements.mbases.checked,
+            mbytes: form.elements.mbytes.checked,
+            organism: form.elements.organism.checked,
+            platform: form.elements.platform.checked,
+            releasedate: form.elements.releasedate.checked,
+            sample_acc: form.elements.sample_acc.checked,
+            sra_study: form.elements.sra_study.checked,
+            age: form.elements.age.checked,
+            altitude: form.elements.altitude.checked,
+            body_habitat: form.elements.body_habitat.checked,
+            body_product: form.elements.body_product.checked,
+            collection_date: form.elements.collection_date.checked,
+            depth: form.elements.depth.checked,
+            env_biome: form.elements.env_biome.checked,
+            env_broad_scale: form.elements.env_broad_scale.checked,
+            env_feature: form.elements.env_feature.checked,
+            env_local_scale: form.elements.env_local_scale.checked,
+            env_material: form.elements.env_material.checked,
+            env_medium: form.elements.env_medium.checked,
+            env_package: form.elements.env_package.checked,
+            host: form.elements.host.checked,
+            host_age: form.elements.host_age.checked,
+            host_body_habitat: form.elements.host_body_habitat.checked,
+            host_body_product: form.elements.host_body_product.checked,
+            host_common_name: form.elements.host_common_name.checked,
+            host_sex: form.elements.host_sex.checked,
+            host_subject_id: form.elements.host_subject_id.checked,
+            host_taxid: form.elements.host_taxid.checked,
+            investigation_type: form.elements.investigation_type.checked,
+            isolate: form.elements.isolate.checked,
+            lat_lon: form.elements.lat_lon.checked,
+            project_name: form.elements.project_name.checked,
+            race: form.elements.race.checked,
+            sample_type: form.elements.sample_type.checked,
+            source_material_id: form.elements.source_material_id.checked,
+          },
+        };
+        const startTime = performance.now();
+        var data = {};
+
+        //Do fetch request to proper route and create dashboard
+        fetch("/advanced", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formdata),
+        })
+          .then((response) => response.json())
+          .then((jsonData) =>
+            createdashboard(jsonData, paragraphElement, navElement)
+          )
+          .catch((error) => {
+            console.error("Error sending data to Flask server:", error);
+          });
+      });
+    </script>
+
+    <!-- Script for tooltips -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+  </body>
+</html>
+
+{% include 'footer.html' %}

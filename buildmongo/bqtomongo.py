@@ -9,10 +9,10 @@ import os
 from google.oauth2 import service_account
 from google.cloud import bigquery
 
-#get the current directory
+# get the current directory
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-#use big query key
+# use big query key
 key_path = os.path.join(dir_path, 'bqKey.json')
 
 # Connect to client
@@ -26,7 +26,7 @@ table_id = f'sraproject-384718.mastiffdata.mastiff_id'
 # Create table of Mastiff accessions
 # Not neccessary if up to date with metadata_prep/metacounts.py first
 # ideally pulling from metadata-endpoint of mastiff API
-runinfo = pd.read_csv(os.path.join(dir_path,'sra.runinfo.csv'))
+runinfo = pd.read_csv(os.path.join(dir_path, 'sra.runinfo.csv'))
 mastiff_acc = tuple(runinfo.Run.tolist())
 client.delete_table(table_id, not_found_ok=True)  # delete table in case exists
 df = pd.DataFrame(mastiff_acc, columns=['accID'])
@@ -36,12 +36,12 @@ job_config = bigquery.LoadJobConfig(
 client.load_table_from_dataframe(df, table_id, job_config=job_config)
 time.sleep(30)  # potentially better as a a "while" loop
 destination_table = client.get_table(table_id)
-print("Loaded {} mastiff accs.".format(destination_table.num_rows))
+print("Loaded {} mastiff accs to a bq table.".format(destination_table.num_rows))
 
 
 # import the table of attributes and counts at >4.5%
 # csv copied from outputs of metadata_prep
-filt_df = pd.read_csv(os.path.join(dir_path,'attrcounts_4.5percent.csv'))
+filt_df = pd.read_csv(os.path.join(dir_path, 'attrcounts_4.5percent.csv'))
 
 # Create bq query to flatten table
 # Tuple of attr located in columns in bq
@@ -125,6 +125,14 @@ res = sradb_col.insert_many(meta_dic)
 
 print(f'{sradb_col.count_documents({})} acc documents imported to mongoDB collection')
 
+# Retrieve statistics about the sradb_list collection
+stats = db.command("collstats", "sradb_list")
 
-#print(sradb_col.find_one({}))
-#print(db.command("collstats", "sradb_list"))
+# Extract the total size and average document size from the stats dictionary
+total_size = stats["size"]
+avg_doc_size = stats["avgObjSize"]
+
+print(
+    f"Full MongoDB size is {total_size} bytes, average document size is {avg_doc_size} bytes")
+
+# print(sradb_col.find_one({}))
