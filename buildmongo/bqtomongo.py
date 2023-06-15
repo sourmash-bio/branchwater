@@ -19,9 +19,9 @@ key_path = os.path.join(dir_path, 'bqKey.json')
 # bq key to service account with the roles: BigQuery Job User; BigQuery Data Owner; BigQuery Read Sessions User
 credentials = service_account.Credentials.from_service_account_file(
     key_path)
-project_id = 'sraproject-384718'
+project_id = 'sraproject-386813'
 client = bigquery.Client(credentials=credentials, project=project_id)
-table_id = f'sraproject-384718.mastiffdata.mastiff_id'
+table_id = f'sraproject-386813.mastiffdata.mastiff_id'
 
 # Create table of Mastiff accessions
 # Not neccessary if up to date with metadata_prep/metacounts.py first
@@ -73,6 +73,7 @@ for item in attr_list_nosam:
 
 ## note LIMIT of 150,000 for initial build ##
 query = f""" SELECT {column_col}, {attr_col} FROM `nih-sra-datastore.sra.metadata` as metadata INNER JOIN `{table_id}` as mastacc ON metadata.acc = mastacc.accID LIMIT 150000; """
+#query = f""" SELECT {column_col}, {attr_col} FROM `nih-sra-datastore.sra.metadata` as metadata INNER JOIN `{table_id}` as mastacc ON metadata.acc = mastacc.accID; """
 
 query_job = client.query(query)
 time.sleep(30)  # potentially better as a a "while" loop
