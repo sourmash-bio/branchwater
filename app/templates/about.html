@@ -15,21 +15,20 @@
       <h4 class="card-title">How the search works</h4>
       <ol class="card-text">
         <li>
-          When you upload a genome to Mastiff-Meta Query, it is processed into
+          When you select a genome, it is processed into a
           <a href="https://sourmash.readthedocs.io/en/latest/#"
-            >sourmash signatures</a
-          >.
+            >sourmash</a
+          > signature locally. Your genome never leaves your computer.
         </li>
         <li>
-          Metagenomes in the SRA (identified by their SRA run accession) are
-          searched for matches with the
+          The signature is used to query 700,000 metagenomes in the SRA using the
           <a href="https://github.com/sourmash-bio/mastiff">mastiff</a>
           implementation of
-          <a href="https://github.com/sourmash-bio/mastiff">branchwater</a>. The quality of the match is represented by containment and containment-based Average Nucleotide Identity (cANI).
+          <a href="https://doi.org/10.1101/2022.11.02.514947">branchwater</a>. The quality of the match is represented by containment and containment-based Average Nucleotide Identity (cANI).
         </li>
         <li>
           Select SRA metadata is pulled for each of the accessions from a curated
-          database.
+          database and used for plots.
         </li>
       </ol>
     </div>
@@ -40,7 +39,7 @@
       <h4 class="card-title">SRA metadata options</h4>
       <p class="card-text">
         The list of SRA metadata options and their definitions are a subset of over 900 potential metadata options that are listed in the <a href="https://www.ncbi.nlm.nih.gov/biosample/docs/attributes/">SRA biosample attribute list </a>  and the <a href="https://www.ncbi.nlm.nih.gov/sra/docs/sra-cloud-based-metadata-table/">SRA cloud-based metadata tables</a> .
-        The options presented in Mastiff-Meta query were selected based on a >4.5% availability cutoff. Some metadata names are similar but represent distinct options, such as the sampling date, because they were derived from information submitted for the SRA run and some are derived from information submitted for the SRA sample (denoted with the '_sam' suffix). Other than minor data reformatting, the metadata provided are directly representative of what is available in the SRA, including missing information or any errors in the SRA submission.
+        The options presented in the Mastiff web query were selected based on a >4.5% availability cutoff. Some metadata names are similar but represent distinct options, such as the sampling date, because they were derived from information submitted for the SRA run and some are derived from information submitted for the SRA sample (denoted with the '_sam' suffix). Other than minor data reformatting, the metadata provided are directly representative of what is available in the SRA, including missing information or any errors in the SRA submission.
       </p>
     </div>
    </div>
@@ -52,9 +51,9 @@
           This tool is powered by sourmash and the result of a collaboration
           between the Data Intensive Biology lab at UC Davis, the USDA-ARS
           Genomics and Bioinformatics Research Unit, and the Joint Genome
-          Institute. Any issues, questions, or comments can be directed to the
-          <a href="https://github.com/sourmash-bio/mastiff/issues"
-            >mastiff issue tracker on github</a
+          Institute. Any issues, questions, or comments about the search can be directed to the
+          <a href="https://github.com/sourmash-bio/sourmash/issues"
+            >sourmash issue tracker on github</a
           >.
         </p>
       </div>
