@@ -17,8 +17,8 @@ services:
       - mongo-data:/data/db
     ports:
       - "27017:27017" #default mongodb port
-    depends_on:
-      - mongo-build
+    # depends_on:
+    #   - mongo-build
 
   app:
     build: ./app #from custom Dockerfile
@@ -27,7 +27,7 @@ services:
     restart: always
     depends_on:
       - mongo-readonly
-      - mongo-build
+      # - mongo-build
     networks:
       - mongo-network
 
