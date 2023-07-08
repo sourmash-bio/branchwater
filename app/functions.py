@@ -24,12 +24,19 @@ def getacc(signatures):
 
     results_wrap_fp = io.StringIO(query_results_text)
     mastiff0_df = pd.read_csv(results_wrap_fp)
+    n_raw_results = len(mastiff0_df)
 
+    # containment to ANI
+    KSIZE = 21
+    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./KSIZE)
     # filter for containment; potential to pass this from user
-    THRESHOLD = 0.2
+    THRESHOLD = 0.1
+    print(
+        f"Search returned {n_raw_results} results. Now filtering results with <{THRESHOLD} containment...")
     mastiff_df = mastiff0_df[mastiff0_df['containment'] >= THRESHOLD]
     print(
-        f"Filtered to {len(mastiff_df)} mastiff acc results!")
+        f"Returning {len(mastiff_df)} filtered results!")
+ 
 
     # remove spaces from columns
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]

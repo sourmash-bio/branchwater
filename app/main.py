@@ -29,13 +29,11 @@ def home():
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
-        # Placeholder ANI calculation based on simple regression from csv at Phylum level
-        # https://github.com/sourmash-bio/sourmash/issues/1859
         for r in result_list:
             for m in mastiff_dict:
                 if r['acc'] == m['SRA_accession']:
                     r['containment'] = round(m['containment'], 2)
-                    r['cANI_est'] = round(0.9984*m['containment']**0.0456, 2)
+                    r['cANI'] = round(m['cANI'], 2)
                     break
 
         return jsonify(result_list)  # return metadata results to client
@@ -63,13 +61,11 @@ def advanced():
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
-        # Placeholder ANI calculation based on simple regression from csv at Phylum level
-        # https://github.com/sourmash-bio/sourmash/issues/1859
         for r in result_list:
             for m in mastiff_dict:
                 if r['acc'] == m['SRA_accession']:
                     r['containment'] = round(m['containment'], 2)
-                    r['cANI_est'] = round(0.9984*m['containment']**0.0456, 2)
+                    r['cANI'] = round(m['cANI'], 2)
                     break
 
         return jsonify(result_list)  # return metadata results to client
