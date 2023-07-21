@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.10.3
+FROM condaforge/mambaforge:23.1.0-4
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -6,9 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PATH /opt/conda/bin:$PATH
 WORKDIR /app
+
 #install packages
-RUN conda install -c conda-forge flask=2.3.2 pandas=1.3.3 pymongo=4.3.3 urllib3=1.26.7 && \
-    conda clean -afy && \
+RUN mamba install -c conda-forge flask=2.3.2 pandas=2.0.3 pymongo=4.4.1 urllib3=2.0.4 pyyaml=6.0 && \
+    mamba clean -afy && \
     rm -rf /opt/conda/pkgs/* && \
     rm -rf /root/.cache/pip/* /root/.cache/conda/*
 

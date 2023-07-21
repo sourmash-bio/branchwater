@@ -48,7 +48,8 @@ def getmongo(acc_t, meta_list):
     # client = pm.MongoClient("mongodb://localhost:27017/")
 
     # connection for docker container
-    client = pm.MongoClient("mongodb://mastiffmeta-query-mongo-readonly-1")
+    repo_name = 'branchwater-web'
+    client = pm.MongoClient(f"mongodb://{repo_name}-mongo-readonly-1")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 

@@ -1,3 +1,5 @@
+import os
+import yaml
 from flask import Flask, render_template, request, jsonify
 from functions import *
 
@@ -5,8 +7,18 @@ app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
 app.config['SECRET_KEY'] = 'my-secret-key'
 
-# define '/' and 'home' route
+# Load configuration from config.yaml
+with open('config.yml', 'r') as file:
+    config_data = yaml.safe_load(file)
 
+    app.config.update(config_data)
+
+KSIZE = app.config.get('ksize', 21)
+THRESHOLD = app.config.get('threshold', 0.1)
+print(f'ksize: {KSIZE}')
+print(f'threshold: {THRESHOLD}')
+
+# define '/' and 'home' route
 
 @app.route('/', methods=['GET', "POST"])
 @app.route('/home', methods=['GET', "POST"])
@@ -86,4 +98,4 @@ def examples():
 # in production this changes:
 #
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=False, host='0.0.0.0', port=8000)
