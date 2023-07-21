@@ -1,6 +1,7 @@
 import pymongo as pm
 import pandas as pd
 import io
+import os
 import urllib3
 import gzip
 import string
@@ -43,12 +44,16 @@ def getacc(signatures):
     return mastiff_df
 
 
-def getmongo(acc_t, meta_list):
+def getmongo(acc_t, meta_list, config):
     # connection to run locally
     # client = pm.MongoClient("mongodb://localhost:27017/")
 
+    # get current directory
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     # connection for docker container
-    repo_name = 'branchwater-web'
+    repo_name = config.get('repository_name', 'branchwater-web')
+    print(f'repo_name: {repo_name}')
+
     client = pm.MongoClient(f"mongodb://{repo_name}-mongo-readonly-1")
     db = client["sradb"]
     sradb_col = db["sradb_list"]

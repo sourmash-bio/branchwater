@@ -37,7 +37,7 @@ def home():
                      'collection_date_sam', 'geo_loc_name_country_calc', 'organism', 'lat_lon')
 
         # get metadata from mongodb (imported from mongoquery.py)
-        result_list = getmongo(acc_t, meta_list)
+        result_list = getmongo(acc_t, meta_list, app.config)
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
@@ -69,7 +69,7 @@ def advanced():
         meta_list = tuple([
                           key for key, value in meta_dic.items() if value])
 
-        result_list = getmongo(acc_t, meta_list)
+        result_list = getmongo(acc_t, meta_list, app.config)
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
