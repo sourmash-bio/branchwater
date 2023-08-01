@@ -24,13 +24,28 @@
           The signature is used to query 700,000 metagenomes in the SRA using the
           <a href="https://github.com/sourmash-bio/mastiff">mastiff</a>
           implementation of
-          <a href="https://doi.org/10.1101/2022.11.02.514947">branchwater</a>. The quality of the match is represented by containment and containment-based Average Nucleotide Identity (cANI).
+          <a href="https://doi.org/10.1101/2022.11.02.514947">branchwater</a>.
+          The quality of the match is represented by containment and containment-based Average Nucleotide Identity (cANI).
         </li>
         <li>
           Select SRA metadata is pulled for each of the accessions from a curated
           database and used for plots.
         </li>
       </ol>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title">Search Considerations</h4>
+      <p class="card-text"> 
+        <strong>For best results, search with sequences 50kb or longer.</strong>
+        Queries smaller than 50kb may not perform well, and queries smaller than 10kb are likely 
+        to produce no results at all. These limitations may be addressed in the future; we welcome
+        feedback and requests on the branchwater-web
+        <a href="https://github.com/sourmash-bio/branchwater-web/issues">issue tracker</a
+        > on github.
+      </p>
     </div>
   </div>
 
@@ -52,8 +67,8 @@
           between the Data Intensive Biology lab at UC Davis, the USDA-ARS
           Genomics and Bioinformatics Research Unit, and the Joint Genome
           Institute. Any issues, questions, or comments about the search can be directed to the
-          <a href="https://github.com/sourmash-bio/sourmash/issues"
-            >sourmash issue tracker on github</a
+          branchwater-web <a href="https://github.com/sourmash-bio/branchwater-web/issues">issue tracker</a>
+          on github</a
           >.
         </p>
       </div>
