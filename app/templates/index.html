@@ -32,11 +32,11 @@
 
     <div class="parent-element" style="text-align: center">
       <h4>
-        Curious what publically available metagenomes contain an organism you're
+        Curious what publicly available metagenomes contain an organism you're
         interested in?
       </h4>
       <h6>
-        Start by uploading your genome below (fasta format only) or checking out
+        Start by selecting your genome below (fasta format only) or checking out
         our <a href="/examples">examples</a>.
       </h6>
     </div>
@@ -59,7 +59,7 @@
 
     <script>
       var signature;
-      //once sketeched, signatures saved and submit button enabled
+      //once sketched, signatures saved and submit button enabled
       document.addEventListener("sketched", (evt) => {
         evt.preventDefault();
         signature = evt.detail.signature;
@@ -81,7 +81,7 @@
         navElement.style.textAlign = "center"; // Add the text-align style
 
         // Create a new <p> element and add it to the <nav> element
-        const paragraphElement = document.createElement("h2");
+        const paragraphElement = document.createElement("h3");
         paragraphElement.contentEditable = true; // Make the text editable
         paragraphElement.textContent =
           "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
@@ -129,20 +129,29 @@
 
         <p style="margin: 20px">
           This
-          <a href="/home"><b>simple search</b></a> allows you to rapidly search
+          <a href="/home"><b>default search</b></a> allows you to rapidly search
           over 700,000 metagenomes deposited in NCBI's
           <a href="https://www.ncbi.nlm.nih.gov/sra/"
-            >sequence read archive (SRA)</a
-          >
-          and bypass additional steps for metadata collation. Just upload your
-          genome of interest and within 5 minutes potential matches and
-          high-interest metadata will be presented in a table, maps, and summary
-          plots. If you'd like to have greater control over your metadata
-          options, an
-          <a href="/advanced">advanced search</a> is available. Please note that
-          SRA run accessions vary greatly in which metadata categories have
-          information available. Further details regarding the curated metadata
-          can be found on the <a href="/about">about page</a>.
+            >Sequence Read Archive (SRA)</a
+          >. <strong>For best results, search with sequences 50kb or longer.</strong>
+          Sequences shorter than 10kb will rarely produce results.
+          </p>
+        <p style="margin: 20px"> 
+          Search typically takes less than 5 minutes. Default search 
+          returns SRA metagenomes with geolocation data and with >10% containment
+          of the query genome, presented in a table, map, and summary plots for selected high-interest 
+          metadata. An <a href="/advanced">advanced search</a> is available for selection of included metadata.
+          Further details regarding search and metadata
+          can be found on the <a href="/about">about page</a>. 
+        </p>
+
+        <p style="margin: 20px">
+          <strong>Please note that this web server is still in development
+            and the interface may occasionally be updated.</strong> If your query does not return
+            results in 5 minutes, please try again in an hour or reach out 
+            to us via the branchwater-web
+            <a href="https://github.com/sourmash-bio/branchwater-web/issues">issue tracker</a>
+            on github.
         </p>
       </div>
     </div>

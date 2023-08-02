@@ -1,3 +1,5 @@
+import os
+import yaml
 from flask import Flask, render_template, request, jsonify
 from functions import *
 
@@ -5,8 +7,18 @@ app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
 app.config['SECRET_KEY'] = 'my-secret-key'
 
-# define '/' and 'home' route
+# Load configuration from config.yaml
+with open('config.yml', 'r') as file:
+    config_data = yaml.safe_load(file)
 
+    app.config.update(config_data)
+
+KSIZE = app.config.get('ksize', 21)
+THRESHOLD = app.config.get('threshold', 0.1)
+print(f'ksize: {KSIZE}')
+print(f'threshold: {THRESHOLD}')
+
+# define '/' and 'home' route
 
 @app.route('/', methods=['GET', "POST"])
 @app.route('/home', methods=['GET', "POST"])
@@ -25,17 +37,15 @@ def home():
                      'collection_date_sam', 'geo_loc_name_country_calc', 'organism', 'lat_lon')
 
         # get metadata from mongodb (imported from mongoquery.py)
-        result_list = getmongo(acc_t, meta_list)
+        result_list = getmongo(acc_t, meta_list, app.config)
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
-        # Placeholder ANI calculation based on simple regression from csv at Phylum level
-        # https://github.com/sourmash-bio/sourmash/issues/1859
         for r in result_list:
             for m in mastiff_dict:
                 if r['acc'] == m['SRA_accession']:
                     r['containment'] = round(m['containment'], 2)
-                    r['cANI_est'] = round(0.9984*m['containment']**0.0456, 2)
+                    r['cANI'] = round(m['cANI'], 2)
                     break
 
         return jsonify(result_list)  # return metadata results to client
@@ -59,17 +69,15 @@ def advanced():
         meta_list = tuple([
                           key for key, value in meta_dic.items() if value])
 
-        result_list = getmongo(acc_t, meta_list)
+        result_list = getmongo(acc_t, meta_list, app.config)
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
-        # Placeholder ANI calculation based on simple regression from csv at Phylum level
-        # https://github.com/sourmash-bio/sourmash/issues/1859
         for r in result_list:
             for m in mastiff_dict:
                 if r['acc'] == m['SRA_accession']:
                     r['containment'] = round(m['containment'], 2)
-                    r['cANI_est'] = round(0.9984*m['containment']**0.0456, 2)
+                    r['cANI'] = round(m['cANI'], 2)
                     break
 
         return jsonify(result_list)  # return metadata results to client
@@ -90,4 +98,4 @@ def examples():
 # in production this changes:
 #
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000)
+    app.run(debug=False, host='0.0.0.0', port=8000)

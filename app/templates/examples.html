@@ -137,7 +137,7 @@
         navElement.style.textAlign = "center"; // Add the text-align style
 
         // Create a new <p> element and add it to the <nav> element
-        const paragraphElement = document.createElement("h2");
+        const paragraphElement = document.createElement("h3");
         paragraphElement.contentEditable = true; // Make the text editable
         paragraphElement.textContent =
           "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
@@ -196,18 +196,20 @@
         <p class="card-text"></p>
 
         <p style="margin: 20px">
-          This example search allows you to try out the our
+          This example search allows you to try out the
           <a href="/home"><b>default search</b></a
           >, which rapidly searches over 700,000 metagenomes deposited in NCBI's
           <a href="https://www.ncbi.nlm.nih.gov/sra/"
             >sequence read archive (SRA)</a
           >
-          and bypasses additional steps for metadata collation. Just select a
-          genome of interest and within 5 minutes potential matches and
-          high-interest metadata will be presented in a table, maps, and summary
-          plots. If you'd like to have greater control over your metadata
-          options, an
-          <a href="/advanced">advanced search</a> is available. Please note that
+          and bypasses additional steps for metadata collation. Search typically
+          takes less than 5 minutes. Default results return SRA metagenomes with 
+          >10% containment of the query genome presented in a table, map, and 
+          summary plots for selected high-interest metadata. If you'd like to have 
+          greater control over the included metadata, an
+          <a href="/advanced">advanced search</a> is available. Metadata selection 
+          does not change the datasets that are searched; it only impacts which 
+          metadata are included in the table and plots. Please note that
           SRA run accessions vary greatly in which metadata categories have
           information available. Further details regarding the curated metadata
           can be found on the <a href="/about">about page</a>.

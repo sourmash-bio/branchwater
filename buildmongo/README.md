@@ -40,8 +40,8 @@ Based on: - [Setting-up BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigq
 
    5. save as 'bqKey.json'
 
-3. In big query console, under 'sraquery' create a dataset named 'mastiffdata'
+3. In big query console, under 'sraproject' create a dataset named 'mastiffdata'
 
 ## CREATE ACCESS IN BQTOMONGO.py:
 
-1. Change project id on lines 22 and 24 to:'sraquery-####' and 'sraquery-####.mastiffdata.mastiff_id'
+1. Change project id on lines 22 and 24 to:'sraproject-####' and 'sraproject-####.mastiffdata.mastiff_id'
