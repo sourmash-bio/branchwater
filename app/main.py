@@ -88,6 +88,9 @@ def advanced():
 def metadata():
     return render_template('about.html')
 
+@app.route('/contact', methods=['GET', "POST"])
+def contact():
+    return render_template('contact.html')
 
 @app.route('/examples', methods=['GET', "POST"])
 def examples():
