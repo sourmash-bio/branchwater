@@ -18,7 +18,7 @@ def getacc(signatures):
     # POST to mastiff
     http = urllib3.PoolManager()
     r = http.request('POST',
-                     'https://mastiff.sourmash.bio/search',
+                     'https://mastiff.jgi.doe.gov/search',
                      body=buf.getvalue(),
                      headers={'Content-Type': 'application/json'})
     query_results_text = r.data.decode('utf-8')
@@ -45,16 +45,7 @@ def getacc(signatures):
 
 
 def getmongo(acc_t, meta_list, config):
-    # connection to run locally
-    # client = pm.MongoClient("mongodb://localhost:27017/")
-
-    # get current directory
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    # connection for docker container
-    repo_name = config.get('repository_name', 'branchwater-web')
-    print(f'repo_name: {repo_name}')
-
-    client = pm.MongoClient(f"mongodb://{repo_name}-mongo-readonly-1")
+    client = pm.MongoClient(f"mongodb://mongo-readonly")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 

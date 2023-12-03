@@ -1,4 +1,4 @@
-FROM mongo:latest
+FROM docker.io/mongo:latest
 
 # Install Python 3
 RUN apt-get update && apt-get install -y python3 python3-pip && apt-get -y install python3-dev
