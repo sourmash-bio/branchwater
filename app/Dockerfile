@@ -9,6 +9,7 @@ WORKDIR /app
 
 #install packages
 RUN mamba install -c conda-forge flask=2.3.2 pandas=2.0.3 pymongo=4.4.1 urllib3=2.0.4 pyyaml=6.0 && \
+    pip install --upgrade "sentry-sdk[flask]" && \
     mamba clean -afy && \
     rm -rf /opt/conda/pkgs/* && \
     rm -rf /root/.cache/pip/* /root/.cache/conda/*

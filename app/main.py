@@ -3,6 +3,9 @@ import yaml
 from flask import Flask, render_template, request, jsonify
 from functions import *
 
+import sentry_sdk
+sentry_sdk.init(enable_tracing=True)
+
 app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
 app.config['SECRET_KEY'] = 'my-secret-key'
