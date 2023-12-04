@@ -4,7 +4,15 @@ from flask import Flask, render_template, request, jsonify
 from functions import *
 
 import sentry_sdk
-sentry_sdk.init(enable_tracing=True)
+from sentry_sdk.integrations.pymongo import PyMongoIntegration
+sentry_sdk.init(
+    enable_tracing=True,
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+    integrations=[
+        PyMongoIntegration(),
+    ],
+)
 
 app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
