@@ -29,7 +29,8 @@ services:
       - mongo-readonly
     networks:
       - mongo-network
-    env_file: prod.env
+    env_file:
+      - prod.env
 
 #volumes:
 #  mongo-data:
