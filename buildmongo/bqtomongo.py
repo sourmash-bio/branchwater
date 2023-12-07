@@ -73,8 +73,11 @@ column_col = column_col[:-2]
 
 attr_col = ''
 for item in attr_list_sam:
-    attr_col = attr_col + \
-        f'''json_query(jattr,'$.{item}_sam') as {item}, '''
+    attrib = f'''json_query(jattr,'$.{item}_sam') as {item}, '''
+    if 'lat_lon' in item:
+        attrib = f'''json_query(jattr,'$.{item}_sam_s_dpl34') as {item}, '''
+
+    attr_col = attr_col + attrib
 
 for item in attr_list_nosam:
     attr_col = attr_col + \
