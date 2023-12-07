@@ -18,7 +18,7 @@ def getacc(signatures):
     # POST to mastiff
     http = urllib3.PoolManager()
     r = http.request('POST',
-                     'https://mastiff.jgi.doe.gov/search',
+                     'https://branchwater-api.jgi.doe.gov/search',
                      body=buf.getvalue(),
                      headers={'Content-Type': 'application/json'})
     query_results_text = r.data.decode('utf-8')
