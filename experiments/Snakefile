@@ -1,0 +1,193 @@
+EXEC="cargo run -p mastiff-index --release -- "
+
+rule all:
+#    input: "outputs/rs207"
+#    input: "outputs/rs207-2k"
+    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
+
+rule rs207_1k:
+    output: directory("outputs/rs207-1k")
+    input:
+      storage="inputs/gtdb-rs207.genomic-reps.dna.k21.zip",
+      manifest="inputs/gtdb-rs207.genomic-reps.dna.k21.manifest"
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} index -k 21 -s 1000 \
+          --output {output} \
+          --manifest <(head -1002 {input.manifest}) \
+          {input.storage}
+    """
+
+rule rs207_2k:
+    output: directory("outputs/rs207-2k")
+    input: 
+        previous="outputs/rs207-1k",
+        storage="inputs/gtdb-rs207.genomic-reps.dna.k21.zip",
+        manifest="inputs/gtdb-rs207.genomic-reps.dna.k21.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        cp -a {input.previous} {output}
+        {EXEC} update -k 21 -s 1000 \
+          --output {output} \
+          --manifest <(head -2002 {input.manifest}) \
+          {input.storage}
+    """
+
+rule rs_207:
+    output: directory("outputs/rs207")
+    input: "inputs/gtdb-rs207.genomic-reps.dna.k21.zip"
+    shell: """
+        {EXEC} index -k 21 -s 1000 \
+            --output {output} \
+            {input}
+    """
+
+rule download_rs_207:
+    output: "inputs/gtdb-rs207.genomic-reps.dna.k21.zip"
+    shell: """
+        curl -L https://osf.io/download/f2wzc/ -o {output}
+    """
+
+rule extract_rs_207_manifest:
+    output: "inputs/gtdb-rs207.genomic-reps.dna.k21.manifest"
+    input: "inputs/gtdb-rs207.genomic-reps.dna.k21.zip"
+    shell: """
+        unzip -p {input} SOURMASH-MANIFEST.csv > {output}
+    """
+
+#######################################################################
+
+rule metag_100:
+    output: directory("outputs/metag-100")
+    input:
+      storage="/data/wort/wort-sra",
+      manifest="outputs/metagenomes-k21-s1000.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} index -k 21 -s 1000 \
+          --output {output} \
+          --manifest <(head -102 {input.manifest}) \
+          {input.storage}
+    """
+
+rule metag_200:
+    output: directory("outputs/metag-200")
+    input:
+      previous="outputs/metag-100",
+      storage="/data/wort/wort-sra",
+      manifest="outputs/metagenomes-k21-s1000.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        cp -a {input.previous} {output}
+        {EXEC} update -k 21 -s 1000 \
+          --output {output} \
+          --manifest <(head -202 {input.manifest}) \
+          {input.storage}
+    """
+
+rule metag:
+    output: directory("outputs/metag")
+    input:
+      storage="/data/wort/wort-sra",
+      manifest="outputs/metagenomes-k21-s1000.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} index -k 21 -s 1000 \
+          --output {output} \
+          --manifest {input.manifest} \
+          {input.storage}
+    """
+
+#######################################################################
+
+rule manifest_test:
+    output:
+        manifest="inputs/metagenomes-k{ksize}-s1000-test.manifest",
+    input:
+        catalog="outputs/metagenomes-catalog",
+    threads: 24,
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} manifest -k 21 \
+            --output {output} \
+            --basepath /data/wort/wort-sra \
+            <(head -2000 {input.catalog})
+    """
+
+#######################################################################
+
+rule manifest_from_catalog:
+    output:
+        manifest="outputs/metagenomes-k{ksize}-s1000.manifest",
+    input:
+        catalog="outputs/metagenomes-catalog",
+    threads: 24,
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} manifest -k 21 \
+            --output {output} \
+            --basepath /data/wort/wort-sra \
+            {input.catalog}
+    """
+
+rule catalog_metagenomes:
+    output:
+        catalog="outputs/metagenomes-catalog",
+    input:
+        runinfo="runinfo-20230817.csv",
+        basepath="/data/wort/wort-sra/"
+    run:
+        import csv
+        from pathlib import Path
+
+        # load all sra IDs
+        sraids = set()
+        with open(input.runinfo) as fp:
+            data = csv.DictReader(fp, delimiter=",")
+            for dataset in data:
+                if dataset['Run'] != 'Run':
+                    sraids.add(dataset['Run'])
+
+        path = Path(input.basepath)
+        with open(output.catalog, 'w') as out:
+            # check if sraids exist on disk
+            for sra_id in sraids:
+                sig_path = path / "sigs" / f"{sra_id}.sig"
+                if sig_path.exists():
+                    out.write(f"{sig_path}\n")
+                    out.flush()
+
+#######################################################################
+
+rule genbank:
+    output: directory("outputs/genbank-{domain}")
+    input: "/data/wort/databases/genbank-2022.03-{domain}-k21.zip"
+
+    shell: """
+        {EXEC} index -k 21 -s 1000 \
+            --output {output} \
+            {input}
+    """
+
+#######################################################################
+
+"""
+{EXEC} index -k 21 -s 1000 --output /scratch/analysis/rocksdb_metagenomes catalog_metagenomes
+{EXEC} index -k 21 -s 10000 --output /scratch/analysis/rocksdb_metagenomes2 <(cat catalog_metagenomes | head 1000)
+{EXEC} index -k 21 -s 1000 --output /scratch/analysis/rocksdb_metagenomes2 <(cat catalog_metagenomes | head -n 10)
+{EXEC} index -k 21 -s 10000 --output /scratch/analysis/rocksdb_metagenomes2 <(cat catalog_metagenomes | head -n 10)
+{EXEC} index -k 21 -s 10000 --output /scratch/analysis/rocksdb_metagenomes2 <(cat catalog_metagenomes | head -n 1000)
+{EXEC} index -k 51 -s 1000 --output bacteria-100k-enum flist
+{EXEC} index -k 51 -s 1000 --output bacteria-100k-cf <(head -1 flist)
+{EXEC} index -k 51 -s 1000 --output bacteria-1k-cf (head -1000 flist)
+{EXEC} index -k 51 -s 1000 --output bacteria-1k-cf $(head -1000 flist)
+{EXEC} index -k 51 -s 1000 --output bacteria-10k-cf <(head -10000 flist)
+{EXEC} index -k 51 -s 1000 --output bacteria-100k-cf flist
+{EXEC} index -k 51 -s 1000 --output bacteria-1k-cf-opts <(head -1000 flist)
+{EXEC} index -k 51 -s 1000 --output bacteria-100k-cf-opts flist
+"""

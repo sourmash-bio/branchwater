@@ -1,2 +1,6 @@
 .DS_Store
 buildmongo/bqKey.json
+/target
+.direnv/
+sandbox/
+result

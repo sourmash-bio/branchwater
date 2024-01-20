@@ -1,0 +1,17 @@
+[package]
+name = "mastiff-index"
+version.workspace = true
+edition = "2021"
+license = "AGPL"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+camino.workspace = true
+clap.workspace = true
+env_logger.workspace = true
+histogram.workspace = true
+log.workspace = true
+numsep.workspace = true
+size.workspace = true
+sourmash.workspace = true

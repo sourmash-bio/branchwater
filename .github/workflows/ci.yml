@@ -1,0 +1,27 @@
+name: "Test"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - 'latest'
+      - 'ci*' # Allow testing CI fixes without opening a PR
+
+jobs:
+  tests:
+    strategy:
+      # Allow other jobs to finish building and cache properly before bailing
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@v4
+    - name: Run the Magic Nix Cache
+      uses: DeterminateSystems/magic-nix-cache-action@v1
+    - name: flake checks
+      run: nix flake check --keep-going --print-build-logs
+

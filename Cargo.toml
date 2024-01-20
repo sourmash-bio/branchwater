@@ -1,0 +1,38 @@
+[workspace]
+members = ["crates/*"]
+default-members = ["crates/server"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+name = "mastiff"
+
+[workspace.dependencies]
+camino = "1.1.6"
+clap = { version = "3.2.8", features = [ "derive" ] }
+color-eyre = "0.6.2"
+csv = "1.1.6"
+env_logger = "0.9.0"
+histogram = "0.6.9"
+log = "0.4.17"
+needletail = "0.4.1"
+niffler = { version = "2.4.0", default-features = false, features = [ "gz" ]}
+numsep = "0.1.12"
+reqwest = { version = "0.11.11", default-features = false, features = [ "blocking", "rustls-tls" ] }
+size = "0.4.0"
+sourmash = { version = "0.12.0", features = ["branchwater"] }
+
+serde_json = "1.0.83"
+# axum deps
+axum = { version = "0.5", features = ["multipart"] }
+tokio = { version = "1.0", features = ["full"] }
+tower = { version = "0.4", features = ["util", "timeout", "load-shed", "limit"] }
+tower-http = { version = "0.3.0", features = ["add-extension", "compression-full", "trace", "fs"] }
+# observability
+sentry = { version = "0.31.0", default-features = false, features = ["reqwest", "rustls", "backtrace", "contexts", "panic", "profiling", "tracing", "tower", "tower-http"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+
+[profile.release]
+#debug = 2
+#lto = true # Enable link-time optimization
