@@ -1,5 +1,5 @@
 [package]
-name = "mastiff-index"
+name = "branchwater-index"
 version.workspace = true
 edition = "2021"
 license = "AGPL"

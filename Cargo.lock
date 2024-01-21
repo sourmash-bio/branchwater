@@ -254,6 +254,53 @@ dependencies = [
 ]
 
 [[package]]
+name = "branchwater-client"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "color-eyre",
+ "csv",
+ "env_logger",
+ "jemallocator",
+ "log",
+ "needletail",
+ "niffler",
+ "reqwest",
+ "sourmash",
+]
+
+[[package]]
+name = "branchwater-index"
+version = "0.1.0"
+dependencies = [
+ "camino",
+ "clap",
+ "env_logger",
+ "histogram",
+ "log",
+ "numsep",
+ "size",
+ "sourmash",
+]
+
+[[package]]
+name = "branchwater-server"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "clap",
+ "color-eyre",
+ "sentry",
+ "serde_json",
+ "sourmash",
+ "tokio",
+ "tower",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "brotli"
 version = "3.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1333,53 +1380,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mastiff-client"
-version = "0.1.0"
-dependencies = [
- "clap",
- "color-eyre",
- "csv",
- "env_logger",
- "jemallocator",
- "log",
- "needletail",
- "niffler",
- "reqwest",
- "sourmash",
-]
-
-[[package]]
-name = "mastiff-index"
-version = "0.1.0"
-dependencies = [
- "camino",
- "clap",
- "env_logger",
- "histogram",
- "log",
- "numsep",
- "size",
- "sourmash",
-]
-
-[[package]]
-name = "mastiff-server"
-version = "0.1.0"
-dependencies = [
- "axum",
- "clap",
- "color-eyre",
- "sentry",
- "serde_json",
- "sourmash",
- "tokio",
- "tower",
- "tower-http",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
 name = "match_cfg"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2312,7 +2312,6 @@ dependencies = [
  "sentry-backtrace",
  "sentry-contexts",
  "sentry-core",
- "sentry-debug-images",
  "sentry-panic",
  "sentry-tower",
  "sentry-tracing",
@@ -2366,17 +2365,6 @@ dependencies = [
  "serde_json",
  "sys-info",
  "uuid 1.3.2",
-]
-
-[[package]]
-name = "sentry-debug-images"
-version = "0.31.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8ddb9b6d43d251b41b792079218ef2d688bd88f01df454d338771cc146bde1a"
-dependencies = [
- "findshlibs",
- "once_cell",
- "sentry-core",
 ]
 
 [[package]]
