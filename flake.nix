@@ -40,8 +40,11 @@
         # our specific toolchain there.
         craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
 
+        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
+
         commonArgs = {
           src = ./.;
+          stdenv = stdenv;
 
           buildInputs = with pkgs; [
             llvmPackages_13.libclang
@@ -139,7 +142,7 @@
            branchwaterNextest;
         };
 
-        devShells.default = pkgs.mkShell (commonArgs // {
+        devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [
