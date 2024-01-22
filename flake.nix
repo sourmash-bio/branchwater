@@ -160,6 +160,16 @@
 
               snakemake
               parallel-full
+
+              (with python311Packages; [
+                furo
+                myst-parser
+                sphinx
+                sphinx-copybutton
+                sphinx-design
+                sphinx-inline-tabs
+                sphinx-tabs
+              ])
           ];
         });
       });
