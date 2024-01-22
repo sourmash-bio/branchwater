@@ -64,5 +64,6 @@ myst_heading_anchors = 3
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'furo'
+html_title = 'branchwater'
 html_static_path = ['_static']
 html_css_files = ["pied-piper-admonition.css"]
