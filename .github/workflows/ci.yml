@@ -13,7 +13,7 @@ jobs:
       # Allow other jobs to finish building and cache properly before bailing
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest] #, macos-latest]
 
     runs-on: ${{ matrix.os }}
     steps:

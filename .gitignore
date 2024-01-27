@@ -4,3 +4,4 @@ buildmongo/bqKey.json
 .direnv/
 sandbox/
 result
+docs/_build
