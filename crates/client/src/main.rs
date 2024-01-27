@@ -49,8 +49,8 @@ struct Cli {
     #[clap(parse(from_os_str), short, long)]
     output: Option<PathBuf>,
 
-    /// Server to query. Default: https://mastiff.sourmash.bio
-    #[clap(short, long, default_value = "https://mastiff.sourmash.bio")]
+    /// Server to query. Default: https://branchwater-api.sourmash.bio
+    #[clap(short, long, default_value = "https://branchwater-api.sourmash.bio")]
     server: String,
 
     /// Input file is already a signature
@@ -78,7 +78,7 @@ fn main() -> Result<()> {
             .ksize(21)
             .build();
         let mut sig = Signature::builder()
-            .name(Some("mastiff query".into()))
+            .name(Some("branchwater query".into()))
             .signatures(vec![Sketch::LargeMinHash(mh)])
             .hash_function("DNA")
             .build();

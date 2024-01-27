@@ -1,4 +1,4 @@
-EXEC="cargo run -p mastiff-index --release -- "
+EXEC="cargo run -p branchwater-index --release -- "
 
 rule all:
 #    input: "outputs/rs207"

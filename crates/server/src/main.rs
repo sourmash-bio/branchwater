@@ -65,7 +65,7 @@ fn main() -> Result<()> {
             enable_profiling: true,
             profiles_sample_rate: 1.0,
             environment: Some(
-                std::env::var("MASTIFF_ENVIRONMENT")
+                std::env::var("BRANCHWATER_ENVIRONMENT")
                     .unwrap_or("development".into())
                     .into(),
             ),
@@ -75,7 +75,8 @@ fn main() -> Result<()> {
 
     tracing_subscriber::registry()
         .with(tracing_subscriber::EnvFilter::new(
-            std::env::var("RUST_LOG").unwrap_or_else(|_| "mastiff=debug,tower_http=debug".into()),
+            std::env::var("RUST_LOG")
+                .unwrap_or_else(|_| "branchwater=debug,tower_http=debug".into()),
         ))
         .with(tracing_subscriber::fmt::layer().json())
         .with(sentry_tracing::layer())

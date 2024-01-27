@@ -1,5 +1,5 @@
 [package]
-name = "mastiff-client"
+name = "branchwater-client"
 version.workspace = true
 edition = "2021"
 license = "AGPL"

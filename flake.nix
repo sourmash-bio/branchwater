@@ -40,8 +40,11 @@
         # our specific toolchain there.
         craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
 
+        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
+
         commonArgs = {
           src = ./.;
+          stdenv = stdenv;
 
           buildInputs = with pkgs; [
             llvmPackages_13.libclang
@@ -75,7 +78,7 @@
         #
         # Note that this is done as a separate derivation so it
         # does not impact building just the crate by itself.
-        mastiffClippy = craneLib.cargoClippy (commonArgs // {
+        branchwaterClippy = craneLib.cargoClippy (commonArgs // {
           # Again we apply some extra arguments only to this derivation
           # and not every where else. In this case we add some clippy flags
           inherit cargoArtifacts;
@@ -83,63 +86,63 @@
         });
 
         # Check formatting
-        mastiffFmt = craneLib.cargoFmt (commonArgs // {
+        branchwaterFmt = craneLib.cargoFmt (commonArgs // {
           inherit cargoArtifacts;
         });
 
         # Run tests with cargo-nextest
         # Consider setting `doCheck = false` on `my-crate` if you do not want
         # the tests to run twice
-        mastiffNextest = craneLib.cargoNextest (commonArgs // {
+        branchwaterNextest = craneLib.cargoNextest (commonArgs // {
           inherit cargoArtifacts;
           partitions = 1;
           partitionType = "count";
         } // lib.optionalAttrs (system == "x86_64-linux") {
           # NB: cargo-tarpaulin only supports x86_64 systems
           # Check code coverage (note: this will not upload coverage anywhere)
-          #mastiffCoverage = craneLib.cargoTarpaulin (commonArgs // {
+          #branchwaterCoverage = craneLib.cargoTarpaulin (commonArgs // {
           #  inherit cargoArtifacts;
           #});
         });
 
         # Build the actual crate itself, reusing the dependency
         # artifacts from above.
-        mastiff-server = craneLib.buildPackage (commonArgs // {
+        branchwater-server = craneLib.buildPackage (commonArgs // {
           inherit cargoArtifacts;
           src = ./.;
-          pname = "mastiff-server";
-          cargoExtraArgs = "--bin mastiff-server";
+          pname = "branchwater-server";
+          cargoExtraArgs = "--bin branchwater-server";
         });
 
         # Build the actual crate itself, reusing the dependency
         # artifacts from above.
-        mastiff-client = craneLib.buildPackage (commonArgs // {
+        branchwater-client = craneLib.buildPackage (commonArgs // {
           inherit cargoArtifacts;
           src = ./.;
-          pname = "mastiff-client";
-          cargoExtraArgs = "-p mastiff-client --bin mastiff-client";
+          pname = "branchwater-client";
+          cargoExtraArgs = "-p branchwater-client --bin branchwater-client";
         });
       in
       {
-        packages.default = mastiff-server;
-        packages.mastiff-server = mastiff-server;
-        packages.mastiff-client = mastiff-client;
+        packages.default = branchwater-server;
+        packages.branchwater-server = branchwater-server;
+        packages.branchwater-client = branchwater-client;
 
         apps.default = flake-utils.lib.mkApp {
-          drv = mastiff-server;
+          drv = branchwater-server;
         };
 
         checks = {
          inherit
            # Build the crate as part of `nix flake check` for convenience
-           mastiff-server
-           mastiff-client
-           mastiffFmt
-           mastiffClippy
-           mastiffNextest;
+           branchwater-server
+           branchwater-client
+           branchwaterFmt
+           branchwaterClippy
+           branchwaterNextest;
         };
 
-        devShells.default = pkgs.mkShell (commonArgs // {
+        devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [

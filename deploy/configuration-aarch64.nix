@@ -2,7 +2,7 @@
   imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ];
   ec2.hvm = true;
   ec2.efi = true;
-  networking.hostName = "mastiff";
+  networking.hostName = "branchwater";
   system.stateVersion = "22.05";
 
   fileSystems."/scratch" =
@@ -40,7 +40,7 @@
   services.caddy = {
     enable = true;
     email = "luiz@sourmash.bio";
-    virtualHosts."mastiff.sourmash.bio".extraConfig = ''
+    virtualHosts."branchwater.sourmash.bio".extraConfig = ''
       reverse_proxy http://127.0.0.1:3059
     '';
   };
@@ -49,7 +49,7 @@
     enable = true;
     enableLiveProcessCollection = true;
     enableTraceAgent = true;
-    tags = [ "mastiff" ];
+    tags = [ "branchwater" ];
     apiKeyFile = "/var/log/datadog/ddagent.key";
     extraConfig = {
       logs_enabled = true;
@@ -63,8 +63,8 @@
       "caddy" = {
         logs = {
           type = "file";
-          path = "/var/log/caddy/access-mastiff.sourmash.bio.log";
-          service = "mastiff";
+          path = "/var/log/caddy/access-branchwater.sourmash.bio.log";
+          service = "branchwater";
           source = "caddy";
         };
       };
@@ -77,7 +77,7 @@
   };
   users.groups.datadog = {};
 
-  mastiff.services.api.enable = true;
+  branchwater.services.api.enable = true;
 
   networking.firewall = {
     enable = true;

@@ -2,40 +2,40 @@
   description = "Deploy a full system with hello service as a separate profile";
 
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.mastiff.url = "github:sourmash-bio/mastiff";
+  inputs.branchwater.url = "github:sourmash-bio/branchwater";
 
-  outputs = { self, nixpkgs, deploy-rs, mastiff }: {
+  outputs = { self, nixpkgs, deploy-rs, branchwater }: {
 
     nixosModule = { config, lib, pkgs, ... }:
       with lib;
-      let cfg = config.mastiff.services.api;
+      let cfg = config.branchwater.services.api;
       in {
-        options.mastiff.services.api = {
-          enable = mkEnableOption "Enables the mastiff HTTP service";
+        options.branchwater.services.api = {
+          enable = mkEnableOption "Enables the branchwater HTTP API service";
 
           domain = mkOption rec {
             type = types.str;
             default = "/scratch";
             example = default;
-            description = "Location of the mastiff DB to serve";
+            description = "Location of the branchwater DB to serve";
           };
         };
 
         config = mkIf cfg.enable {
-          systemd.services."mastiff.api" = {
+          systemd.services."branchwater.api" = {
             wantedBy = [ "multi-user.target" ];
 
             serviceConfig =
-              let pkg = mastiff.packages.${pkgs.system}.default;
+              let pkg = branchwater.packages.${pkgs.system}.default;
               in {
                 Restart = "on-failure";
-                ExecStart = "${pkg}/bin/mastiff-server -k21 /scratch";
+                ExecStart = "${pkg}/bin/branchwater-server -k21 /scratch";
                 DynamicUser = "yes";
-                RuntimeDirectory = "mastiff.api";
+                RuntimeDirectory = "branchwater.api";
                 RuntimeDirectoryMode = "0755";
-                StateDirectory = "mastiff.api";
+                StateDirectory = "branchwater.api";
                 StateDirectoryMode = "0700";
-                CacheDirectory = "mastiff.api";
+                CacheDirectory = "branchwater.api";
                 CacheDirectoryMode = "0750";
               };
           };
@@ -43,7 +43,7 @@
       };
 
     nixosConfigurations = {
-      mastiff-sourmash-bio = nixpkgs.lib.nixosSystem {
+      branchwater-sourmash-bio = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
           self.nixosModule
@@ -51,7 +51,7 @@
         ];
       };
 
-      mastiff-sourmash-bio_x86 = nixpkgs.lib.nixosSystem {
+      branchwater-sourmash-bio_x86 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           self.nixosModule
@@ -63,15 +63,15 @@
     # This is the application we actually want to run
     #defaultPackage.x86_64-linux = import ./hello.nix nixpkgs;
 
-    deploy.nodes."mastiff" = {
+    deploy.nodes."branchwater" = {
       sshOpts = [ "-p" "22" "-i" "~/.aws/Luiz-sourmash.pem" ];
-      hostname = "mastiff.sourmash.bio";
+      hostname = "branchwater.sourmash.bio";
       fastConnection = false;
       profiles = {
         system = {
           sshUser = "root";
           path =
-            deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.mastiff-sourmash-bio;
+            deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.branchwater-sourmash-bio;
           user = "root";
         };
       };
