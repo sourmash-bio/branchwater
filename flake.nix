@@ -45,22 +45,30 @@
         commonArgs = {
           src = ./.;
           stdenv = stdenv;
+          preConfigure = lib.optionalString stdenv.isDarwin ''
+            export MACOSX_DEPLOYMENT_TARGET=10.14
+          '';
+
+          # Work around https://github.com/NixOS/nixpkgs/issues/166205.
+          env = lib.optionalAttrs stdenv.cc.isClang {
+            NIX_LDFLAGS = "-l${stdenv.cc.libcxx.cxxabi.libName}";
+          };
 
           buildInputs = with pkgs; [
-            llvmPackages_13.libclang
-            llvmPackages_13.libcxxClang
+            llvmPackages_16.libclang
+            llvmPackages_16.libcxxClang
           ] ++ lib.optionals stdenv.isDarwin [
             darwin.apple_sdk.frameworks.Security
           ];
 
           # Extra inputs can be added here
           nativeBuildInputs = with pkgs; [
-            clang_13
+            clang_16
 
             rustOxalica
           ];
 
-          LIBCLANG_PATH = "${pkgs.llvmPackages_13.libclang.lib}/lib";
+          LIBCLANG_PATH = "${pkgs.llvmPackages_16.libclang.lib}/lib";
         };
 
         # Build *just* the cargo dependencies, so we can reuse
@@ -133,44 +141,49 @@
         };
 
         checks = {
-         inherit
-           # Build the crate as part of `nix flake check` for convenience
-           branchwater-server
-           branchwater-client
-           branchwaterFmt
-           branchwaterClippy
-           branchwaterNextest;
+          inherit
+            # Build the crate as part of `nix flake check` for convenience
+            branchwater-server
+            branchwater-client
+            branchwaterFmt
+            branchwaterClippy
+            branchwaterNextest;
         };
 
         devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [
-              oha
-              #awscli2
-              rclone
-              nixpkgs-fmt
-              asciinema
-              asciinema-agg
+            oha
+            #awscli2
+            rclone
+            nixpkgs-fmt
+            asciinema
+            asciinema-agg
 
-              cargo-udeps
-              cargo-outdated
-              cargo-watch
-              cargo-limit
+            cargo-udeps
+            cargo-outdated
+            cargo-watch
+            cargo-limit
 
-              snakemake
-              parallel-full
+            snakemake
+            parallel-full
 
-              (with python311Packages; [
-                furo
-                myst-parser
-                sphinx
-                sphinx-copybutton
-                sphinx-design
-                sphinx-inline-tabs
-                sphinx-tabs
-              ])
+            (with python311Packages; [
+              furo
+              myst-parser
+              sphinx
+              sphinx-copybutton
+              sphinx-design
+              sphinx-inline-tabs
+              sphinx-tabs
+            ])
+          ] ++ lib.optionals stdenv.isDarwin [
+            darwin.apple_sdk.frameworks.Security
           ];
+          shellHook = ''
+            export MACOSX_DEPLOYMENT_TARGET=10.14
+          '';
         });
       });
 }

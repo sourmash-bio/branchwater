@@ -47,7 +47,7 @@
       };
     };
   };
-  users.users.datadog.extraGroups = ["systemd-journal"];
+  users.users.datadog.extraGroups = [ "systemd-journal" ];
 
   branchwater.services.api.enable = true;
 
