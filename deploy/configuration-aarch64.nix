@@ -72,10 +72,10 @@
   };
   users.users.datadog = {
     group = "datadog";
-    extraGroups = ["systemd-journal"];
+    extraGroups = [ "systemd-journal" ];
     isSystemUser = true;
   };
-  users.groups.datadog = {};
+  users.groups.datadog = { };
 
   branchwater.services.api.enable = true;
 
