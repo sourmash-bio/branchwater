@@ -169,7 +169,7 @@
             snakemake
             parallel-full
 
-            (with python311Packages; [
+            (python311.withPackages (ps: with ps; [
               furo
               myst-parser
               sphinx
@@ -177,7 +177,7 @@
               sphinx-design
               sphinx-inline-tabs
               sphinx-tabs
-            ])
+            ]))
           ] ++ lib.optionals stdenv.isDarwin [
             darwin.apple_sdk.frameworks.Security
           ];
