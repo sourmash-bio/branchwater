@@ -169,6 +169,8 @@
             snakemake
             parallel-full
 
+            podman-compose
+
             (python311.withPackages (ps: with ps; [
               furo
               myst-parser
