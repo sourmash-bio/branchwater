@@ -1,38 +1,20 @@
 version: "3.4"
 services:
-  mongo-build:
+  mongodb:
     build:
       context: ./buildmongo #from custom Dockerfile
-    ports:
-      - "27018:27017" # bind local port 27018 to container port 27017 so it's not occupied
-    volumes:
-      #- mongo-data:/data/db
-      - ./mongodb:/data/db
-
-  mongo-readonly:
-    image: docker.io/mongo:latest
     restart: always
-    networks:
-      - mongo-network
     volumes:
-      #- mongo-data:/data/db
       - ./mongodb:/data/db
 
   app:
     build: ./app #from custom Dockerfile
     links:
-      - mongo-readonly
+      - mongodb
     ports:
       - "8000:8000"
     restart: always
     depends_on:
-      - mongo-readonly
-    networks:
-      - mongo-network
+      - mongodb
     env_file:
       - prod.env
-
-#volumes:
-#  mongo-data:
-networks:
-  mongo-network:

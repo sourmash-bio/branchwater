@@ -45,7 +45,7 @@ def getacc(signatures):
 
 
 def getmongo(acc_t, meta_list, config):
-    client = pm.MongoClient(f"mongodb://mongo-readonly")
+    client = pm.MongoClient(f"mongodb://mongodb")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 
