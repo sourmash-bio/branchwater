@@ -168,6 +168,7 @@
 
             snakemake
             parallel-full
+            pixi
 
             podman-compose
 

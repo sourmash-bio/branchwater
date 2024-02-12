@@ -6,3 +6,7 @@ sandbox/
 result
 docs/_build
 prod.env
+mongodb/
+# pixi environments
+.pixi
+
