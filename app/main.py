@@ -40,7 +40,7 @@ def home():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        mastiff_df = getacc(signatures)
+        mastiff_df = getacc(signatures, app.config)
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
         # for 'basic' query, override metadata form with selected categories

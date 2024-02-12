@@ -7,7 +7,7 @@ import gzip
 import string
 
 
-def getacc(signatures):
+def getacc(signatures, config):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
     json_bytes = sig_str.encode('utf-8')
@@ -17,8 +17,9 @@ def getacc(signatures):
 
     # POST to mastiff
     http = urllib3.PoolManager()
+    base_url = config.get('index_server', 'https://branchwater-api.jgi.doe.gov')
     r = http.request('POST',
-                     'https://branchwater-api.jgi.doe.gov/search',
+                     f"{base_url}/search",
                      body=buf.getvalue(),
                      headers={'Content-Type': 'application/json'})
     query_results_text = r.data.decode('utf-8')

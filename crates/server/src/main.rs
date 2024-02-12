@@ -123,7 +123,7 @@ fn main() -> Result<()> {
     // Create the runtime
     let rt = Runtime::new()?;
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], opts.port));
+    let addr = SocketAddr::from(([0, 0, 0, 0], opts.port));
     tracing::debug!("listening on {}", addr);
 
     // Spawn the root task

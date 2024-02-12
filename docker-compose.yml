@@ -1,5 +1,14 @@
 version: "3.4"
 services:
+  index:
+    build:
+      dockerfile: Dockerfile.index
+    restart: always
+    volumes:
+      - ./bw_db:/data/
+    env_file:
+      - prod.env
+
   mongodb:
     build:
       context: ./buildmongo #from custom Dockerfile
@@ -11,6 +20,7 @@ services:
     build: ./app #from custom Dockerfile
     links:
       - mongodb
+      - index
     ports:
       - "8000:8000"
     restart: always
