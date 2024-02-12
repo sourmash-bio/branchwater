@@ -3,7 +3,60 @@ EXEC="cargo run -p branchwater-index --release -- "
 rule all:
 #    input: "outputs/rs207"
 #    input: "outputs/rs207-2k"
-    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
+#    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
+    input: "outputs/tara_runinfo.csv"
+
+##################################
+
+rule download_tara_runinfo:
+#  output: 'inputs/tara_runinfo.csv'
+  shell: """
+    esearch -db sra -query '"173486"[bioproject]' | efetch -format runinfo > {output}
+  """
+
+rule subset_columns:
+  output: "outputs/{sample}_runinfo.csv"
+  input:
+    runinfo="inputs/{sample}_runinfo.csv"
+  run:
+    import csv
+
+    with open(input.runinfo, "r") as f:
+        datasets = csv.DictReader(f, delimiter=",")
+
+        with open(output[0], 'w', newline='') as g:
+            writer = csv.writer(g)
+            writer.writerow(["", "Run", "ScientificName"])
+
+            for i, row in enumerate(datasets):
+                writer.writerow([i, row["Run"], row["ScientificName"]])
+
+def tara_sraids(wildcards):
+    import csv
+    with open("outputs/tara_runinfo.csv", "r") as f:
+        datasets = csv.DictReader(f, delimiter=",")
+        return [f"outputs/wort/{row['Run']}.sig" for row in datasets]
+
+rule merge_tara_sigs:
+  output: "sigs/tara.zip"
+  input:
+    runinfo="outputs/tara_runinfo.csv",
+    sigs=tara_sraids,
+  shell: """
+    echo {input.sigs}
+  """
+
+#################################
+
+rule download_from_wort:
+  output: "outputs/wort/{sraid}.sig"
+  params:
+    sraid="{sraid}"
+  shell: """
+    curl -JLf https://wort.sourmash.bio/v1/view/sra/{params.sraid} -o {output}
+  """
+
+#################################
 
 rule rs207_1k:
     output: directory("outputs/rs207-1k")
@@ -21,7 +74,7 @@ rule rs207_1k:
 
 rule rs207_2k:
     output: directory("outputs/rs207-2k")
-    input: 
+    input:
         previous="outputs/rs207-1k",
         storage="inputs/gtdb-rs207.genomic-reps.dna.k21.zip",
         manifest="inputs/gtdb-rs207.genomic-reps.dna.k21.manifest",
