@@ -190,6 +190,7 @@
               sphinx-design
               sphinx-inline-tabs
               sphinx-tabs
+              tox
             ]))
           ] ++ lib.optionals stdenv.isDarwin [
             darwin.apple_sdk.frameworks.Security

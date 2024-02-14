@@ -3,13 +3,20 @@ name = "branchwater"
 channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64"]
 
+[environments]
+prepare = ["prepare"]
+deploy = ["deploy"]
+
 [dependencies]
 
 [feature.prepare.tasks]
-snakemake = { cmd = ["snakemake"] }
+index = { cmd = ["snakemake"] }
+metadata = { cmd = ["podman-compose",
+                    "exec", "mongo",
+                    "python3", "/docker-entrypoint-initdb.d/bqtomongo.py"] }
 
 [feature.prepare.dependencies]
-snakemake = "*"
+snakemake = ">=8,<9"
 
-[environments]
-snakemake = ["prepare"]
+[feature.deploy.dependencies]
+podman-compose = "*"
