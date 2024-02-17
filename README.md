@@ -1,4 +1,6 @@
 # branchwater
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsourmash-bio%2Fbranchwater.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsourmash-bio%2Fbranchwater?ref=badge_shield)
+
 
 This is the central repository for branchwater.
 
@@ -69,3 +71,6 @@ Check out their other work at https://tinyecology.com.
 As a work of the United States Government,
 the original code is available under the CC0 1.0 Universal Public Domain Dedication (CC0 1.0).
 
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsourmash-bio%2Fbranchwater.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsourmash-bio%2Fbranchwater?ref=badge_large)
