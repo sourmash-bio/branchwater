@@ -172,15 +172,11 @@ fn gather<P: AsRef<Path>>(
         .swap_remove(0)
         .select(&selection)?;
 
-    let mut query = None;
-    if let Some(q) = prepare_query(query_sig, &selection) {
-        query = Some(q);
-    }
-    let query = query.expect("Couldn't find a compatible MinHash");
+    let query = prepare_query(query_sig, &selection).expect("Couldn't find a compatible MinHash");
 
     let threshold = threshold_bp / query.scaled() as usize;
 
-    let db = RevIndex::open(index.as_ref(), true)?;
+    let db = RevIndex::open(index.as_ref(), true, None)?;
     info!("Loaded DB");
 
     info!("Building counter");
@@ -231,7 +227,7 @@ fn search<P: AsRef<Path>>(
 
     let threshold = threshold_bp / query.scaled() as usize;
 
-    let db = RevIndex::open(index.as_ref(), true)?;
+    let db = RevIndex::open(index.as_ref(), true, None)?;
     info!("Loaded DB");
 
     info!("Building counter");
@@ -334,7 +330,7 @@ fn update<P: AsRef<Path>>(
         Collection::new(manifest, InnerStorage::new(storage))
     };
 
-    let db = RevIndex::open(output.as_ref(), false)?;
+    let db = RevIndex::open(output.as_ref(), false, None)?;
     db.update(collection.select(&selection)?.try_into()?)?;
 
     Ok(())
@@ -418,7 +414,7 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     use size::Size;
 
     info!("Opening DB");
-    let db = RevIndex::open(output.as_ref(), true)?;
+    let db = RevIndex::open(output.as_ref(), true, None)?;
 
     info!("Starting check");
     let stats = db.check(quick);
@@ -445,12 +441,12 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     info!("v: {}", vsize.to_string());
 
     if !quick && kcount > 0 {
-        info!("max v: {}", vcounts.maximum().unwrap());
-        info!("mean v: {}", vcounts.mean().unwrap());
-        info!("stddev: {}", vcounts.stddev().unwrap());
-        info!("median v: {}", vcounts.percentile(50.0).unwrap());
-        info!("p25 v: {}", vcounts.percentile(25.0).unwrap());
-        info!("p75 v: {}", vcounts.percentile(75.0).unwrap());
+        info!("max v: {}", vcounts.percentile(100.0).unwrap().count());
+//        info!("mean v: {}", vcounts.mean().unwrap());
+//        info!("stddev: {}", vcounts.stddev().unwrap());
+        info!("median v: {}", vcounts.percentile(50.0).unwrap().count());
+        info!("p25 v: {}", vcounts.percentile(25.0).unwrap().count());
+        info!("p75 v: {}", vcounts.percentile(75.0).unwrap().count());
     }
 
     info!("Finished check");

@@ -175,6 +175,7 @@
             cargo-outdated
             cargo-watch
             cargo-limit
+            rust-analyzer
 
             snakemake
             parallel-full
@@ -190,6 +191,7 @@
               sphinx-design
               sphinx-inline-tabs
               sphinx-tabs
+              sourmash
               tox
             ]))
           ] ++ lib.optionals stdenv.isDarwin [

@@ -17,6 +17,7 @@ metadata = { cmd = ["podman-compose",
 
 [feature.prepare.dependencies]
 snakemake = ">=8,<9"
+entrez-direct = ">=16.2"
 
 [feature.deploy.dependencies]
 podman-compose = "*"

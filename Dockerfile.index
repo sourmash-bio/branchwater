@@ -32,4 +32,4 @@ WORKDIR /data
 
 EXPOSE 80/tcp
 
-CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "-a", "/app/assets", "/data/index"]
+CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "-a", "/app/assets", "--location", "/data/sigs.zip", "/data/index"]

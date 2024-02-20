@@ -4,15 +4,56 @@ rule all:
 #    input: "outputs/rs207"
 #    input: "outputs/rs207-2k"
 #    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
-    input: "outputs/tara_runinfo.csv"
+    input: "outputs/demo_runinfo.csv"
 
 ##################################
 
-rule download_tara_runinfo:
-#  output: 'inputs/tara_runinfo.csv'
+DEMO_SRAIDS = [
+  "ERR272375",    # salt marsh metagenome
+  "SRR5439749",   # human gut metagenome 
+  "SRR20285055",  # air metagenome
+  "SRR24480609",  # gut metagenome
+  "ERR3220185",   # bovine gut metagenome
+  "SRR6269135",   # marine metagenome
+  "SRR25653600",  # phage metagenome
+  "SRR25021205",  # soil metagenome
+  "SRR25646998",  # drinking water metagenome
+  "SRR25611550",  # food production metagenome
+  "SRR2243572",   # wastewater metagenome
+  "SRR7698815",   # plant metagenome
+]
+
+rule download_demo_runinfo:
+  output: 'inputs/demo_runinfo.csv'
+  params:
+    query = lambda w: " OR ".join(f'{sra_id}[Accession]' for sra_id in DEMO_SRAIDS)
   shell: """
-    esearch -db sra -query '"173486"[bioproject]' | efetch -format runinfo > {output}
+    esearch -db sra -query '{params.query}' | efetch -format runinfo > {output}
   """
+
+def demo_sraids(wildcards):
+    import csv
+    with open("outputs/demo_runinfo.csv", "r") as f:
+        datasets = csv.DictReader(f, delimiter=",")
+        return [f"outputs/wort/{row['Run']}.sig" for row in datasets]
+
+rule merge_demo_sigs:
+  output: "sigs/demo.zip"
+  input:
+    runinfo="outputs/demo_runinfo.csv",
+    sigs=demo_sraids,
+  shell: """
+    sourmash sig cat {input.sigs} -o {output}
+  """
+
+rule demo_index:
+    output: directory("outputs/demo")
+    input: "sigs/demo.zip"
+    shell: """
+        {EXEC} index -k 21 -s 1000 \
+            --output {output} \
+            {input}
+    """
 
 rule subset_columns:
   output: "outputs/{sample}_runinfo.csv"
@@ -30,21 +71,6 @@ rule subset_columns:
 
             for i, row in enumerate(datasets):
                 writer.writerow([i, row["Run"], row["ScientificName"]])
-
-def tara_sraids(wildcards):
-    import csv
-    with open("outputs/tara_runinfo.csv", "r") as f:
-        datasets = csv.DictReader(f, delimiter=",")
-        return [f"outputs/wort/{row['Run']}.sig" for row in datasets]
-
-rule merge_tara_sigs:
-  output: "sigs/tara.zip"
-  input:
-    runinfo="outputs/tara_runinfo.csv",
-    sigs=tara_sraids,
-  shell: """
-    echo {input.sigs}
-  """
 
 #################################
 

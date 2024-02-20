@@ -1,4 +1,4 @@
-use std::{borrow::Cow, net::SocketAddr, path::PathBuf, sync::Arc, time::Duration};
+use std::{borrow::Cow, net::SocketAddr, sync::Arc, time::Duration};
 
 use axum::{
     body::{BoxBody, Bytes},
@@ -16,25 +16,29 @@ use tower::{BoxError, ServiceBuilder};
 use tower_http::{services::ServeDir, trace::TraceLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+use camino::Utf8PathBuf as PathBuf;
 use clap::Parser;
 use color_eyre::eyre::Result;
-use sourmash::index::revindex::{RevIndex, RevIndexOps};
+use sourmash::index::revindex::{RevIndex, RevIndexOps, prepare_query};
+use sourmash::selection::Selection;
 use sourmash::signature::{Signature, SigsTrait};
-use sourmash::sketch::minhash::{max_hash_for_scaled, KmerMinHash};
-use sourmash::sketch::Sketch;
+use sourmash::prelude::*;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Cli {
     /// Path to rocksdb index dir
-    #[clap(parse(from_os_str))]
     index: PathBuf,
+
+    /// Location of the data for signatures.
+    /// Either a zip file or a path to a directory containing signatures.
+    #[clap(short = 'l', long = "location")]
+    location: Option<PathBuf>,
 
     /// Path to static assets
     #[clap(
         short = 'a',
         long = "assets",
-        parse(from_os_str),
         default_value = "assets/"
     )]
     assets: PathBuf,
@@ -58,7 +62,7 @@ struct Cli {
 
 fn main() -> Result<()> {
     let _guard = sentry::init((
-        std::env::var("SENTRY_DSN").expect("$SENTRY_DSN must be set"),
+        std::env::var("SENTRY_DSN").unwrap_or_else(|_| "".to_string()),
         sentry::ClientOptions {
             release: sentry::release_name!(),
             traces_sample_rate: 1.0,
@@ -84,18 +88,20 @@ fn main() -> Result<()> {
 
     let opts = Cli::parse();
 
-    let max_hash = max_hash_for_scaled(opts.scaled as u64);
-    let mh = KmerMinHash::builder()
-        .num(0)
-        .max_hash(max_hash)
-        .ksize(opts.ksize as u32)
+    let selection = Selection::builder()
+        .ksize(opts.ksize.into())
+        .scaled(opts.scaled as u32)
         .build();
 
-    let threshold = opts.threshold_bp / mh.scaled() as usize;
+    let threshold = opts.threshold_bp / opts.scaled;
+
+    let location = opts.location.map(|path| if path.ends_with(".zip") {
+        format!("zip://{}", path)
+    } else { format!("fs://{}", path) });
 
     let state = Arc::new(State {
-        db: Arc::new(RevIndex::open(opts.index, true).expect("Error opening DB")),
-        template: Arc::new(Sketch::MinHash(mh)),
+        db: Arc::new(RevIndex::open(opts.index, true, location.as_deref())?),
+        selection: Arc::new(selection),
         threshold,
     });
 
@@ -142,7 +148,7 @@ type SharedState = Arc<State>;
 
 struct State {
     db: Arc<RevIndex>,
-    template: Arc<Sketch>,
+    selection: Arc<Selection>,
     threshold: usize,
 }
 
@@ -150,11 +156,11 @@ impl State {
     async fn search(&self, query: Signature) -> Result<Vec<String>, Box<dyn std::error::Error>> {
         let db = self.db.clone();
         let threshold = self.threshold;
-        let template = self.template.clone();
+        let selection = self.selection.clone();
 
         let Ok((matches, query_size)) = tokio::task::spawn_blocking(move || {
-            if let Some(Sketch::MinHash(mh)) = query.select_sketch(&template) {
-                let counter = db.counter_for_query(mh);
+            if let Some(mh) = prepare_query(query, &selection) {
+                let counter = db.counter_for_query(&mh);
                 let matches = db.matches_from_counter(counter, threshold);
                 Ok((matches, mh.size() as f64))
             } else {
@@ -179,16 +185,9 @@ impl State {
     }
 
     fn parse_sig(&self, raw_data: &[u8]) -> Result<Signature, BoxError> {
-        let sig = Signature::from_reader(raw_data)?.swap_remove(0);
-        if sig.select_sketch(&self.template).is_none() {
-            Err(format!(
-                "Could not extract compatible sketch to compare. Expected k={}",
-                &self.template.ksize(),
-            )
-            .into())
-        } else {
-            Ok(sig)
-        }
+        Ok(Signature::from_reader(raw_data)?
+            .swap_remove(0)
+            .select(&self.selection)?)
     }
 }
 
