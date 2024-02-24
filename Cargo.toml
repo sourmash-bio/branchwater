@@ -20,8 +20,7 @@ niffler = { version = "2.4.0", default-features = false, features = [ "gz" ]}
 numsep = "0.1.12"
 reqwest = { version = "0.11.11", default-features = false, features = [ "blocking", "rustls-tls" ] }
 size = "0.4.0"
-#sourmash = { version = "0.13.0", features = ["branchwater"] }
-sourmash = { features = ["branchwater"], git = "https://github.com/sourmash-bio/sourmash.git", branch = "lirber/bw_location" }
+sourmash = { version = "0.13.0", features = ["branchwater"] }
 
 serde_json = "1.0.113"
 # axum deps
