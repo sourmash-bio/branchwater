@@ -14,6 +14,7 @@ services:
       context: ./buildmongo #from custom Dockerfile
     restart: always
     volumes:
+      - ./bw_db:/data/bw_db
       - ./mongodb:/data/db
 
   app:

@@ -1,4 +1,3 @@
-
 import pandas as pd
 import pymongo as pm
 import time
@@ -6,6 +5,7 @@ import re
 import datetime
 import os
 import yaml
+from pathlib import Path
 
 from google.oauth2 import service_account
 from google.cloud import bigquery
@@ -35,8 +35,7 @@ table_id = f'{project_id}.mastiffdata.mastiff_id'
 # Create table of Mastiff accessions
 # Not neccessary if up to date with metadata_prep/metacounts.py first
 # ideally pulling from metadata-endpoint of mastiff API
-runinfo = pd.read_csv(os.path.join(dir_path, 'sra.runinfo.csv'))
-mastiff_acc = tuple(runinfo.Run.tolist())
+mastiff_acc = Path("/data/bw_db/sraids").read_text().splitlines()
 client.delete_table(table_id, not_found_ok=True)  # delete table in case exists
 df = pd.DataFrame(mastiff_acc, columns=['accID'])
 job_config = bigquery.LoadJobConfig(
