@@ -37,15 +37,60 @@ git clone https://github.com/sourmash-bio/branchwater
 
 ### Set up dependencies
 
-For development on macOS: https://podman-desktop.io/downloads
-and follow instructions inside podman desktop to setup podman.
-
-
+We use [pixi](https://pixi.sh) for managing dependencies and running tasks for `branchwater` development,
+you can install it with
 ```
 curl -fsSL https://pixi.sh/install.sh | bash
 ```
+or check updated instructions on their website.
+
+For deploying a complete development or production environment,
+we have a `docker-compose.yml` configuration describing the containers and how they connect together.
+For using this configuration,
+either `docker compose` or `podman-compose` is needed.
+While there are many ways to get them installed,
+on MacOS or Windows there are a couple of "Desktop" versions with a complete solution
+(GUI, start services, configure networking) to make it easy to get started.
+
+:::{note}
+You only need one of `docker` or `podman`, no need to install both!
+:::
+
+::::{tab-set}
+
+:::{tab-item} Docker Desktop
+
+We recommend setting up [Rancher Desktop](https://rancherdesktop.io/)
+for development with `docker compose`.
+Follow instructions from their website to set it up for your operating system.
+
+:::
+
+:::{tab-item} Podman Desktop
+
+[Podman Desktop](https://podman-desktop.io/) is the "Desktop" equivalent for Podman.
+Follow instruction on their website to set it up for your operating system.
+
+`pixi` tasks default to run with `docker compose`,
+if you're using `podman` you need to update tasks to use
+```
+"podman-compose"
+```
+instead of
+```
+"docker compose"
+```
+especially in the `deploy` and `metadata` tasks.
+Edit the `pixi.toml` file and replace entries accordingly.
+
+:::
+
+::::
+
 
 ### The demo dataset
+
+The demo dataset included in the repo has the following SRA accessions:
 
 - [ERR272375](https://trace.ncbi.nlm.nih.gov/Traces/index.html?view=run_browser&acc=ERR272375&display=metadata), a salt marsh metagenome
 - [SRR5439749](https://trace.ncbi.nlm.nih.gov/Traces/index.html?view=run_browser&acc=SRR5439749&display=metadata), a human gut metagenome
@@ -60,15 +105,27 @@ curl -fsSL https://pixi.sh/install.sh | bash
 - [SRR7698815](https://trace.ncbi.nlm.nih.gov/Traces/index.html?view=run_browser&acc=SRR7698815&display=metadata), a plant metagenome
 - [SRR2243572](https://trace.ncbi.nlm.nih.gov/Traces/index.html?view=run_browser&acc=SRR2243572&display=metadata), a wastewater metagenome
 
+They are listed in this file:
 ```
-cat experiments/inputs/sraids
+cat experiments/inputs/demo_sraids
 ```
+
+You can modify and use other SRA accessions,
+they were chosen just so we can see some results in the web frontend.
 
 ### Download signatures and prepare search index
 
+The snakemake pipeline in `experiments/Snakefile` was prepared to
+- download pre-calculated signatures for the SRA accessions in the demo dataset from [wort](https://wort.sourmash.bio),
+- build a search index
+- copy data into `bw_db/` so it can be used further ahead by the containers in `docker-compose.yml`
+
+You can run the snakemake pipeline with
 ```
-pixi run index
+pixi run index -j 4
 ```
+which will install all the dependencies needed and run snakemake.
+You can adjust how many jobs are executed by changing `-j 4`.
 
 This will create a `bw_db` directory at the root of the repository with the following structure:
 ```
@@ -78,7 +135,14 @@ bw_db
 └── sraids      # a list of SRA accessions to download signatures and build the index
 ```
 
-### Bring up mongo for data loading
+### Prepare a BigQuery access key
+
+```{include} ../buildmongo/README.md
+:start-after: <!-- start sra-metadata-access -->
+:end-before: <!-- end sra-metadata-access -->
+```
+
+### Download the SRA metadata from bigquery and load into mongo
 
 After the index is build,
 we can bring up the `mongodb` that will hold the metadata:
@@ -86,11 +150,8 @@ we can bring up the `mongodb` that will hold the metadata:
 pixi run deploy up -d mongodb
 ```
 It is empty initially,
-so let's load the metadata next.
+so let's load the metadata next with
 
-### Download the SRA metadata from bigquery and load into mongo
-
-Need to setup bigquery
 ```
 pixi run metadata
 ```

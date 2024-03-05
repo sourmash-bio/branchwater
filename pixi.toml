@@ -12,10 +12,8 @@ test = ["test"]
 python = ">=3.12.2,<3.13"
 
 [feature.prepare.tasks]
-index = { cmd = ["snakemake", "-j4"], cwd = "experiments" }
-metadata = { cmd = ["podman-compose",
-                    "exec", "mongodb",
-                    "python3", "/docker-entrypoint-initdb.d/bqtomongo.py"] }
+index = { cmd = ["snakemake"], cwd = "experiments" }
+metadata = "docker compose exec mongodb python3 /docker-entrypoint-initdb.d/bqtomongo.py"
 
 [feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
@@ -30,7 +28,7 @@ libclang = ">=16.0.6,<17.1"
 podman-compose = ">=1.0.6,<1.1"
 
 [feature.deploy.tasks]
-deploy = { cmd = ["podman-compose"] }
+deploy = "docker compose"
 
 [feature.test.dependencies]
 tox = ">=3.24.5,<4.14"
