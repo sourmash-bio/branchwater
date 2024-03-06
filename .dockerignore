@@ -8,3 +8,5 @@
 !flake.lock
 !Cargo.toml
 !Cargo.lock
+!pixi.toml
+!pixi.lock

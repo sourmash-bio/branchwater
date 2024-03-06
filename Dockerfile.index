@@ -26,10 +26,9 @@ WORKDIR /app
 # Copy /nix/store
 COPY --from=builder /tmp/nix-store-closure /nix/store
 COPY --from=builder /tmp/build/result /app
-RUN mkdir -p /app/assets
 
 WORKDIR /data
 
 EXPOSE 80/tcp
 
-CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "-a", "/app/assets", "--location", "/data/sigs.zip", "/data/index"]
+CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data/sigs.zip", "/data/index"]
