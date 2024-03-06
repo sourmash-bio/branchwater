@@ -33,6 +33,7 @@ that can bring up these components in the appropriate order.
 
 ```
 git clone https://github.com/sourmash-bio/branchwater
+cd branchwater
 ```
 
 ### Set up dependencies
@@ -161,3 +162,5 @@ pixi run metadata
 ```
 pixi run deploy up -d
 ```
+
+Web frontend will be available at [http://localhost:8000](http://localhost:8000)
