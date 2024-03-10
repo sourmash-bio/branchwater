@@ -1,31 +1,16 @@
-# Nix builder
-FROM docker.io/nixos/nix:latest AS builder
-
-# Copy our source and setup our working dir.
+FROM ghcr.io/prefix-dev/pixi:0.16.0 AS build
 COPY . /tmp/build
+
 WORKDIR /tmp/build
 
-# Build our Nix environment
-#RUN --mount=type=cache,target=/nix/store nix \
-RUN nix \
-    --extra-experimental-features "nix-command flakes" \
-    --option filter-syscalls false \
-    build
+RUN apt-get update && apt-get -y install ca-certificates
+RUN pixi run -e build build-server
 
-# Copy the Nix store closure into a directory. The Nix store closure is the
-# entire set of Nix store values that we need for our build.
-RUN mkdir /tmp/nix-store-closure
-RUN cp -R $(nix-store -qR result/) /tmp/nix-store-closure
-
-# Final image is based on scratch. We copy a bunch of Nix dependencies
-# but they're fully self-contained so we don't need Nix anymore.
+# Final image is based on scratch. We only copy the server binary,
+# no need for pixi anymore
 FROM scratch
 
-WORKDIR /app
-
-# Copy /nix/store
-COPY --from=builder /tmp/nix-store-closure /nix/store
-COPY --from=builder /tmp/build/result /app
+COPY --from=build /tmp/build/target/release/branchwater-server /app/bin/
 
 WORKDIR /data
 
