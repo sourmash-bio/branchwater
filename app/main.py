@@ -6,6 +6,7 @@ from functions import *
 import sentry_sdk
 from sentry_sdk.integrations.pymongo import PyMongoIntegration
 sentry_sdk.init(
+    os.environ.get("SENTRY_DSN"),
     enable_tracing=True,
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
