@@ -442,8 +442,8 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
 
     if !quick && kcount > 0 {
         info!("max v: {}", vcounts.percentile(100.0).unwrap().count());
-//        info!("mean v: {}", vcounts.mean().unwrap());
-//        info!("stddev: {}", vcounts.stddev().unwrap());
+        //        info!("mean v: {}", vcounts.mean().unwrap());
+        //        info!("stddev: {}", vcounts.stddev().unwrap());
         info!("median v: {}", vcounts.percentile(50.0).unwrap().count());
         info!("p25 v: {}", vcounts.percentile(25.0).unwrap().count());
         info!("p75 v: {}", vcounts.percentile(75.0).unwrap().count());

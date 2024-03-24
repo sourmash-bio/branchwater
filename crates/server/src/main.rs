@@ -19,10 +19,10 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use camino::Utf8PathBuf as PathBuf;
 use clap::Parser;
 use color_eyre::eyre::Result;
-use sourmash::index::revindex::{RevIndex, RevIndexOps, prepare_query};
+use sourmash::index::revindex::{prepare_query, RevIndex, RevIndexOps};
+use sourmash::prelude::*;
 use sourmash::selection::Selection;
 use sourmash::signature::{Signature, SigsTrait};
-use sourmash::prelude::*;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -36,11 +36,7 @@ struct Cli {
     location: Option<PathBuf>,
 
     /// Path to static assets
-    #[clap(
-        short = 'a',
-        long = "assets",
-        default_value = "assets/"
-    )]
+    #[clap(short = 'a', long = "assets", default_value = "assets/")]
     assets: PathBuf,
 
     /// ksize
@@ -95,9 +91,13 @@ fn main() -> Result<()> {
 
     let threshold = opts.threshold_bp / opts.scaled;
 
-    let location = opts.location.map(|path| if path.ends_with(".zip") {
-        format!("zip://{}", path)
-    } else { format!("fs://{}", path) });
+    let location = opts.location.map(|path| {
+        if path.ends_with(".zip") {
+            format!("zip://{}", path)
+        } else {
+            format!("fs://{}", path)
+        }
+    });
 
     let state = Arc::new(State {
         db: Arc::new(RevIndex::open(opts.index, true, location.as_deref())?),
