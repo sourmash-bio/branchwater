@@ -7,10 +7,17 @@ import gzip
 import string
 
 
+DEFAULT_COLUMNS = ["SRA_accession", "containment", "cANI"]
+
+
+class SearchError(Exception):
+    """Search index errors"""
+
+
 def getacc(signatures, config):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
-    json_bytes = sig_str.encode('utf-8')
+    json_bytes = f"[{sig_str}]".encode('utf-8')
     buf = io.BytesIO()
     with gzip.open(buf, 'w') as fout:
         fout.write(json_bytes)
@@ -22,23 +29,29 @@ def getacc(signatures, config):
                      f"{base_url}/search",
                      body=buf.getvalue(),
                      headers={'Content-Type': 'application/json'})
+    if r.status != 200:
+        raise SearchError(r.data.decode('utf-8'), r.status)
+
     query_results_text = r.data.decode('utf-8')
 
     results_wrap_fp = io.StringIO(query_results_text)
     mastiff0_df = pd.read_csv(results_wrap_fp)
     n_raw_results = len(mastiff0_df)
 
+    if n_raw_results == 0:
+        return pd.DataFrame(columns=DEFAULT_COLUMNS)
+
     # containment to ANI
-    KSIZE = 21
-    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./KSIZE)
+    ksize = config.get('ksize', 21)
+    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./ksize)
+
     # filter for containment; potential to pass this from user
-    THRESHOLD = 0.1
+    threshold = config.get('threshold', 0.1)
     print(
-        f"Search returned {n_raw_results} results. Now filtering results with <{THRESHOLD} containment...")
-    mastiff_df = mastiff0_df[mastiff0_df['containment'] >= THRESHOLD]
+        f"Search returned {n_raw_results} results. Now filtering results with <{threshold} containment...")
+    mastiff_df = mastiff0_df[mastiff0_df['containment'] >= threshold]
     print(
         f"Returning {len(mastiff_df)} filtered results!")
- 
 
     # remove spaces from columns
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]

@@ -41,7 +41,11 @@ def home():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        mastiff_df = getacc(signatures, app.config)
+        try:
+            mastiff_df = getacc(signatures, app.config)
+        except SearchError as e:
+            return e.args
+
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
         # for 'basic' query, override metadata form with selected categories
@@ -73,7 +77,11 @@ def advanced():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        mastiff_df = getacc(signatures)
+        try:
+            mastiff_df = getacc(signatures, app.config)
+        except SearchError as e:
+            return e.args
+
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
         # get metadata from mongodb (imported from mongoquery.py)
