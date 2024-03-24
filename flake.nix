@@ -130,11 +130,21 @@
           pname = "branchwater-client";
           cargoExtraArgs = "-p branchwater-client --bin branchwater-client";
         });
+
+        # Build the actual crate itself, reusing the dependency
+        # artifacts from above.
+        branchwater-query = craneLib.buildPackage (commonArgs // {
+          inherit cargoArtifacts;
+          src = ./.;
+          pname = "branchwater-query";
+          cargoExtraArgs = "-p branchwater-query --bin branchwater-query";
+        });
       in
       {
         packages.default = branchwater-server;
         packages.branchwater-server = branchwater-server;
         packages.branchwater-client = branchwater-client;
+        packages.branchwater-query = branchwater-query;
 
         apps.default = flake-utils.lib.mkApp {
           drv = branchwater-server;
@@ -165,9 +175,13 @@
             cargo-outdated
             cargo-watch
             cargo-limit
+            rust-analyzer
 
             snakemake
             parallel-full
+            pixi
+
+            podman-compose
 
             (python311.withPackages (ps: with ps; [
               furo
@@ -177,6 +191,8 @@
               sphinx-design
               sphinx-inline-tabs
               sphinx-tabs
+              sourmash
+              tox
             ]))
           ] ++ lib.optionals stdenv.isDarwin [
             darwin.apple_sdk.frameworks.Security

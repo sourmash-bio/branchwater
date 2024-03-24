@@ -25,7 +25,8 @@ extensions = [
     "myst_parser",
     "sphinx_copybutton",
     "sphinx_design",
-    "sphinx_inline_tabs"
+    "sphinx_inline_tabs",
+    "sphinxcontrib.mermaid"
 ]
 
 templates_path = ['_templates']
@@ -57,6 +58,7 @@ todo_include_todos = True
 myst_enable_extensions = [
     "colon_fence",
     "deflist",
+    "html_admonition",
 ]
 myst_heading_anchors = 3
 

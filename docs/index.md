@@ -11,6 +11,8 @@ hide-toc: true
 
 ```{toctree}
 :hidden:
+
+deploy
 ```
 
 ```{toctree}

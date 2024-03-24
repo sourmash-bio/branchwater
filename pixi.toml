@@ -1,0 +1,43 @@
+[project]
+name = "branchwater"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64", "osx-64", "osx-arm64"]
+
+[environments]
+build = ["build"]
+prepare = ["build", "prepare"]
+deploy = ["deploy"]
+test = ["test"]
+
+[dependencies]
+python = ">=3.12.2,<3.13"
+
+[feature.build.dependencies]
+rust = ">=1.76.0,<1.77"
+compilers = ">=1.7.0,<1.8"
+clangdev = ">=16.0.6,<17.1"
+libclang = ">=16.0.6,<17.1"
+
+[feature.build.tasks]
+build-server = "cargo build --release -p branchwater-server"
+
+[feature.prepare.tasks]
+index = { cmd = ["snakemake"], cwd = "experiments" }
+metadata = "docker compose exec mongodb python3 /docker-entrypoint-initdb.d/bqtomongo.py"
+
+[feature.prepare.dependencies]
+snakemake = ">=8.5.3,<8.6"
+pandas = ">=2.2.1,<2.3"
+sourmash = ">=4.8.6,<4.9"
+
+[feature.deploy.dependencies]
+podman-compose = ">=1.0.6,<1.1"
+
+[feature.deploy.tasks]
+deploy = "docker compose"
+
+[feature.test.dependencies]
+tox = ">=3.24.5,<4.14"
+
+[feature.test.tasks]
+docs = { cmd = ["tox", "-e", "docs"] }
