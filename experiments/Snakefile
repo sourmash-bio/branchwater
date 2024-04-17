@@ -3,7 +3,85 @@ EXEC="cargo run -p branchwater-index --release -- "
 rule all:
 #    input: "outputs/rs207"
 #    input: "outputs/rs207-2k"
-    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
+#    input: expand("outputs/genbank-{domain}", domain=["archaea", "bacteria", "fungi", "protozoa", "viral"])
+    input: "../bw_db/"
+
+##################################
+
+def demo_sraids(wildcards):
+    from pathlib import Path
+
+    datasets = Path("inputs/demo_sraids").read_text().splitlines()
+    return [f"outputs/wort/{sra_id}.sig" for sra_id in datasets]
+
+rule merge_demo_sigs:
+  output: "sigs/demo.zip"
+  input:
+    sraids="inputs/demo_sraids",
+    sigs=demo_sraids,
+  shell: """
+    sourmash sig cat {input.sigs} -o {output}
+  """
+
+rule demo_index:
+  output: directory("outputs/demo")
+  input: "sigs/demo.zip"
+  shell: """
+    {EXEC} index -k 21 -s 1000 \
+        --output {output} \
+        {input}
+  """
+
+rule prepare_index:
+  output: directory("../bw_db/")
+  input:
+    sigs="sigs/demo.zip",
+    sraids="inputs/demo_sraids",
+    index=directory("outputs/demo")
+  shell: """
+    mkdir -p {output}
+    cp -a {input.index} {output}/index
+    cp {input.sigs} {output}/sigs.zip
+    cp {input.sraids} {output}/sraids
+  """
+
+#################################
+
+rule download_from_wort:
+  output: "outputs/wort/{sraid}.sig"
+  params:
+    sraid="{sraid}"
+  shell: """
+    curl -JLf https://wort.sourmash.bio/v1/view/sra/{params.sraid} -o {output}
+  """
+
+#################################
+
+rule download_demo_runinfo:
+  output: 'inputs/demo_runinfo.csv'
+  params:
+    query = lambda w: " OR ".join(f'{sra_id}[Accession]' for sra_id in DEMO_SRAIDS)
+  shell: """
+    esearch -db sra -query '{params.query}' | efetch -format runinfo > {output}
+  """
+
+rule subset_columns:
+  output: "outputs/{sample}_sraids"
+  input:
+    runinfo="inputs/{sample}_runinfo.csv"
+  run:
+    import csv
+
+    with open(input.runinfo, "r") as f:
+        datasets = csv.DictReader(f, delimiter=",")
+
+        with open(output[0], 'w', newline='') as g:
+            writer = csv.writer(g)
+
+            for row in datasets:
+                writer.writerow(row["Run"])
+
+#################################
 
 rule rs207_1k:
     output: directory("outputs/rs207-1k")
@@ -21,7 +99,7 @@ rule rs207_1k:
 
 rule rs207_2k:
     output: directory("outputs/rs207-2k")
-    input: 
+    input:
         previous="outputs/rs207-1k",
         storage="inputs/gtdb-rs207.genomic-reps.dna.k21.zip",
         manifest="inputs/gtdb-rs207.genomic-reps.dna.k21.manifest",

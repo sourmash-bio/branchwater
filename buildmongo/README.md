@@ -2,7 +2,9 @@ Building the mongoDB database for the webapp to access is dependent on bigquery.
 
 Right now the query is setup to pull metadata for just 150,000 accessions to keep the db small while running locally for app troubleshooting. To remove this limit and pull metadata for all the accessions, remove 'LIMIT 150000' from L75 of bqtomongo.py.
 
-## SET UP SRA METADATA ACCESS
+#### Set up SRA metadata access
+
+<!-- start sra-metadata-access -->
 
 Based on: - [Setting-up BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigquery/)
 
@@ -16,7 +18,7 @@ Based on: - [Setting-up BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigq
 
    3. Search: **nih-sra-datastore** and select
 
-## CREATE SERVICE ACCOUNT KEY
+#### Create service account key
 
 1. Go to `navigation menu` - `IAM & Admin`: - `service accounts` `+ CREATE SERVICE ACCOUNT`
 
@@ -42,6 +44,9 @@ Based on: - [Setting-up BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigq
 
 3. In big query console, under 'sraproject' create a dataset named 'mastiffdata'
 
-## CREATE ACCESS IN BQTOMONGO.py:
+#### Create project id in buildmongo/config.yml
 
-1. Change project id on lines 22 and 24 to:'sraproject-####' and 'sraproject-####.mastiffdata.mastiff_id'
+1. Change project id to:'sraproject-####'
+2. For testing, you can set 'build_full_db: False' if you'd like to build a smaller test mongodb. Be sure to set this back to `True` to build all metadata.
+
+<!-- end sra-metadata-access -->

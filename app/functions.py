@@ -7,37 +7,51 @@ import gzip
 import string
 
 
-def getacc(signatures):
+DEFAULT_COLUMNS = ["SRA_accession", "containment", "cANI"]
+
+
+class SearchError(Exception):
+    """Search index errors"""
+
+
+def getacc(signatures, config):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
-    json_bytes = sig_str.encode('utf-8')
+    json_bytes = f"[{sig_str}]".encode('utf-8')
     buf = io.BytesIO()
     with gzip.open(buf, 'w') as fout:
         fout.write(json_bytes)
 
     # POST to mastiff
     http = urllib3.PoolManager()
+    base_url = config.get('index_server', 'https://branchwater-api.jgi.doe.gov')
     r = http.request('POST',
-                     'https://mastiff.sourmash.bio/search',
+                     f"{base_url}/search",
                      body=buf.getvalue(),
                      headers={'Content-Type': 'application/json'})
+    if r.status != 200:
+        raise SearchError(r.data.decode('utf-8'), r.status)
+
     query_results_text = r.data.decode('utf-8')
 
     results_wrap_fp = io.StringIO(query_results_text)
     mastiff0_df = pd.read_csv(results_wrap_fp)
     n_raw_results = len(mastiff0_df)
 
+    if n_raw_results == 0:
+        return pd.DataFrame(columns=DEFAULT_COLUMNS)
+
     # containment to ANI
-    KSIZE = 21
-    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./KSIZE)
+    ksize = config.get('ksize', 21)
+    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./ksize)
+
     # filter for containment; potential to pass this from user
-    THRESHOLD = 0.1
+    threshold = config.get('threshold', 0.1)
     print(
-        f"Search returned {n_raw_results} results. Now filtering results with <{THRESHOLD} containment...")
-    mastiff_df = mastiff0_df[mastiff0_df['containment'] >= THRESHOLD]
+        f"Search returned {n_raw_results} results. Now filtering results with <{threshold} containment...")
+    mastiff_df = mastiff0_df[mastiff0_df['containment'] >= threshold]
     print(
         f"Returning {len(mastiff_df)} filtered results!")
- 
 
     # remove spaces from columns
     mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]
@@ -45,16 +59,7 @@ def getacc(signatures):
 
 
 def getmongo(acc_t, meta_list, config):
-    # connection to run locally
-    # client = pm.MongoClient("mongodb://localhost:27017/")
-
-    # get current directory
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    # connection for docker container
-    repo_name = config.get('repository_name', 'branchwater-web')
-    print(f'repo_name: {repo_name}')
-
-    client = pm.MongoClient(f"mongodb://{repo_name}-mongo-readonly-1")
+    client = pm.MongoClient(f"mongodb://mongodb")
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 

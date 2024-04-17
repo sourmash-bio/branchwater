@@ -3,6 +3,18 @@ import yaml
 from flask import Flask, render_template, request, jsonify
 from functions import *
 
+import sentry_sdk
+from sentry_sdk.integrations.pymongo import PyMongoIntegration
+sentry_sdk.init(
+    os.environ.get("SENTRY_DSN"),
+    enable_tracing=True,
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+    integrations=[
+        PyMongoIntegration(),
+    ],
+)
+
 app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
 app.config['SECRET_KEY'] = 'my-secret-key'
@@ -29,7 +41,11 @@ def home():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        mastiff_df = getacc(signatures)
+        try:
+            mastiff_df = getacc(signatures, app.config)
+        except SearchError as e:
+            return e.args
+
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
         # for 'basic' query, override metadata form with selected categories
@@ -61,7 +77,11 @@ def advanced():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        mastiff_df = getacc(signatures)
+        try:
+            mastiff_df = getacc(signatures, app.config)
+        except SearchError as e:
+            return e.args
+
         acc_t = tuple(mastiff_df.SRA_accession.tolist())
 
         # get metadata from mongodb (imported from mongoquery.py)
