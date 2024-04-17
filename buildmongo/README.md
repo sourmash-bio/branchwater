@@ -46,6 +46,7 @@ Based on: - [Setting-up BigQuery](https://www.ncbi.nlm.nih.gov/sra/docs/sra-bigq
 
 #### Create access in bqmongo.py
 
-1. Change project id on lines 22 and 24 to:'sraproject-####' and 'sraproject-####.mastiffdata.mastiff_id'
+1. Change project id to:'sraproject-####'
+2. For testing, you can set 'build_full_db: False' if you'd like to build a smaller test mongodb. Be sure to set this back to `True` to build all metadata.
 
 <!-- end sra-metadata-access -->
