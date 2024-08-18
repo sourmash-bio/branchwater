@@ -1,3 +1,6 @@
+use std::fs::File;
+use std::io::{BufRead, BufReader, BufWriter, Write};
+
 use camino::Utf8Path as Path;
 use camino::Utf8PathBuf as PathBuf;
 use clap::{Parser, Subcommand};
@@ -19,6 +22,7 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands {
+    /// Create a new index from a collection manifest
     Index {
         /// Location of the input data.
         /// Either a zip file or a path to a directory containing signatures.
@@ -44,6 +48,8 @@ enum Commands {
         #[clap(long = "colors")]
         colors: bool,
     },
+
+    /// Update existing index with additional signatures
     Update {
         /// Location of the input data.
         /// Either a zip file or a path to a directory containing signatures.
@@ -76,6 +82,7 @@ enum Commands {
             colors: bool,
         },
     */
+    /// Prepare a manifest from a list of paths to signatures
     Manifest {
         /// File with list of paths to signatures
         pathlist: PathBuf,
@@ -94,6 +101,23 @@ enum Commands {
         #[clap(short, long)]
         output: Option<PathBuf>,
     },
+
+    /// Metadata for a database, like the sourmash manifest
+    Metadata {
+        /// Database location
+        database: PathBuf,
+
+        /// Location of the input data.
+        /// Either a zip file or a path to a directory containing signatures.
+        #[clap(short, long)]
+        location: Option<PathBuf>,
+
+        /// The path for output
+        #[clap(short, long)]
+        output: Option<PathBuf>,
+    },
+
+    /// Report information on an existing index
     Check {
         /// The path for output
         output: PathBuf,
@@ -102,6 +126,8 @@ enum Commands {
         #[clap(long = "quick")]
         quick: bool,
     },
+
+    /// Convert older version of DB to current one
     Convert {
         /// The path for the input DB
         input: PathBuf,
@@ -109,6 +135,8 @@ enum Commands {
         /// The path for the output DB
         output: PathBuf,
     },
+
+    /// Search for similar signatures in an index
     Search {
         /// Query signature
         query_path: PathBuf,
@@ -136,6 +164,8 @@ enum Commands {
         #[clap(short = 'o', long = "output")]
         output: Option<PathBuf>,
     },
+
+    /// Decompose query signature into components from index
     Gather {
         /// Query signature
         query_path: PathBuf,
@@ -359,9 +389,6 @@ fn manifest<P: AsRef<Path>>(
     selection: Option<Selection>,
     basepath: Option<P>,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    use std::fs::File;
-    use std::io::{BufRead, BufReader, BufWriter, Write};
-
     let paths: Vec<PathBuf> = BufReader::new(File::open(pathlist.as_ref())?)
         .lines()
         .map(|line| {
@@ -398,6 +425,49 @@ fn manifest<P: AsRef<Path>>(
     } else {
         manifest
     };
+
+    let out: Box<dyn Write + Send> = match output {
+        Some(path) => Box::new(BufWriter::new(File::create(path.as_ref()).unwrap())),
+        None => Box::new(std::io::stdout()),
+    };
+
+    manifest.to_writer(out)?;
+
+    Ok(())
+}
+
+fn metadata<P: AsRef<Path>>(
+    database: P,
+    location: Option<P>,
+    output: Option<P>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let db = match RevIndex::open(database.as_ref(), false, None) {
+        Ok(db) => db,
+        Err(_) => {
+            if location.is_none() {
+                return Err("Failed to open database, need a location for signature storage".into());
+            }
+            let location = location.unwrap();
+
+            let spec = if matches!(location.as_ref().extension(), Some("zip")) {
+                ZipStorage::from_file(location)?.spec()
+            } else {
+                assert!(location.as_ref().exists());
+                assert!(location.as_ref().is_dir());
+                FSStorage::builder()
+                    .fullpath(location.as_ref().into())
+                    .subdir("".into())
+                    .build()
+                    .spec()
+            };
+
+            RevIndex::open(database.as_ref(), false, Some(&spec))?
+        }
+    };
+
+    let collection = db.collection();
+
+    let manifest = collection.manifest();
 
     let out: Box<dyn Write + Send> = match output {
         Some(path) => Box::new(BufWriter::new(File::create(path.as_ref()).unwrap())),
@@ -509,6 +579,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             manifest(pathlist, output, selection, basepath)?
         }
+        Metadata {
+            database,
+            location,
+            output,
+        } => metadata(database, location, output)?,
         Search {
             query_path,
             output,
