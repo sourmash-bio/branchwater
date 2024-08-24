@@ -13,7 +13,7 @@ test = ["test"]
 python = ">=3.12.2,<3.13"
 
 [feature.build.dependencies]
-rust = ">=1.76.0,<1.77"
+rust = ">=1.80.1,<1.81"
 compilers = ">=1.7.0,<1.8"
 clangdev = ">=16.0.6,<17.1"
 libclang = ">=16.0.6,<17.1"
