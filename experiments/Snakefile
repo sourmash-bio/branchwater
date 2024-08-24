@@ -26,7 +26,9 @@ rule merge_demo_sigs:
 rule demo_index:
   output: directory("outputs/demo")
   input: "sigs/demo.zip"
+  threads: 24
   shell: """
+    export RAYON_NUM_THREADS={threads}
     {EXEC} index -k 21 -s 1000 \
         --output {output} \
         {input}
