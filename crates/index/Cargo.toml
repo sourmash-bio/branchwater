@@ -3,6 +3,7 @@ name = "branchwater-index"
 version.workspace = true
 edition = "2021"
 license = "AGPL"
+repository = "https://github.com/sourmash-bio/branchwater"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
