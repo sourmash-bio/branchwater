@@ -15,4 +15,4 @@ histogram.workspace = true
 log.workspace = true
 numsep.workspace = true
 size.workspace = true
-sourmash.workspace = true
+sourmash = { workspace = true, features = ["branchwater"] }
