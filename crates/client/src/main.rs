@@ -1,9 +1,11 @@
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use clap::Parser;
 use color_eyre::{eyre::Result, eyre::WrapErr};
 use log::info;
 use needletail::{parse_fastx_file, parse_fastx_stdin, Sequence};
+use serde_json::json;
 
 use sourmash::encodings::HashFunctions;
 use sourmash::prelude::*;
@@ -49,13 +51,21 @@ struct Cli {
     #[clap(parse(from_os_str), short, long)]
     output: Option<PathBuf>,
 
-    /// Server to query. Default: https://branchwater-api.sourmash.bio
-    #[clap(short, long, default_value = "https://branchwater-api.sourmash.bio")]
+    /// Server to query. Default: https://api.branchwater.sourmash.bio
+    #[clap(short, long, default_value = "https://api.branchwater.sourmash.bio")]
     server: String,
+
+    /// Metadata server to query. Default: https://branchwater.sourmash.bio
+    #[clap(short, long, default_value = "https://branchwater.jgi.doe.gov")]
+    metadata_server: String,
 
     /// Input file is already a signature
     #[clap(long = "sig")]
     is_sig: bool,
+
+    /// Return full results (containment plus matching dataset ID metadata)
+    #[clap(long = "full")]
+    full: bool,
 }
 
 fn main() -> Result<()> {
@@ -67,6 +77,8 @@ fn main() -> Result<()> {
         output,
         is_sig,
         server,
+        metadata_server,
+        full,
     } = Cli::parse();
 
     info!("Preparing signature");
@@ -133,43 +145,72 @@ fn main() -> Result<()> {
         None => Box::new(std::io::stdout()),
     };
 
-    let mut sig_data = vec![];
-    {
-        let mut output = niffler::get_writer(
-            Box::new(&mut sig_data),
-            niffler::compression::Format::Gzip,
-            niffler::compression::Level::Nine,
-        )
-        .wrap_err_with(|| "Error preparing signature")?;
-
-        sig.to_writer(&mut output)
-            .wrap_err_with(|| "Error preparing signature")?;
-    }
-
-    info!("Sending request to {}", server);
     let client = reqwest::blocking::Client::builder()
         .timeout(std::time::Duration::from_secs(3600))
         .build()?;
-    let res = client
-        .post(format!("{}/search", server))
-        .body(sig_data)
-        .send()?;
+
+    let res = if full {
+        info!("Sending request to {}", metadata_server);
+
+        let sig_data: HashMap<&str, String> = [("signatures", json!([sig]).to_string())].into();
+        client.post(metadata_server).json(&sig_data).send()?
+    } else {
+        info!("Sending request to {}", server);
+        let mut sig_data = vec![];
+        {
+            let mut output = niffler::get_writer(
+                Box::new(&mut sig_data),
+                niffler::compression::Format::Gzip,
+                niffler::compression::Level::Nine,
+            )
+            .wrap_err_with(|| "Error preparing signature")?;
+
+            sig.to_writer(&mut output)
+                .wrap_err_with(|| "Error preparing signature")?;
+        }
+
+        client
+            .post(format!("{}/search", server))
+            .body(sig_data)
+            .send()?
+    };
 
     info!("Writing matches to output");
-    let data = res.bytes()?;
+    if full {
+        //let raw_results: serde_json::Value = serde_json::from_slice(&res.bytes()?)?;
+        let raw_results: serde_json::Value = res.json()?;
+        let records = raw_results.as_array().unwrap();
+        let headers = records[0].as_object().unwrap().keys();
 
-    let mut wtr = csv::Writer::from_writer(output);
-    let mut rdr = csv::Reader::from_reader(&data[..]);
+        let mut wtr = csv::Writer::from_writer(output);
+        wtr.write_record(headers)?;
 
-    let mut headers = rdr.headers()?.clone();
-    headers.push_field("query");
+        for record in records {
+            let values = record.as_object().unwrap().values();
+            wtr.write_record(values.map(|v| {
+                if v.is_string() {
+                    v.as_str().unwrap().into()
+                } else {
+                    v.to_string()
+                }
+            }))?;
+        }
+    } else {
+        let data = res.bytes()?;
 
-    wtr.write_record(&headers)?;
+        let mut wtr = csv::Writer::from_writer(output);
+        let mut rdr = csv::Reader::from_reader(&data[..]);
 
-    for result in rdr.records() {
-        let mut record = result?;
-        record.push_field(query_name.as_str());
-        wtr.write_record(&record)?;
+        let mut headers = rdr.headers()?.clone();
+        headers.push_field("query");
+
+        wtr.write_record(&headers)?;
+
+        for result in rdr.records() {
+            let mut record = result?;
+            record.push_field(query_name.as_str());
+            wtr.write_record(&record)?;
+        }
     }
 
     info!("Finished!");

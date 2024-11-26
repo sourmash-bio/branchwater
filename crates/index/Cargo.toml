@@ -5,6 +5,9 @@ edition = "2021"
 license = "AGPL"
 repository = "https://github.com/sourmash-bio/branchwater"
 
+[package.metadata.dist]
+dist = false
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -15,4 +18,4 @@ histogram.workspace = true
 log.workspace = true
 numsep.workspace = true
 size.workspace = true
-sourmash.workspace = true
+sourmash = { workspace = true, features = ["branchwater"] }
