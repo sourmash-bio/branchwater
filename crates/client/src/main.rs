@@ -68,6 +68,10 @@ struct Cli {
     /// Return full results (containment plus matching dataset ID metadata)
     #[clap(long = "full")]
     full: bool,
+
+    /// How many times to retry requests to the server (default: 3)
+    #[clap(long = "retry", default_value = "3")]
+    retry: u32,
 }
 
 #[tokio::main]
@@ -82,6 +86,7 @@ async fn main() -> Result<()> {
         server,
         metadata_server,
         full,
+        retry,
     } = Cli::parse();
 
     info!("Preparing signature");
@@ -148,7 +153,7 @@ async fn main() -> Result<()> {
         None => Box::new(std::io::stdout()),
     };
 
-    let retry_policy = ExponentialBackoff::builder().build_with_max_retries(3);
+    let retry_policy = ExponentialBackoff::builder().build_with_max_retries(retry);
     let client = ClientBuilder::new(
         reqwest::Client::builder()
             .timeout(std::time::Duration::from_secs(3600))
