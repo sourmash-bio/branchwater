@@ -4,13 +4,17 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "osx-64", "osx-arm64"]
 
 [environments]
-build = ["build"]
-prepare = ["build", "prepare"]
-deploy = ["deploy"]
-test = ["test"]
+default = { features = ["test", "build", "prepare", "deploy"], solve-group = "default" }
+build = { features = ["build"], solve-group = "default" }
+prepare = { features = ["build", "prepare"], solve-group = "default" }
+deploy = { features = ["deploy"], solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
 
 [dependencies]
 python = ">=3.12.2,<3.13"
+
+[tasks]
+demo = { depends-on = ["index", "metadata"] }
 
 [feature.build.dependencies]
 rust = ">=1.80.1,<1.81"

@@ -5,6 +5,8 @@ use clap::Parser;
 use color_eyre::{eyre::Result, eyre::WrapErr};
 use log::info;
 use needletail::{parse_fastx_file, parse_fastx_stdin, Sequence};
+use reqwest_middleware::ClientBuilder;
+use reqwest_retry::{policies::ExponentialBackoff, RetryTransientMiddleware};
 use serde_json::json;
 
 use sourmash::encodings::HashFunctions;
@@ -68,7 +70,8 @@ struct Cli {
     full: bool,
 }
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
     color_eyre::install()?;
 
@@ -145,15 +148,20 @@ fn main() -> Result<()> {
         None => Box::new(std::io::stdout()),
     };
 
-    let client = reqwest::blocking::Client::builder()
-        .timeout(std::time::Duration::from_secs(3600))
-        .build()?;
+    let retry_policy = ExponentialBackoff::builder().build_with_max_retries(3);
+    let client = ClientBuilder::new(
+        reqwest::Client::builder()
+            .timeout(std::time::Duration::from_secs(3600))
+            .build()?,
+    )
+    .with(RetryTransientMiddleware::new_with_policy(retry_policy))
+    .build();
 
     let res = if full {
         info!("Sending request to {}", metadata_server);
 
         let sig_data: HashMap<&str, String> = [("signatures", json!([sig]).to_string())].into();
-        client.post(metadata_server).json(&sig_data).send()?
+        client.post(metadata_server).json(&sig_data).send().await?
     } else {
         info!("Sending request to {}", server);
         let mut sig_data = vec![];
@@ -172,13 +180,14 @@ fn main() -> Result<()> {
         client
             .post(format!("{}/search", server))
             .body(sig_data)
-            .send()?
+            .send()
+            .await?
     };
 
     info!("Writing matches to output");
     if full {
         //let raw_results: serde_json::Value = serde_json::from_slice(&res.bytes()?)?;
-        let raw_results: serde_json::Value = res.json()?;
+        let raw_results: serde_json::Value = res.json().await?;
         let records = raw_results.as_array().unwrap();
         let headers = records[0].as_object().unwrap().keys();
 
@@ -196,7 +205,7 @@ fn main() -> Result<()> {
             }))?;
         }
     } else {
-        let data = res.bytes()?;
+        let data = res.bytes().await?;
 
         let mut wtr = csv::Writer::from_writer(output);
         let mut rdr = csv::Reader::from_reader(&data[..]);
