@@ -18,7 +18,9 @@ log = "0.4.22"
 needletail = "0.6.0"
 niffler = { version = "2.6.0", default-features = false, features = [ "gz" ]}
 numsep = "0.1.12"
-reqwest = { version = "0.12.9", default-features = false, features = [ "blocking", "json", "rustls-tls" ] }
+reqwest = { version = "0.12.9", default-features = false, features = [ "json", "rustls-tls" ] }
+reqwest-retry = "0.7.0"
+reqwest-middleware = { version = "0.4.0", features = [ "json" ] }
 size = "0.4.0"
 sourmash = { version = "0.17.2" }
 
