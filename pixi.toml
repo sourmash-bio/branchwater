@@ -32,7 +32,11 @@ metadata = "docker compose exec mongodb python3 /docker-entrypoint-initdb.d/bqto
 [feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
 pandas = ">=2.2.1,<2.3"
+polars = "~=1.15.0"
 sourmash = ">=4.8.6,<4.9"
+duckdb-cli = ">=1.0.0,<2"
+awscli = ">=2.17.18,<3"
+python-duckdb = ">=1.0.0,<2"
 
 [feature.deploy.dependencies]
 podman-compose = ">=1.0.6,<1.1"

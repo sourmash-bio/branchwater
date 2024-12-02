@@ -83,6 +83,158 @@ rule subset_columns:
 
 #################################
 
+rule catalog_metagenomes:
+    output:
+        catalog="outputs/20241128-metagenomes-catalog",
+    input:
+        acclist="inputs/20241128.acclist",
+        basepath="/data/wort/wort-sra/"
+    run:
+        import csv
+        from pathlib import Path
+
+        # load all sra IDs
+        sraids = set()
+        with open(input.acclist) as fp:
+            data = csv.DictReader(fp, delimiter=",")
+            for dataset in data:
+                if dataset['acc'] != 'acc':
+                    sraids.add(dataset['acc'])
+
+        path = Path(input.basepath)
+        with open(output.catalog, 'w') as out:
+            # check if sraids exist on disk
+            for sra_id in sraids:
+                sig_path = path / "sigs" / f"{sra_id}.sig"
+                if sig_path.exists():
+                    out.write(f"{sig_path}\n")
+                    out.flush()
+
+rule manifest_from_catalog_full:
+    output:
+        manifest="outputs/20241128-metagenomes-s1000.manifest",
+    input:
+        catalog="outputs/20241128-metagenomes-catalog.available",
+        removed="inputs/20241128.removed",
+    threads: 24,
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} manifest \
+            --output {output} \
+            --basepath /data/wort/wort-sra \
+            <(cat {input.catalog} {input.removed})
+    """
+
+rule manifest_subset:
+  output:
+    manifest="outputs/20240420-metagenomes-k{ksize}-s1000.manifest",
+  input:
+    full_manifest="outputs/20240420-metagenomes-s1000.manifest",
+  params:
+    ksize = "{ksize}"
+  threads: 24,
+  run:
+    import csv
+
+    with open(input.full_manifest, "r") as fp:
+        sourmash_id = next(fp)
+        csv_header = next(fp).strip().split(",")
+            
+        data = csv.DictReader(fp, delimiter=",", fieldnames=csv_header)
+
+        with open(output[0], 'w', newline='') as g:
+            g.write(sourmash_id)
+            out = csv.DictWriter(g, csv_header, delimiter=",")
+            out.writeheader()
+
+            for row in data:
+                if row["ksize"] == params.ksize:
+                    out.writerow(row)
+
+rule previous_manifest:
+    output:
+        manifest="outputs/20230814-metagenomes-k21-s1000.manifest",
+    input:
+        database="/scratch/mastiff/2023.08.14/metag"
+    threads: 24,
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} metadata \
+            --output {output} \
+            {input.database}
+    """
+
+rule sync_with_previous_manifest:
+  output:
+    manifest="outputs/20241128-metagenomes-k{ksize}-s1000.synced.manifest",
+  input:
+    previous_manifest="outputs/20230814-metagenomes-k21-s1000.manifest",
+    manifest="outputs/20241128-metagenomes-s1000.manifest",
+  params:
+    ksize = "{ksize}"
+  threads: 24,
+  run:
+    import csv
+
+    with open(input.manifest, "r") as fp:
+        sourmash_id = next(fp)
+        csv_header = next(fp).strip().split(",")
+
+        data = csv.DictReader(fp, delimiter=",", fieldnames=csv_header)
+        new_data = {}
+        for row in data:
+            if row['ksize'] == params.ksize:
+              new_data[row['name']] = row
+
+    with open(output[0], 'w', newline='') as g:
+        g.write(sourmash_id)
+        out = csv.DictWriter(g, csv_header, delimiter=",")
+        out.writeheader()
+
+        with open(input.previous_manifest, "r") as fp:
+            sourmash_id = next(fp)
+            csv_header = next(fp).strip().split(",")
+                
+            data = csv.DictReader(fp, delimiter=",", fieldnames=csv_header)
+
+            for row in data:
+                new_row = new_data.pop(row["name"])
+                assert new_row["ksize"] == params.ksize
+                out.writerow(new_row)
+
+        for row in new_data.values():
+            out.writerow(row)
+	
+rule metag_k31:
+    output: directory("outputs/20241128")
+    input:
+      storage="/data/wort/wort-sra",
+      manifest="outputs/20241128-metagenomes-k31-s1000.synced.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} index -k 31 -s 1000 \
+          --output {output} \
+          --manifest {input.manifest} \
+          {input.storage}
+    """
+
+rule metag_debug:
+    output: directory("outputs/20241128-debug")
+    input:
+      storage="/data/wort/wort-sra",
+      manifest="outputs/20241128-metagenomes-k31-s1000.synced.manifest",
+    threads: 24
+    shell: """
+        export RAYON_NUM_THREADS={threads}
+        RUST_LOG=info {EXEC} index -k 31 -s 1000 \
+          --output {output} \
+          --manifest <(head -102 {input.manifest}) \
+          {input.storage}
+    """
+
+#################################
+
 rule rs207_1k:
     output: directory("outputs/rs207-1k")
     input:
@@ -196,49 +348,6 @@ rule manifest_test:
             --basepath /data/wort/wort-sra \
             <(head -2000 {input.catalog})
     """
-
-#######################################################################
-
-rule manifest_from_catalog:
-    output:
-        manifest="outputs/metagenomes-k{ksize}-s1000.manifest",
-    input:
-        catalog="outputs/metagenomes-catalog",
-    threads: 24,
-    shell: """
-        export RAYON_NUM_THREADS={threads}
-        RUST_LOG=info {EXEC} manifest -k 21 \
-            --output {output} \
-            --basepath /data/wort/wort-sra \
-            {input.catalog}
-    """
-
-rule catalog_metagenomes:
-    output:
-        catalog="outputs/metagenomes-catalog",
-    input:
-        runinfo="runinfo-20230817.csv",
-        basepath="/data/wort/wort-sra/"
-    run:
-        import csv
-        from pathlib import Path
-
-        # load all sra IDs
-        sraids = set()
-        with open(input.runinfo) as fp:
-            data = csv.DictReader(fp, delimiter=",")
-            for dataset in data:
-                if dataset['Run'] != 'Run':
-                    sraids.add(dataset['Run'])
-
-        path = Path(input.basepath)
-        with open(output.catalog, 'w') as out:
-            # check if sraids exist on disk
-            for sra_id in sraids:
-                sig_path = path / "sigs" / f"{sra_id}.sig"
-                if sig_path.exists():
-                    out.write(f"{sig_path}\n")
-                    out.flush()
 
 #######################################################################
 
