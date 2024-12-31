@@ -22,9 +22,10 @@ reqwest = { version = "0.12.9", default-features = false, features = [ "json", "
 reqwest-retry = "0.7.0"
 reqwest-middleware = { version = "0.4.0", features = [ "json" ] }
 size = "0.4.0"
-sourmash = { version = "0.17.2" }
+#sourmash = { version = "0.17.2" }
 #sourmash = { git = "https://github.com/sourmash-bio/sourmash", branch = "lirber/collection_method_2", features = ["branchwater"] }
-#sourmash = { path = "../../sourmash/collection_method_2/src/core/", features = ["branchwater"] }
+#sourmash = { path = "../../sourmash/manual_compaction/src/core/", features = ["branchwater"] }
+sourmash = { path = "../../sourmash/collection_method/src/core/", features = ["branchwater"] }
 
 serde_json = "1.0.113"
 # axum deps

@@ -189,6 +189,34 @@ enum Commands {
         #[clap(short = 'o', long = "output")]
         output: Option<PathBuf>,
     },
+
+    /// Tasks for low-level database maintenance
+    #[clap(subcommand, hide(true))]
+    Maintenance(MaintenanceCommands)
+}
+
+#[derive(Subcommand, Debug)]
+enum MaintenanceCommands {
+    /// Copy over items from original database, applying changes to destination
+    Rebuild {
+        /// Location of original index
+        original: PathBuf,
+
+        /// Location of destination index
+        destination: PathBuf,
+    }
+}
+
+fn rebuild<P: AsRef<Path>>(
+    original: P,
+    destination: P,
+) -> Result<(), Box<dyn std::error::Error>> {
+   let db = RevIndex::open(original.as_ref(), false, None)?;
+   dbg!("loaded original");
+
+   //db.rebuild(destination.as_ref())?;
+
+   Ok(())
 }
 
 fn gather<P: AsRef<Path>>(
@@ -634,6 +662,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } /* TODO: need the repair_cf variant, not available in rocksdb-rust yet
                   Repair { index, colors } => repair(index, colors),
           */
+        Maintenance(m) => {
+            use MaintenanceCommands::*;
+            match m {
+                Rebuild { original, destination } => {
+                    rebuild(original, destination)?
+                }
+            }
+        }
     };
 
     Ok(())
