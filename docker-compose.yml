@@ -1,8 +1,9 @@
-version: "3.4"
 services:
   index:
     build:
-      dockerfile: Dockerfile.index
+      context: .
+      dockerfile: Dockerfile
+      target: index
     restart: always
     volumes:
       - ./bw_db:/data/
@@ -11,14 +12,19 @@ services:
 
   mongodb:
     build:
-      context: ./buildmongo #from custom Dockerfile
+      context: .
+      dockerfile: Dockerfile
+      target: mongo
     restart: always
     volumes:
       - ./bw_db:/data/bw_db
       - ./mongodb:/data/db
 
   app:
-    build: ./app #from custom Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
     links:
       - mongodb
       - index

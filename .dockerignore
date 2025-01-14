@@ -2,6 +2,8 @@
 **
 
 # except
+!app/
+!buildmongo/
 !crates/
 !assets/
 !flake.nix
