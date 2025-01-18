@@ -29,14 +29,14 @@ build-server = "cargo build --release -p branchwater-server"
 
 [feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
-metadata = "docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/bqtomongo.py"
+#metadata = "docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/bqtomongo.py"
+metadata = { cmd = ["python3", "bqtomongo.py"], cwd = "buildmongo" }
 
 [feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
-pandas = ">=2.2.1,<2.3"
+polars = ">=1.12.0,<2"
 sourmash = ">=4.8.6,<4.9"
 pymongo = "~=4.10"
-google-cloud-bigquery = "~=3.26.0"
 pyarrow = "*"
 
 [feature.deploy.dependencies]
