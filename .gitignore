@@ -1,5 +1,11 @@
 .DS_Store
+
+bw_db/
 bw_db/bqKey.json
+experiments/.snakemake
+experiments/outputs/
+experiments/sigs/
+
 /target
 .direnv/
 sandbox/
