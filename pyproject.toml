@@ -1,74 +1,71 @@
 [project]
 name = "branchwater"
+version = "0.1.0"
+requires-python = ">=3.12.2,<3.13"
+
+[tool.pixi.project]
 channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
-[environments]
+[tool.pixi.environments]
 default = { features = ["test", "build", "prepare", "deploy", "dev", "web", "metadata", "mongo"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
-deploy = { features = ["deploy"], solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 web = { features = ["web", "mongo"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
 mongo = { features = ["mongo"], solve-group = "default" }
 
-[dependencies]
-python = ">=3.12.2,<3.13"
-
-[tasks]
+[tool.pixi.tasks]
 demo = { depends-on = ["index", "metadata"] }
 
-[feature.build.dependencies]
+[tool.pixi.feature.build.dependencies]
 rust = ">=1.80.1,<1.81"
 compilers = ">=1.7.0,<1.8"
 clangdev = ">=16.0.6,<17.1"
 libclang = ">=16.0.6,<17.1"
 
-[feature.build.tasks]
+[tool.pixi.feature.build.tasks]
 build-server = "cargo build --release -p branchwater-server"
 
-[feature.prepare.tasks]
+[tool.pixi.feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
 metadata = { depends-on = ["metadata_bq", "load_mongo"] }
 
-[feature.prepare.dependencies]
+[tool.pixi.feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
 sourmash = ">=4.8.6,<4.9"
 
-[feature.mongo.dependencies]
+[tool.pixi.feature.mongo.dependencies]
 pymongo = "~=4.10"
 polars = ">=1.12.0,<2"
 
-[feature.mongo.tasks]
+[tool.pixi.feature.mongo.tasks]
 load_mongo = "docker compose up -d mongodb && docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/load_parquet.py /data/bw_db/metadata.parquet"
 
-[feature.metadata.dependencies]
+[tool.pixi.feature.metadata.dependencies]
 polars = ">=1.12.0,<2"
 pyarrow = "*"
 google-cloud-bigquery = ">=3.28.0,<4"
 
-[feature.metadata.tasks]
+[tool.pixi.feature.metadata.tasks]
 metadata_sra = { cmd = ["python3", "prepare_sra.py"], cwd = "metadata" }
 metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
 
-[feature.deploy.dependencies]
-podman-compose = ">=1.0.6,<1.1"
-
-[feature.deploy.tasks]
+[tool.pixi.feature.deploy.tasks]
 deploy = "docker compose"
 
-[feature.test.dependencies]
-tox = ">=3.24.5,<4.14"
+[tool.pixi.feature.test.dependencies]
+tox = ">=4.0,<4.24"
 
-[feature.test.tasks]
+[tool.pixi.feature.test.tasks]
 docs = { cmd = ["tox", "-e", "docs"] }
 
-[feature.dev.dependencies]
+[tool.pixi.feature.dev.dependencies]
 pyright = "*"
 
-[feature.web.dependencies]
+[tool.pixi.feature.web.dependencies]
 flask = "~=2.3.2"
 polars = ">=1.12.0,<2"
 pandas = "~=2.0"
@@ -76,5 +73,5 @@ urllib3 = "~=2.0.4"
 pyyaml = "~=6.0"
 gunicorn = "~=23.0"
 
-[feature.web.pypi-dependencies]
+[tool.pixi.feature.web.pypi-dependencies]
 sentry-sdk = { version = "*", extras = ["flask", "pymongo"] }

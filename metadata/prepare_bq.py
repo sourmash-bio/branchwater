@@ -12,7 +12,7 @@ from google.cloud import bigquery
 def main(
     *,
     accs="/data/bw_db/sraids",
-    build_full_db=True,
+    limit=True,
     output="/data/bw_db/metadata.parquet",
     key_path="/data/bw_db/bqKey.json",
 ):
@@ -82,7 +82,7 @@ def main(
     for item in attr_list_nosam:
         attr_col = attr_col + f"""json_query(jattr,'$.{item}') as {item}, """
 
-    if build_full_db == True:
+    if not limit:
         print(f"building full mongodb database.")
         limit = ";"
     else:
@@ -109,6 +109,7 @@ if __name__ == "__main__":
     parser.add_argument("-a", "--acc", default="/data/bw_db/sraids")
     parser.add_argument("-o", "--output", default="/data/bw_db/metadata.parquet")
     parser.add_argument("-k", "--key-path", default="/data/bw_db/bqKey.json")
+    parser.add_argument("-l", "--limit", default=False, action='store_true')
 
     args = parser.parse_args()
-    main(accs=args.acc, output=args.output, key_path=args.key_path)
+    main(accs=args.acc, output=args.output, key_path=args.key_path, limit=args.limit)
