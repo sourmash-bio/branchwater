@@ -8,10 +8,9 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [tool.pixi.environments]
-default = { features = ["test", "build", "prepare", "deploy", "dev", "web", "metadata", "mongo", "docs"], solve-group = "default" }
+default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "mongo", "docs"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
-test = { features = ["test"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 web = { features = ["web", "mongo"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
@@ -55,9 +54,6 @@ metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k"
 
 [tool.pixi.feature.deploy.tasks]
 deploy = "docker compose"
-
-[tool.pixi.feature.test.dependencies]
-tox = ">=4.0,<4.24"
 
 [tool.pixi.feature.docs.dependencies]
 pandoc = "*"
