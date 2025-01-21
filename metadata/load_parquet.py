@@ -7,9 +7,7 @@ import polars as pl
 import pymongo as pm
 
 
-def main(*,
-    metadata="/data/bw_db/metadata.parquet"):
-
+def main(*, metadata="/data/bw_db/metadata.parquet"):
     query_job = pl.read_parquet(metadata)
 
     meta_dic = []
@@ -21,28 +19,30 @@ def main(*,
         # replace 'none' with NP
         for key in d:
             if type(d[key]) == list and len(d[key]) == 0:
-                d[key] = 'NP'
+                d[key] = "NP"
             elif d[key] == None:
-                d[key] = 'NP'
+                d[key] = "NP"
 
         # add biosample link
-        d['biosample_link'] = f"https://www.ncbi.nlm.nih.gov/biosample/{d.get('biosample', '')}"
+        d["biosample_link"] = (
+            f"https://www.ncbi.nlm.nih.gov/biosample/{d.get('biosample', '')}"
+        )
 
         # replace lat-lon with decimal degrees
-        if 'lat_lon' in d and d['lat_lon'] != 'NP':
+        if "lat_lon" in d and d["lat_lon"] != "NP":
             regex = r'"(\d+\.\d+) ([NS]) (\d+\.\d+) ([EW])"'
             # extract latitude and longitude using regular expression
-            match = re.search(regex, d['lat_lon'])
+            match = re.search(regex, d["lat_lon"])
             if match:
                 # convert latitude and longitude to decimal degrees
                 lat = float(match.group(1))
-                if match.group(2) == 'S':
+                if match.group(2) == "S":
                     lat *= -1
                 lon = float(match.group(3))
-                if match.group(4) == 'W':
+                if match.group(4) == "W":
                     lon *= -1
                 # replace 'lat_lon' value with list of latitude and longitude
-                d['lat_lon'] = [lat, lon]
+                d["lat_lon"] = [lat, lon]
 
         # remove any more errors that could occur from improper date-time formatting by converting to string
         for key, value in d.items():
@@ -58,8 +58,9 @@ def main(*,
     sradb_col.drop()  # delete current collection if already present
     res = sradb_col.insert_many(meta_dic)
 
-
-    print(f'{sradb_col.count_documents({})} acc documents imported to mongoDB collection')
+    print(
+        f"{sradb_col.count_documents({})} acc documents imported to mongoDB collection"
+    )
 
     # Retrieve statistics about the sradb_list collection
     stats = db.command("collstats", "sradb_list")
@@ -69,9 +70,11 @@ def main(*,
     avg_doc_size = stats["avgObjSize"]
 
     print(
-        f"Full MongoDB size is {total_size} bytes, average document size is {avg_doc_size} bytes")
+        f"Full MongoDB size is {total_size} bytes, average document size is {avg_doc_size} bytes"
+    )
 
     # print(sradb_col.find_one({}))
+
 
 if __name__ == "__main__":
     import argparse

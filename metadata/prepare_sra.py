@@ -12,7 +12,7 @@ def main(
     accs="/data/bw_db/sraids",
     sra_metadata="s3://sra-pub-metadata-us-east-1/sra/metadata/",
     build_full_db=True,
-    output="/data/bw_db/metadata.parquet"
+    output="/data/bw_db/metadata.parquet",
 ):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print(f"dir_path: {dir_path}")
@@ -89,7 +89,7 @@ def main(
         print(f"limiting mongodb to 150,000 for testing.")
         sra_metadata = sra_metadata.head(150000)
 
-    #print(sra_metadata.explain(optimized=True))
+    # print(sra_metadata.explain(optimized=True))
 
     query_job = sra_metadata.join(mastiff_acc, on="acc").sink_parquet(output)
 
