@@ -17,3 +17,6 @@ mongodb/
 # pixi environments
 .pixi
 .tox
+
+docs/doctree/
+docs/out/
