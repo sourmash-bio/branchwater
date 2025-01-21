@@ -25,13 +25,11 @@ services:
       context: .
       dockerfile: Dockerfile
       target: web
-    links:
-      - mongodb
-      - index
     ports:
       - "8000:8000"
     restart: always
     depends_on:
       - mongodb
+      - index
     env_file:
       - prod.env

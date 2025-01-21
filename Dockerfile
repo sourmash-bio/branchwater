@@ -9,6 +9,8 @@ RUN echo 'exec "$@"' >> /shell-hook-web
 #RUN pixi run -e worker postinstall-prod
 RUN pixi shell-hook -e prepare > /shell-hook-prepare
 RUN echo 'exec "$@"' >> /shell-hook-prepare
+RUN pixi shell-hook -e mongo > /shell-hook-mongo
+RUN echo 'exec "$@"' >> /shell-hook-mongo
 
 #--------------------
 
@@ -55,8 +57,8 @@ CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data
 
 FROM docker.io/mongo:latest AS mongo
 
-COPY --from=build /app/.pixi/envs/prepare /app/.pixi/envs/prepare
-COPY --from=build /shell-hook-prepare /shell-hook
+COPY --from=build /app/.pixi/envs/mongo /app/.pixi/envs/mongo
+COPY --from=build /shell-hook-mongo /shell-hook
 
 # Copy the contents of the current directory to the container's entrypoint directory
-COPY ./buildmongo/ /docker-entrypoint-initdb.d/
+COPY ./metadata/load_parquet.py /docker-entrypoint-initdb.d/load_parquet.py

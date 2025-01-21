@@ -4,13 +4,15 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [environments]
-default = { features = ["test", "build", "prepare", "deploy", "dev", "web"], solve-group = "default" }
+default = { features = ["test", "build", "prepare", "deploy", "dev", "web", "metadata", "mongo"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 deploy = { features = ["deploy"], solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
-web = { features = ["web"], solve-group = "default" }
+web = { features = ["web", "mongo"], solve-group = "default" }
+metadata = { features = ["metadata"], solve-group = "default" }
+mongo = { features = ["mongo"], solve-group = "default" }
 
 [dependencies]
 python = ">=3.12.2,<3.13"
@@ -29,15 +31,23 @@ build-server = "cargo build --release -p branchwater-server"
 
 [feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
-#metadata = "docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/bqtomongo.py"
-metadata = { cmd = ["python3", "bqtomongo.py"], cwd = "buildmongo" }
+metadata = { depends-on = ["metadata_bq", "load_mongo"] }
+load_mongo = "docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/load_parquet.py /data/bw_db/metadata.parquet"
+metadata_sra = { cmd = ["python3", "prepare_sra.py"], cwd = "metadata" }
+metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-p", "sraproject-406923", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
 
 [feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
-polars = ">=1.12.0,<2"
 sourmash = ">=4.8.6,<4.9"
+
+[feature.mongo.dependencies]
 pymongo = "~=4.10"
+polars = ">=1.12.0,<2"
+
+[feature.metadata.dependencies]
+polars = ">=1.12.0,<2"
 pyarrow = "*"
+google-cloud-bigquery = ">=3.28.0,<4"
 
 [feature.deploy.dependencies]
 podman-compose = ">=1.0.6,<1.1"
@@ -58,7 +68,6 @@ pyright = "*"
 flask = "~=2.3.2"
 polars = ">=1.12.0,<2"
 pandas = "~=2.0"
-pymongo = "~=4.10"
 urllib3 = "~=2.0.4"
 pyyaml = "~=6.0"
 gunicorn = "~=23.0"

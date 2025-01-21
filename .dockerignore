@@ -3,7 +3,7 @@
 
 # except
 !app/
-!buildmongo/
+!metadata/
 !crates/
 !assets/
 !flake.nix

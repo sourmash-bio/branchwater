@@ -12,6 +12,7 @@ def main(
     accs="/data/bw_db/sraids",
     sra_metadata="s3://sra-pub-metadata-us-east-1/sra/metadata/",
     build_full_db=True,
+    output="/data/bw_db/metadata.parquet"
 ):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print(f"dir_path: {dir_path}")
@@ -88,78 +89,9 @@ def main(
         print(f"limiting mongodb to 150,000 for testing.")
         sra_metadata = sra_metadata.head(150000)
 
-    print(sra_metadata.explain(optimized=True))
+    #print(sra_metadata.explain(optimized=True))
 
-    query_job = sra_metadata.join(mastiff_acc, on="acc").sink_parquet("test.parquet")
-
-    print(query_job)
-
-    query_job = client.query(query)
-    time.sleep(30)  # potentially better as a a "while" loop
-    meta_dic = []
-    for row in query_job:
-        meta_dic.append(dict(row.items()))
-
-    # iterate over each dictionary in the list
-    for d in meta_dic:
-        # replace 'none' with NP
-        for key in d:
-            if type(d[key]) == list and len(d[key]) == 0:
-                d[key] = "NP"
-            elif d[key] == None:
-                d[key] = "NP"
-
-        # add biosample link
-        d["biosample_link"] = (
-            f"https://www.ncbi.nlm.nih.gov/biosample/{d.get('biosample', '')}"
-        )
-
-        # replace lat-lon with decimal degrees
-        if "lat_lon" in d and d["lat_lon"] != "NP":
-            regex = r'"(\d+\.\d+) ([NS]) (\d+\.\d+) ([EW])"'
-            # extract latitude and longitude using regular expression
-            match = re.search(regex, d["lat_lon"])
-            if match:
-                # convert latitude and longitude to decimal degrees
-                lat = float(match.group(1))
-                if match.group(2) == "S":
-                    lat *= -1
-                lon = float(match.group(3))
-                if match.group(4) == "W":
-                    lon *= -1
-                # replace 'lat_lon' value with list of latitude and longitude
-                d["lat_lon"] = [lat, lon]
-
-        # remove any more errors that could occur from improper date-time formatting by converting to string
-        for key, value in d.items():
-            if isinstance(value, datetime.date):
-                d[key] = str(value)
-
-    # connect to mongodb client, clear collection, and insert
-    # For now default client settings, needs to be changed for app deployment with port
-    # client = pm.MongoClient(, 27017)  # in first location insert the port
-    client = pm.MongoClient("mongodb://localhost:27017/")
-    db = client["sradb"]
-    sradb_col = db["sradb_list"]
-    sradb_col.drop()  # delete current collection if already present
-    res = sradb_col.insert_many(meta_dic)
-
-    print(
-        f"{sradb_col.count_documents({})} acc documents imported to mongoDB collection"
-    )
-
-    # Retrieve statistics about the sradb_list collection
-    stats = db.command("collstats", "sradb_list")
-
-    # Extract the total size and average document size from the stats dictionary
-    total_size = stats["size"]
-    avg_doc_size = stats["avgObjSize"]
-
-    print(
-        f"Full MongoDB size is {total_size} bytes, average document size is {avg_doc_size} bytes"
-    )
-
-    # print(sradb_col.find_one({}))
+    query_job = sra_metadata.join(mastiff_acc, on="acc").sink_parquet(output)
 
 
 if __name__ == "__main__":
@@ -170,6 +102,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s", "--sra-metadata", default="s3://sra-pub-metadata-us-east-1/sra/metadata/"
     )
+    parser.add_argument("-o", "--output", default="/data/bw_db/metadata.parquet")
 
     args = parser.parse_args()
-    main(accs=args.acc, sra_metadata=args.sra_metadata)
+    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output)
