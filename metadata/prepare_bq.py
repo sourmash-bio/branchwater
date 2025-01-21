@@ -1,12 +1,9 @@
-import datetime
-import re
+import json
 import os
-import time
 from pathlib import Path
 
 import pandas as pd
 import polars as pl
-import yaml
 
 from google.oauth2 import service_account
 from google.cloud import bigquery
@@ -14,16 +11,17 @@ from google.cloud import bigquery
 def main(
     *,
     accs="/data/bw_db/sraids",
-    sra_metadata="s3://sra-pub-metadata-us-east-1/sra/metadata/",
     build_full_db=True,
     output="/data/bw_db/metadata.parquet",
     key_path="/data/bw_db/bqKey.json",
-    project_id='sraproject-386813',
 ):
     # get current directory
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print(f'dir_path: {dir_path}')
     print(os.listdir(dir_path))
+
+    # load project_id from bigquery key file
+    project_id = json.loads(Path(key_path).read_text())['project_id']
 
     # Connect to client
     # bq key to service account with the roles: BigQuery Job User; BigQuery Data Owner; BigQuery Read Sessions User
@@ -107,13 +105,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--acc", default="/data/bw_db/sraids")
-    parser.add_argument(
-        "-s", "--sra-metadata", default="s3://sra-pub-metadata-us-east-1/sra/metadata/"
-    )
     parser.add_argument("-o", "--output", default="/data/bw_db/metadata.parquet")
     parser.add_argument("-k", "--key-path", default="/data/bw_db/bqKey.json")
-    parser.add_argument("-p", "--project-id", default='sraproject-386813')
 
     args = parser.parse_args()
-    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output,
-         key_path=args.key_path, project_id=args.project_id)
+    main(accs=args.acc, output=args.output, key_path=args.key_path)
