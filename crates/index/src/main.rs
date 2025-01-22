@@ -307,10 +307,7 @@ fn index<P: AsRef<Path>>(
     Ok(())
 }
 
-fn metadata<P: AsRef<Path>>(
-    index: P,
-    output: Option<P>,
-) -> Result<(), Box<dyn std::error::Error>> {
+fn metadata<P: AsRef<Path>>(index: P, output: Option<P>) -> Result<(), Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::{BufWriter, Write};
 
@@ -550,12 +547,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             manifest(pathlist, output, selection, basepath)?
         }
-        Metadata {
-            index,
-            output,
-        } => {
-            metadata(index, output)?
-        }
+        Metadata { index, output } => metadata(index, output)?,
         Search {
             query_path,
             output,

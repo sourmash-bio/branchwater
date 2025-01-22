@@ -10,5 +10,5 @@
 !flake.lock
 !Cargo.toml
 !Cargo.lock
-!pixi.toml
+!pyproject.toml
 !pixi.lock

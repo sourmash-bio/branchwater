@@ -39,7 +39,7 @@ WORKDIR /app/web
 #USER user 
 
 ENTRYPOINT ["/bin/bash", "/shell-hook"]
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "--access-logfile", "-", "main:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--access-logfile", "-", "main:app"]
 
 #--------------------
 
