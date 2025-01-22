@@ -94,6 +94,14 @@ enum Commands {
         #[clap(short, long)]
         output: Option<PathBuf>,
     },
+    Metadata {
+        /// Save metadata manifest to this file
+        #[clap(short, long)]
+        output: Option<PathBuf>,
+
+        /// Index to extract metadata from
+        index: PathBuf,
+    },
     Check {
         /// The path for output
         output: PathBuf,
@@ -295,6 +303,27 @@ fn index<P: AsRef<Path>>(
         collection.select(&selection)?.try_into()?,
         colors,
     )?;
+
+    Ok(())
+}
+
+fn metadata<P: AsRef<Path>>(
+    index: P,
+    output: Option<P>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    use std::fs::File;
+    use std::io::{BufWriter, Write};
+
+    let db = RevIndex::open(index.as_ref(), false, None)?;
+
+    let manifest = db.collection().manifest();
+
+    let out: Box<dyn Write + Send> = match output {
+        Some(path) => Box::new(BufWriter::new(File::create(path.as_ref()).unwrap())),
+        None => Box::new(std::io::stdout()),
+    };
+
+    manifest.to_writer(out)?;
 
     Ok(())
 }
@@ -520,6 +549,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let selection = ksize.map(|ksize| Selection::builder().ksize(ksize.into()).build());
 
             manifest(pathlist, output, selection, basepath)?
+        }
+        Metadata {
+            index,
+            output,
+        } => {
+            metadata(index, output)?
         }
         Search {
             query_path,
