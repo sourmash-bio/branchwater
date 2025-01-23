@@ -1,20 +1,26 @@
-FROM ghcr.io/prefix-dev/pixi:0.39.5-noble AS build
+FROM ghcr.io/prefix-dev/pixi:0.39.5-noble AS install
 
-COPY . /app
 WORKDIR /app
 
-#RUN pixi run -e web postinstall-prod
+COPY pyproject.toml .
+COPY pixi.lock .
+
+RUN --mount=type=cache,target=/root/.cache/rattler/cache,sharing=private pixi install
+
 RUN pixi shell-hook -e web > /shell-hook-web
 RUN echo 'exec "$@"' >> /shell-hook-web
-#RUN pixi run -e worker postinstall-prod
+
 RUN pixi shell-hook -e prepare > /shell-hook-prepare
 RUN echo 'exec "$@"' >> /shell-hook-prepare
+
 RUN pixi shell-hook -e mongo > /shell-hook-mongo
 RUN echo 'exec "$@"' >> /shell-hook-mongo
 
 #--------------------
 
-FROM build AS rust_build
+FROM install AS rust_build
+
+COPY . .
 
 # Need this to avoid SSL errors. Can this be done only with pixi?
 RUN apt-get update && apt-get -y install ca-certificates
@@ -26,8 +32,8 @@ RUN pixi run build-server
 FROM ubuntu:24.04 AS web
 
 # only copy the production environment into prod container
-COPY --from=build /app/.pixi/envs/web /app/.pixi/envs/web
-COPY --from=build /shell-hook-web /shell-hook
+COPY --from=install /app/.pixi/envs/web /app/.pixi/envs/web
+COPY --from=install /shell-hook-web /shell-hook
 
 RUN groupadd user && \
     useradd --create-home --home-dir /home/user -g user -s /bin/bash user
@@ -57,8 +63,8 @@ CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data
 
 FROM docker.io/mongo:latest AS mongo
 
-COPY --from=build /app/.pixi/envs/mongo /app/.pixi/envs/mongo
-COPY --from=build /shell-hook-mongo /shell-hook
+COPY --from=install /app/.pixi/envs/mongo /app/.pixi/envs/mongo
+COPY --from=install /shell-hook-mongo /shell-hook
 
 # Copy the contents of the current directory to the container's entrypoint directory
 COPY ./metadata/load_parquet.py /docker-entrypoint-initdb.d/load_parquet.py
