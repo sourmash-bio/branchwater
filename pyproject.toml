@@ -83,3 +83,8 @@ gunicorn = "~=23.0"
 
 [tool.pixi.feature.web.pypi-dependencies]
 sentry-sdk = { version = "*", extras = ["flask", "pymongo"] }
+
+[tool.pixi.system-requirements]
+linux = "3.10"
+libc = "2.17"
+macos = "12.0"
