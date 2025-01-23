@@ -26,6 +26,7 @@ services:
     volumes:
       - ./bw_k21:/data/bw_db
       - ./mongodb:/data/db
+      - ./metadata:/docker-entrypoint-initdb.d
 
   app:
     build:

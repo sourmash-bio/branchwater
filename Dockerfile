@@ -65,6 +65,3 @@ FROM docker.io/mongo:latest AS mongo
 
 COPY --from=install /app/.pixi/envs/mongo /app/.pixi/envs/mongo
 COPY --from=install /shell-hook-mongo /shell-hook
-
-# Copy the contents of the current directory to the container's entrypoint directory
-COPY ./metadata/load_parquet.py /docker-entrypoint-initdb.d/load_parquet.py

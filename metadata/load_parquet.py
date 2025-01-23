@@ -1,53 +1,13 @@
 import datetime
-import os
 import re
-import time
+from itertools import batched
 
 import polars as pl
 import pymongo as pm
 
 
-def main(*, metadata="/data/bw_db/metadata.parquet"):
+def main(*, metadata="/data/bw_db/metadata.parquet", batch_size=10000):
     query_job = pl.read_parquet(metadata)
-
-    meta_dic = []
-    for row in query_job.iter_rows(named=True):
-        meta_dic.append(dict(row.items()))
-
-    # iterate over each dictionary in the list
-    for d in meta_dic:
-        # replace 'none' with NP
-        for key in d:
-            if type(d[key]) == list and len(d[key]) == 0:
-                d[key] = "NP"
-            elif d[key] == None:
-                d[key] = "NP"
-
-        # add biosample link
-        d["biosample_link"] = (
-            f"https://www.ncbi.nlm.nih.gov/biosample/{d.get('biosample', '')}"
-        )
-
-        # replace lat-lon with decimal degrees
-        if "lat_lon" in d and d["lat_lon"] != "NP":
-            regex = r'"(\d+\.\d+) ([NS]) (\d+\.\d+) ([EW])"'
-            # extract latitude and longitude using regular expression
-            match = re.search(regex, d["lat_lon"])
-            if match:
-                # convert latitude and longitude to decimal degrees
-                lat = float(match.group(1))
-                if match.group(2) == "S":
-                    lat *= -1
-                lon = float(match.group(3))
-                if match.group(4) == "W":
-                    lon *= -1
-                # replace 'lat_lon' value with list of latitude and longitude
-                d["lat_lon"] = [lat, lon]
-
-        # remove any more errors that could occur from improper date-time formatting by converting to string
-        for key, value in d.items():
-            if isinstance(value, datetime.date):
-                d[key] = str(value)
 
     # connect to mongodb client, clear collection, and insert
     # For now default client settings, needs to be changed for app deployment with port
@@ -56,7 +16,48 @@ def main(*, metadata="/data/bw_db/metadata.parquet"):
     db = client["sradb"]
     sradb_col = db["sradb_list"]
     sradb_col.drop()  # delete current collection if already present
-    res = sradb_col.insert_many(meta_dic)
+
+    for batch in batched(query_job.iter_rows(named=True), batch_size):
+        meta_dic = []
+        for row in batch:
+            meta_dic.append(dict(row.items()))
+
+        # iterate over each dictionary in the list
+        for d in meta_dic:
+            # replace 'none' with NP
+            for key in d:
+                if type(d[key]) == list and len(d[key]) == 0:
+                    d[key] = "NP"
+                elif d[key] == None:
+                    d[key] = "NP"
+
+            # add biosample link
+            d["biosample_link"] = (
+                f"https://www.ncbi.nlm.nih.gov/biosample/{d.get('biosample', '')}"
+            )
+
+            # replace lat-lon with decimal degrees
+            if "lat_lon" in d and d["lat_lon"] != "NP":
+                regex = r'"(\d+\.\d+) ([NS]) (\d+\.\d+) ([EW])"'
+                # extract latitude and longitude using regular expression
+                match = re.search(regex, d["lat_lon"])
+                if match:
+                    # convert latitude and longitude to decimal degrees
+                    lat = float(match.group(1))
+                    if match.group(2) == "S":
+                        lat *= -1
+                    lon = float(match.group(3))
+                    if match.group(4) == "W":
+                        lon *= -1
+                    # replace 'lat_lon' value with list of latitude and longitude
+                    d["lat_lon"] = [lat, lon]
+
+            # remove any more errors that could occur from improper date-time formatting by converting to string
+            for key, value in d.items():
+                if isinstance(value, datetime.date):
+                    d[key] = str(value)
+
+        res = sradb_col.insert_many(meta_dic)
 
     print(
         f"{sradb_col.count_documents({})} acc documents imported to mongoDB collection"
