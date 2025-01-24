@@ -5,11 +5,12 @@ new search index is built from zero,
 but in case you want to use an existing branchwater database there is
 a more direct way that skips the `wort` signature download and indexing into a branchwater database.
 
-
-
-In the case of the SRA metagenomes database from the [main instance](https://branchwater.sourmash.bio)
-it is ~1.3 TiB as of 2024-11-28 for `s=1000`,
-but we provide downscaled versions to `s=100,000` for `k={21,31,51}` containing the same `1,161,119` datasets that are easier to download and run locally:
+To demonstrate the process we will use the SRA metagenomes index from the [main instance](https://branchwater.sourmash.bio),
+althought at a larger scaled value.
+The `s=1000` index from the main instance is ~1.3 TiB as of 2024-11-28,
+but we provide downsampled versions to `s=100,000` for `k={21,31,51}`,
+containing the same `1,161,119` SRA metagenomes,
+and they are easier to download and run locally:
 
 - [`20241128-k21-s100000`](https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k21-s100000/) (14.1 GiB)
 - [`20241128-k31-s100000`](https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k31-s100000/) (32.2 GiB)
@@ -28,49 +29,129 @@ For this example we will use `k=21,s=100,000` to bring up a new local instance o
 
 ## Cloning the repo
 
-```
+```bash
 git clone https://github.com/sourmash-bio/branchwater
 cd branchwater
 ```
 
 ## Create a new directory to hold the index and metadata
 
-```
+Let's create a new directory to hold the data for this service:
+
+```bash
 mkdir -p bw_k21
 cd bw_k21
 ```
 
+By the point we are ready to start the service it will look like this:
+```
+bw_k21
+├── bqKey.json
+├── index/
+├── metadata.parquet
+└── sraids
+```
+
 ## Download the `k=21` index
 
-```
-pixi exec wget -c --recursive --no-parent -nH --cut-dirs=3 --reject "index.html*" https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k21-s100000/ -P index/
+Let's start by downloading the index. Here is a `wget` invocation to save it into `index/`:
+
+```bash
+pixi exec wget \
+    -c --recursive \
+    --no-parent -nH \
+    --cut-dirs=3 --reject "index.html*" \
+    -P index/ \
+    https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k21-s100000/
 ```
 
-## Extract manifest from index
+## Extract accessions from index
 
-```
-cargo run --release -p branchwater-index metadata index -o manifest
-tail -n +3 manifest|cut -d, -f1 | cut -d/ -f2|cut -d. -f1 > sraids
+`sraids` is a list of all the SRA accessions used to build the index,
+and we need it to retrieve the SRA metadata that is presented in the frontend.
+This information is contained in the manifest used to build the index,
+so we can extract it from the index and manifest by running
+
+```bash
+cargo run --release -p branchwater-index metadata index --acc-only -o sraids
 ```
 
 ## Edit `docker-compose.yml`
 
+In the `volumes` section for the `index` and `mongodb` services,
+replace `bw_db` with `bw_k21`:
+```diff
+     volumes:
+-      - ./bw_db:/data/
++      - ./bw_k21:/data/
+```
 
+And in the `index` service, add the following lines to pass new parameters to the command that initializes the service:
+```diff
++    command: >
++      /app/bin/branchwater-server
++        --port 80
++        -k 21
++        --scaled 100000
++        --location /dev/null
++        /data/index
+```
 
-## Prepare and load metadata
+:::{note}
+Since we don't have the signatures,
+we point `--location` to `/dev/null`.
+Weird, but it works =]
+:::
 
+## BigQuery credentials
+
+If you did the demo deployment you can copy and reuse it:
 ```
 cp ../bw_db/bqKey.json .
+```
+Otherwise, follow [these instructions](deploy.md#prepare-a-bigquery-access-key) to create the BigQuery credential file.
+
+## Prepare metadata
+
+The final file we need is `metadata.parquet`,
+and we have all the pieces in place to generate it.
+Run
+```bash
 pixi run metadata_bq
+```
+to create it.
+
+## Load metadata into mongodb
+
+We can load `metadata.parquet` into mongodb by running
+```bash
 pixi run load_mongo
 ```
 
+This will be printed after the command finishes:
+```bash
+1160375 acc documents imported to mongoDB collection
+Full MongoDB size is 2304478866 bytes, average document size is 1985 bytes
+```
+
+:::{note}
+Did you notice that 1,160,375 != 1,161,119? What is up with the missing metadata?
+
+There is a longer discussion in <https://github.com/sourmash-bio/branchwater/issues/24#issuecomment-2067814713>
+but mostly because there are metadata changes and datasets that were in previous versions
+of branchwater might not have updated metadata anymore (due to retractions),
+and we are downloading the most up-to-date metadata to serve.
+We avoid removing the datasets from the search index to keep maintenance easier,
+but they won't show up in the frontend without the metadata.
+
+It is left as an exercise to the reader to figure out how to retrieve the ghost matches =]
+:::
+
 ## Bring up the search index and frontend
 
+Finally, we can bring up the index and frontend app:
 ```
 pixi run deploy up -d
 ```
 
 The website is now available at <http://localhost:8000>
-
-
