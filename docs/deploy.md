@@ -138,14 +138,25 @@ bw_db
 
 ### Prepare a BigQuery access key
 
-```{include} ../buildmongo/README.md
+```{include} ../metadata/README.md
 :start-after: <!-- start sra-metadata-access -->
 :end-before: <!-- end sra-metadata-access -->
 ```
 
+### Checkpoint before metadata processing
+
+This is how the `bw_db` directory at the root of the repository should look like:
+```
+bw_db
+├── bqKey.json     # NEW: BigQuery credentials and Project ID
+├── index/         # the branchwater search index
+├── sigs.zip       # signatures indexed for search
+└── sraids         # a list of SRA accessions to download signatures and build the index
+```
+
 ### Download the SRA metadata from bigquery and load into mongo
 
-After the index is build,
+After the index is build and we have BigQuery credentials,
 we can bring up the `mongodb` that will hold the metadata:
 ```
 pixi run deploy up -d mongodb

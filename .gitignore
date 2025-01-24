@@ -1,5 +1,11 @@
 .DS_Store
-buildmongo/bqKey.json
+
+bw_db/
+bw_db/bqKey.json
+experiments/.snakemake
+experiments/outputs/
+experiments/sigs/
+
 /target
 .direnv/
 sandbox/
@@ -7,6 +13,10 @@ result
 docs/_build
 prod.env
 mongodb/
+
 # pixi environments
 .pixi
+.tox
 
+docs/doctree/
+docs/out/
