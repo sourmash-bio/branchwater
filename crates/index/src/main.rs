@@ -99,6 +99,10 @@ enum Commands {
         #[clap(short, long)]
         output: Option<PathBuf>,
 
+        /// Return only accessions
+        #[clap(long = "acc-only")]
+        acc_only: bool,
+
         /// Index to extract metadata from
         index: PathBuf,
     },
@@ -307,7 +311,11 @@ fn index<P: AsRef<Path>>(
     Ok(())
 }
 
-fn metadata<P: AsRef<Path>>(index: P, output: Option<P>) -> Result<(), Box<dyn std::error::Error>> {
+fn metadata<P: AsRef<Path>>(
+    index: P,
+    output: Option<P>,
+    acc_only: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::{BufWriter, Write};
 
@@ -315,12 +323,18 @@ fn metadata<P: AsRef<Path>>(index: P, output: Option<P>) -> Result<(), Box<dyn s
 
     let manifest = db.collection().manifest();
 
-    let out: Box<dyn Write + Send> = match output {
+    let mut out: Box<dyn Write + Send> = match output {
         Some(path) => Box::new(BufWriter::new(File::create(path.as_ref()).unwrap())),
         None => Box::new(std::io::stdout()),
     };
 
-    manifest.to_writer(out)?;
+    if acc_only {
+        let accs: Vec<String> = manifest.iter().map(|r| r.name().into()).collect();
+        let accs = accs.join("\n");
+        writeln!(out, "{}", accs)?;
+    } else {
+        manifest.to_writer(out)?;
+    }
 
     Ok(())
 }
@@ -547,7 +561,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             manifest(pathlist, output, selection, basepath)?
         }
-        Metadata { index, output } => metadata(index, output)?,
+        Metadata {
+            index,
+            acc_only,
+            output,
+        } => metadata(index, output, acc_only)?,
         Search {
             query_path,
             output,
