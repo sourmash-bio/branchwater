@@ -99,8 +99,8 @@
           inherit cargoArtifacts;
           partitions = 1;
           partitionType = "count";
-          withLlvmCov = true;
         } // lib.optionalAttrs (system == "x86_64-linux") {
+          withLlvmCov = true;
           # NB: cargo-tarpaulin only supports x86_64 systems
           # Check code coverage (note: this will not upload coverage anywhere)
           #branchwaterCoverage = craneLib.cargoLlvmCov (commonArgs // {
@@ -166,6 +166,7 @@
             asciinema
             asciinema-agg
 
+            cargo-deny
             cargo-udeps
             cargo-outdated
             cargo-watch
