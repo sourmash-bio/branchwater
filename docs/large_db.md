@@ -103,6 +103,17 @@ we point `--location` to `/dev/null`.
 Weird, but it works =]
 :::
 
+## Edit `pyproject.toml`
+
+There is one mention to `bw_db` in `pyproject.toml` that we need to change to
+`bw_k21`, it is in the `[tool.pixi.feature.metadata.tasks]` section,
+for the `metadata_bq` task:
+
+```diff
+-metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
++metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_k21/sraids", "-k", "../bw_k21/bqKey.json", "-o", "../bw_k21/metadata.parquet"], cwd = "metadata" }
+```
+
 ## BigQuery credentials
 
 If you did the demo deployment you can copy and reuse it:
