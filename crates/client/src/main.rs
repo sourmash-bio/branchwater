@@ -3,11 +3,12 @@ use std::path::{Path, PathBuf};
 
 use clap::Parser;
 use color_eyre::{eyre::Result, eyre::WrapErr};
-use log::info;
 use needletail::{parse_fastx_file, parse_fastx_stdin, Sequence};
 use reqwest_middleware::ClientBuilder;
 use reqwest_retry::{policies::ExponentialBackoff, RetryTransientMiddleware};
 use serde_json::json;
+use tracing::info;
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use sourmash::encodings::HashFunctions;
 use sourmash::prelude::*;
@@ -46,11 +47,11 @@ struct Cli {
     ///   - sequences (FASTA/Q, compressed or not)
     ///   - an existing signature (use with --sig)
     ///   - a single dash ("-") for reading from stdin
-    #[clap(parse(from_os_str), verbatim_doc_comment)]
+    #[clap(value_parser, verbatim_doc_comment)]
     sequences: PathBuf,
 
     /// Save results to this file. Default: stdout
-    #[clap(parse(from_os_str), short, long)]
+    #[clap(value_parser, short, long)]
     output: Option<PathBuf>,
 
     /// Server to query. Default: https://api.branchwater.sourmash.bio
@@ -76,7 +77,13 @@ struct Cli {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::EnvFilter::new(
+            std::env::var("RUST_LOG").unwrap_or_else(|_| "branchwater=debug".into()),
+        ))
+        .with(tracing_subscriber::fmt::layer().json())
+        .init();
+
     color_eyre::install()?;
 
     let Cli {
