@@ -237,3 +237,9 @@ async fn main() -> Result<()> {
     info!("Finished!");
     Ok(())
 }
+
+#[test]
+fn verify_cli() {
+    use clap::CommandFactory;
+    Cli::command().debug_assert()
+}

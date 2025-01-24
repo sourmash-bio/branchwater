@@ -6,7 +6,6 @@
 
     crane = {
       url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -15,7 +14,6 @@
       url = "github:oxalica/rust-overlay";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
       };
     };
   };
@@ -32,6 +30,7 @@
 
         rustOxalica = pkgs.rust-bin.stable.latest.default.override {
           #targets = [ "wasm32-wasi" ];
+          extensions = ["llvm-tools-preview"];
         };
 
         # NB: we don't need to overlay our custom toolchain for the *entire*
@@ -48,11 +47,6 @@
           preConfigure = lib.optionalString stdenv.isDarwin ''
             export MACOSX_DEPLOYMENT_TARGET=10.14
           '';
-
-          # Work around https://github.com/NixOS/nixpkgs/issues/166205.
-          env = lib.optionalAttrs stdenv.cc.isClang {
-            NIX_LDFLAGS = "-l${stdenv.cc.libcxx.cxxabi.libName}";
-          };
 
           buildInputs = with pkgs; [
             llvmPackages_16.libclang
@@ -105,10 +99,11 @@
           inherit cargoArtifacts;
           partitions = 1;
           partitionType = "count";
+          withLlvmCov = true;
         } // lib.optionalAttrs (system == "x86_64-linux") {
           # NB: cargo-tarpaulin only supports x86_64 systems
           # Check code coverage (note: this will not upload coverage anywhere)
-          #branchwaterCoverage = craneLib.cargoTarpaulin (commonArgs // {
+          #branchwaterCoverage = craneLib.cargoLlvmCov (commonArgs // {
           #  inherit cargoArtifacts;
           #});
         });

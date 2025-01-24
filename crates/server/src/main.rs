@@ -248,3 +248,9 @@ async fn handle_error(error: BoxError) -> impl IntoResponse {
         Cow::from(format!("Unhandled internal error: {}", error)),
     )
 }
+
+#[test]
+fn verify_cli() {
+    use clap::CommandFactory;
+    Cli::command().debug_assert()
+}
