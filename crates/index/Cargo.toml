@@ -13,9 +13,8 @@ dist = false
 [dependencies]
 camino.workspace = true
 clap.workspace = true
-env_logger.workspace = true
-histogram.workspace = true
-log.workspace = true
 numsep.workspace = true
 size.workspace = true
 sourmash = { workspace = true, features = ["branchwater"] }
+tracing.workspace = true
+tracing-subscriber.workspace = true

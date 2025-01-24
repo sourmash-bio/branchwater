@@ -20,10 +20,12 @@ mongo = { features = ["mongo"], solve-group = "default" }
 demo = { depends-on = ["index", "metadata"] }
 
 [tool.pixi.feature.build.dependencies]
-rust = ">=1.80.1,<1.81"
+rust = "~=1.84.0"
 compilers = ">=1.7.0,<1.8"
 clangdev = ">=16.0.6,<17.1"
 libclang = ">=16.0.6,<17.1"
+cargo-llvm-cov = "~=0.6.15"
+cargo-nextest = "~=0.9.78"
 
 [tool.pixi.feature.build.tasks]
 build-server = "cargo build --release -p branchwater-server"

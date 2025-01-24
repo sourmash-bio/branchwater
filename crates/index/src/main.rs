@@ -1,7 +1,8 @@
 use camino::Utf8Path as Path;
 use camino::Utf8PathBuf as PathBuf;
 use clap::{Parser, Subcommand};
-use log::info;
+use tracing::info;
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use sourmash::collection::Collection;
 use sourmash::index::revindex::{prepare_query, RevIndex, RevIndexOps};
@@ -514,8 +515,14 @@ fn repair<P: AsRef<Path>>(output: P, colors: bool) {
 */
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
     use Commands::*;
+
+    tracing_subscriber::registry()
+        .with(tracing_subscriber::EnvFilter::new(
+            std::env::var("RUST_LOG").unwrap_or_else(|_| "branchwater=debug".into()),
+        ))
+        .with(tracing_subscriber::fmt::layer().json())
+        .init();
 
     let opts = Cli::parse();
 
@@ -609,4 +616,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     Ok(())
+}
+
+#[test]
+fn verify_cli() {
+    use clap::CommandFactory;
+    Cli::command().debug_assert()
 }

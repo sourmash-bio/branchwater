@@ -1,19 +1,22 @@
-use std::{borrow::Cow, net::SocketAddr, sync::Arc, time::Duration};
+use std::{borrow::Cow, sync::Arc, time::Duration};
 
 use axum::{
-    body::{BoxBody, Bytes},
+    body::{Body, Bytes},
     error_handling::HandleErrorLayer,
-    extract::{ContentLengthLimit, Extension},
+    extract::{DefaultBodyLimit, State},
+    handler::Handler,
     http::{header, StatusCode},
     response::{IntoResponse, Response},
-    routing::{get, get_service, post},
+    routing::{get, post_service},
     Router,
 };
 use sentry::integrations::tower::{NewSentryLayer, SentryHttpLayer};
 use sentry::integrations::tracing as sentry_tracing;
+use tokio::net::TcpListener;
 use tokio::runtime::Runtime;
 use tower::{BoxError, ServiceBuilder};
-use tower_http::{services::ServeDir, trace::TraceLayer};
+use tower_http::limit::RequestBodyLimitLayer;
+use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use camino::Utf8PathBuf as PathBuf;
@@ -34,10 +37,6 @@ struct Cli {
     /// Either a zip file or a path to a directory containing signatures.
     #[clap(short = 'l', long = "location")]
     location: Option<PathBuf>,
-
-    /// Path to static assets
-    #[clap(short = 'a', long = "assets", default_value = "assets/")]
-    assets: PathBuf,
 
     /// ksize
     #[clap(short = 'k', long = "ksize", default_value = "21")]
@@ -62,8 +61,6 @@ fn main() -> Result<()> {
         sentry::ClientOptions {
             release: sentry::release_name!(),
             traces_sample_rate: 1.0,
-            enable_profiling: true,
-            profiles_sample_rate: 1.0,
             environment: Some(
                 std::env::var("BRANCHWATER_ENVIRONMENT")
                     .unwrap_or("development".into())
@@ -99,7 +96,7 @@ fn main() -> Result<()> {
         }
     });
 
-    let state = Arc::new(State {
+    let state = Arc::new(AppState {
         db: Arc::new(RevIndex::open(opts.index, true, location.as_deref())?),
         selection: Arc::new(selection),
         threshold,
@@ -107,10 +104,19 @@ fn main() -> Result<()> {
 
     // Build our application by composing routes
     let app = Router::new()
-        .route("/search", post(search))
+        .route(
+            "/search",
+            post_service(
+                search
+                    .layer((
+                        DefaultBodyLimit::disable(),
+                        RequestBodyLimitLayer::new(1024 * 5_000 /* ~5mb */),
+                    ))
+                    .with_state(Arc::clone(&state)),
+            ),
+        )
         .route("/health", get(health))
         //.route("/gather", post(gather))
-        .fallback(get_service(ServeDir::new(opts.assets)).handle_error(handle_static_serve_error))
         // Add middleware to all routes
         .layer(
             ServiceBuilder::new()
@@ -122,37 +128,34 @@ fn main() -> Result<()> {
                 .concurrency_limit(200)
                 .timeout(Duration::from_secs(3600))
                 .layer(TraceLayer::new_for_http())
-                .layer(Extension(state))
                 .into_inner(),
         );
 
     // Create the runtime
     let rt = Runtime::new()?;
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], opts.port));
-    tracing::debug!("listening on {}", addr);
-
     // Spawn the root task
     rt.block_on(async {
-        // Run our app with hyper
-        axum::Server::bind(&addr)
-            .serve(app.into_make_service())
+        let listener = TcpListener::bind(format!("0.0.0.0:{}", opts.port))
             .await
             .unwrap();
+        tracing::debug!("listening on http://{listener:?}");
+        // Run our app with hyper
+        axum::serve(listener, app).await.unwrap();
     });
 
     Ok(())
 }
 
-type SharedState = Arc<State>;
+type SharedState = Arc<AppState>;
 
-struct State {
+struct AppState {
     db: Arc<RevIndex>,
     selection: Arc<Selection>,
     threshold: usize,
 }
 
-impl State {
+impl AppState {
     async fn search(&self, query: Signature) -> Result<Vec<String>, Box<dyn std::error::Error>> {
         let db = self.db.clone();
         let threshold = self.threshold;
@@ -192,10 +195,10 @@ impl State {
 }
 
 async fn search(
-    ContentLengthLimit(bytes): ContentLengthLimit<Bytes, { 1024 * 5_000 }>, // ~5mb
-    Extension(state): Extension<SharedState>,
+    State(state): State<SharedState>,
+    bytes: Bytes,
     //) -> Result<Json<serde_json::Value>, StatusCode> {
-) -> Response<BoxBody> {
+) -> impl IntoResponse {
     let sig = match state.parse_sig(&bytes) {
         Ok(sig) => sig,
         Err(e) => {
@@ -224,15 +227,8 @@ async fn search(
     }
 }
 
-async fn health() -> Response<BoxBody> {
+async fn health() -> Response<Body> {
     (StatusCode::OK, "I'm doing science and I'm still alive").into_response()
-}
-
-async fn handle_static_serve_error(error: std::io::Error) -> impl IntoResponse {
-    (
-        StatusCode::INTERNAL_SERVER_ERROR,
-        Cow::from(format!("Unhandled static serve error: {}", error)),
-    )
 }
 
 async fn handle_error(error: BoxError) -> impl IntoResponse {
@@ -251,4 +247,10 @@ async fn handle_error(error: BoxError) -> impl IntoResponse {
         StatusCode::INTERNAL_SERVER_ERROR,
         Cow::from(format!("Unhandled internal error: {}", error)),
     )
+}
+
+#[test]
+fn verify_cli() {
+    use clap::CommandFactory;
+    Cli::command().debug_assert()
 }
