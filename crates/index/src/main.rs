@@ -519,8 +519,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tracing_subscriber::registry()
         .with(tracing_subscriber::EnvFilter::new(
-            std::env::var("RUST_LOG")
-                .unwrap_or_else(|_| "branchwater=debug".into()),
+            std::env::var("RUST_LOG").unwrap_or_else(|_| "branchwater=debug".into()),
         ))
         .with(tracing_subscriber::fmt::layer().json())
         .init();
