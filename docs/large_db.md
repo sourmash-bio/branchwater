@@ -141,7 +141,7 @@ for the `metadata_bq` task:
 
 If you did the demo deployment you can copy and reuse it:
 ```
-cp ../bw_db/bqKey.json .
+cp bw_db/bqKey.json bw_k21/bqKey.json
 ```
 Otherwise, follow [these instructions](deploy.md#prepare-a-bigquery-access-key) to create the BigQuery credential file.
 
