@@ -123,7 +123,7 @@ This information is contained in the manifest used to build the index,
 so we can extract it from the index and manifest by running
 
 ```bash
-cargo run --release -p branchwater-index metadata bw_k21/index --acc-only -o bw_k21/sraids
+pixi run cargo run --release -p branchwater-index metadata bw_k21/index --acc-only -o bw_k21/sraids
 ```
 
 ### Edit `pyproject.toml`
