@@ -27,12 +27,17 @@ But the signatures are available and can be individually downloaded from [wort](
 
 For this example we will use `k=21,s=100,000` to bring up a new local instance of branchwater.
 
-## Cloning the repo
+## Clone the repo
 
 ```bash
 git clone https://github.com/sourmash-bio/branchwater
 cd branchwater
 ```
+
+## Set up dependencies
+
+In case you haven't done the [deployment for the demo database]() tutorial,
+follow the [setup instructions](deploy.md#set-up-dependencies) to download `pixi` and a docker runtime.
 
 ## Create a new directory to hold the index and metadata
 
