@@ -59,7 +59,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch,prefix=${{ matrix.target }}
-            type=ref,event=pr,prefix=${{ matrix.target }}
+            type=ref,event=pr,prefix=${{ matrix.target }}-pr-
 
       - name: Build and push Docker image
         id: push
@@ -75,6 +75,6 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}-${{ matrix.target }}
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
