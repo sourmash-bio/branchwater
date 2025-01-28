@@ -72,6 +72,7 @@ jobs:
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
+          platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           target: ${{ matrix.target }}
           outputs: type=image,"name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}",push-by-digest=true,name-canonical=true,push=true
