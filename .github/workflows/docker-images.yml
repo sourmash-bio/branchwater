@@ -136,7 +136,7 @@ jobs:
           tags: |
             type=ref,event=branch,prefix=${{ matrix.target }}
             type=ref,event=pr,prefix=${{ matrix.target }}-pr-
-            type=ref,event=tag,prefix=${{ matrix.target }}
+            type=semver,prefix=${{ matrix.target }}-,pattern={{version}}
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests
