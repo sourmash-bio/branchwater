@@ -34,19 +34,30 @@ branchwater-client --sig -o matches.csv \
 ## Available options
 
 ```
-USAGE:
-    branchwater-client [OPTIONS] <SEQUENCES>
+Usage: branchwater-client [OPTIONS] <SEQUENCES>
 
-ARGS:
-    <SEQUENCES>    Input file. Can be:
-                     - sequences (FASTA/Q, compressed or not)
-                     - an existing signature (use with --sig)
-                     - a single dash ("-") for reading from stdin
+Arguments:
+  <SEQUENCES>  Input file. Can be:
+                 - sequences (FASTA/Q, compressed or not)
+                 - an existing signature (use with --sig)
+                 - a single dash ("-") for reading from stdin
 
-OPTIONS:
-    -h, --help               Print help information
-    -o, --output <OUTPUT>    Save results to this file. Default: stdout
-        --sig                Input file is already a signature
-    -V, --version            Print version information
+Options:
+  -o, --output <OUTPUT>
+          Save results to this file. Default: stdout
+  -s, --server <SERVER>
+          Server to query. Default: https://api.branchwater.sourmash.bio [default: https://api.branchwater.sourmash.bio]
+  -m, --metadata-server <METADATA_SERVER>
+          Metadata server to query. Default: https://branchwater.sourmash.bio [default: https://branchwater.jgi.doe.gov]
+      --sig
+          Input file is already a signature
+      --full
+          Return full results (containment plus matching dataset ID metadata)
+      --retry <RETRY>
+          How many times to retry requests to the server (default: 3) [default: 3]
+  -h, --help
+          Print help
+  -V, --version
+          Print version
 ```
 
