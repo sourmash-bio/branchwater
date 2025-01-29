@@ -1,5 +1,6 @@
 services:
   index:
+    image: ghcr.io/sourmash-bio/branchwater:index-0.3.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +12,7 @@ services:
       - prod.index.env
 
   mongodb:
+    image: ghcr.io/sourmash-bio/branchwater:mongo-0.3.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,6 +24,7 @@ services:
       - ./metadata:/docker-entrypoint-initdb.d
 
   app:
+    image: ghcr.io/sourmash-bio/branchwater:web-0.3.0
     build:
       context: .
       dockerfile: Dockerfile
