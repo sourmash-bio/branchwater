@@ -14,7 +14,8 @@ branchwater had a couple of names over time:
 - [MAGsearch](https://github.com/ctb/magsearch)
 - [rocksdb-eval](https://github.com/luizirber/2022-06-26-rocksdb-eval)
 - [mastiff](https://github.com/sourmash-bio/mastiff)
-We finally brought it all together under the same umbrella.
+
+ae finally brought it all together under the same umbrella named 'branchwater'!
 
 Here are a few blog posts:
 * [MinHashing all the things: searching for MAGs in the SRA](https://blog.luizirber.org/2020/07/22/mag-search/)
@@ -25,7 +26,7 @@ Here are a few blog posts:
 ## Code repository links and details.
 
 branchwater is based on [sourmash](https://github.com/dib-lab/sourmash/issues),
-and the search index data structure live there since
+and the search index data structure lives there since
 [version `0.12`](https://crates.io/crates/sourmash/0.12.0) of the Rust crate.
 
 branchwater is currently (Jan 2024) mostly contained in this repo,
@@ -62,10 +63,11 @@ sourmash collaborators.
 
 branchwater is [AGPL licensed](./LICENSE-AGPL).
 
-The webapp was developed by the USDA Agricultural Research Service, Genomics and
-Bioinformatics Research Unit group in Gainesville, FL,
-Primarily authored by Suzanne Fleishman and led by Adam Rivers.
-Check out their other work at https://tinyecology.com.
-As a work of the United States Government,
-the original code is available under the CC0 1.0 Universal Public Domain Dedication (CC0 1.0).
+The webapp was developed by the USDA Agricultural Research Service,
+Genomics and Bioinformatics Research Unit group in Gainesville, FL,
+and was primarily authored by Suzanne Fleishman in a project led by
+Adam Rivers.  Check out their other work at https://tinyecology.com.
+As a work of the United States Government, the original code is
+available under the CC0 1.0 Universal Public Domain Dedication (CC0
+1.0).
 
