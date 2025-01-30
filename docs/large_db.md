@@ -36,7 +36,7 @@ cd branchwater
 
 ## Set up dependencies
 
-In case you haven't done the [deployment for the demo database]() tutorial,
+In case you haven't done the [deployment for the demo database](deploy.md) tutorial,
 follow the [setup instructions](deploy.md#set-up-dependencies) to download `pixi` and a docker runtime.
 
 ## Create a new directory to hold the index and metadata

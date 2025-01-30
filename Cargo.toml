@@ -18,12 +18,13 @@ numsep = "0.1.12"
 reqwest = { version = "0.12.9", default-features = false, features = [ "json", "rustls-tls" ] }
 reqwest-retry = "0.7.0"
 reqwest-middleware = { version = "0.4.0", features = [ "json" ] }
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = "1.0.113"
 size = "0.4.0"
 sourmash = { version = "0.18.0" }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
 
-serde_json = "1.0.113"
 # axum deps
 axum = { version = "0.8", features = ["multipart"] }
 tokio = { version = "1.0", features = ["full"] }

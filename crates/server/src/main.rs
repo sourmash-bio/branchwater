@@ -8,7 +8,7 @@ use axum::{
     http::{header, StatusCode},
     response::{IntoResponse, Response},
     routing::{get, post_service},
-    Router,
+    Json, Router,
 };
 use sentry::integrations::tower::{NewSentryLayer, SentryHttpLayer};
 use sentry::integrations::tracing as sentry_tracing;
@@ -22,7 +22,9 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use camino::Utf8PathBuf as PathBuf;
 use clap::Parser;
 use color_eyre::eyre::Result;
+use serde::Serialize;
 use sourmash::index::revindex::{prepare_query, RevIndex, RevIndexOps};
+use sourmash::manifest::Manifest;
 use sourmash::prelude::*;
 use sourmash::selection::Selection;
 use sourmash::signature::{Signature, SigsTrait};
@@ -116,6 +118,19 @@ fn main() -> Result<()> {
             ),
         )
         .route("/health", get(health))
+        //.route("/metadata", get(metadata).with_state(Arc::clone(&state)))
+        .route(
+            "/metadata/accessions",
+            get(metadata_accessions).with_state(Arc::clone(&state)),
+        )
+        .route(
+            "/metadata/stats",
+            get(metadata_stats).with_state(Arc::clone(&state)),
+        )
+        .route(
+            "/metadata/manifest",
+            get(metadata_manifest).with_state(Arc::clone(&state)),
+        )
         //.route("/gather", post(gather))
         // Add middleware to all routes
         .layer(
@@ -155,6 +170,14 @@ struct AppState {
     threshold: usize,
 }
 
+#[derive(Serialize)]
+struct Stats {
+    ksize: u32,
+    scaled: sourmash::ScaledType,
+    threshold: usize,
+    n_datasets: u32,
+}
+
 impl AppState {
     async fn search(&self, query: Signature) -> Result<Vec<String>, Box<dyn std::error::Error>> {
         let db = self.db.clone();
@@ -191,6 +214,20 @@ impl AppState {
         Ok(Signature::from_reader(raw_data)?
             .swap_remove(0)
             .select(&self.selection)?)
+    }
+
+    fn manifest(&self) -> &Manifest {
+        self.db.collection().manifest()
+    }
+
+    fn stats(&self) -> Stats {
+        let manifest = self.db.collection().manifest();
+        Stats {
+            ksize: self.selection.ksize().expect("error extracting ksize"),
+            scaled: self.selection.scaled().expect("error extracting scaled"),
+            threshold: self.threshold,
+            n_datasets: manifest.len() as u32,
+        }
     }
 }
 
@@ -229,6 +266,44 @@ async fn search(
 
 async fn health() -> Response<Body> {
     (StatusCode::OK, "I'm doing science and I'm still alive").into_response()
+}
+
+async fn metadata(State(state): State<SharedState>) -> Response<Body> {
+    let metadata = state.manifest();
+    (StatusCode::OK, Json(metadata)).into_response()
+}
+
+async fn metadata_manifest(State(state): State<SharedState>) -> Response<Body> {
+    let manifest = state.manifest();
+    let mut manifest_csv = Vec::new();
+    {
+        let mut wtr = csv::Writer::from_writer(&mut manifest_csv);
+        for record in manifest.iter() {
+            wtr.serialize(record).expect("error writing record");
+        }
+    }
+
+    (
+        StatusCode::OK,
+        [(header::CONTENT_TYPE, "text/csv; charset=utf-8")],
+        manifest_csv,
+    )
+        .into_response()
+}
+
+async fn metadata_accessions(State(state): State<SharedState>) -> Response<Body> {
+    let manifest = state.manifest();
+
+    let accs: Vec<String> = manifest.iter().map(|r| r.name().into()).collect();
+    let accs = accs.join("\n");
+
+    (StatusCode::OK, accs).into_response()
+}
+
+async fn metadata_stats(State(state): State<SharedState>) -> Response<Body> {
+    let stats = state.stats();
+
+    (StatusCode::OK, Json(stats)).into_response()
 }
 
 async fn handle_error(error: BoxError) -> impl IntoResponse {

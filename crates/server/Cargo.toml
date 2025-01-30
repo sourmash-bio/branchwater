@@ -10,9 +10,12 @@ repository = "https://github.com/sourmash-bio/branchwater"
 [dependencies]
 camino.workspace = true
 clap.workspace = true
+csv.workspace = true
 color-eyre.workspace = true
 sourmash = { workspace = true, features = ["branchwater"] }
+serde.workspace = true
 serde_json.workspace = true
+
 axum.workspace = true
 tokio.workspace = true
 tower.workspace = true
