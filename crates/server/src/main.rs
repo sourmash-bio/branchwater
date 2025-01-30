@@ -268,11 +268,6 @@ async fn health() -> Response<Body> {
     (StatusCode::OK, "I'm doing science and I'm still alive").into_response()
 }
 
-async fn metadata(State(state): State<SharedState>) -> Response<Body> {
-    let metadata = state.manifest();
-    (StatusCode::OK, Json(metadata)).into_response()
-}
-
 async fn metadata_manifest(State(state): State<SharedState>) -> Response<Body> {
     let manifest = state.manifest();
     let mut manifest_csv = Vec::new();
