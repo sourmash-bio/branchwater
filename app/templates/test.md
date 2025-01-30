@@ -1,9 +1,14 @@
-<html><head>
-    <title>chill-filter sample screening - Frequently Asked Questions (FAQ)</title>
-</head>
+{% include 'header.html' %}
 
-  <body>
-    <main class="container">
+<link
+  href="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/css/tabulator.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+
+<div class="container mt-3">
+
       {% filter markdownify %}
 # Frequently Asked Questions - chill-filter
 
@@ -120,7 +125,8 @@ chill-filter.sourmash.bio is running on a Digital Ocean Basic Droplet,
 with 4 GB of RAM, 2 CPUs, and 80 GB of SSD space.
       
   {% endfilter %}
+  </div>
 
-    </main>
-   </body>
-</html>
+    {% include 'footer.html' %}
+  </div>
+</div>

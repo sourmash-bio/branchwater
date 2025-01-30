@@ -2,7 +2,7 @@
 
 The code underlying https://branchwater.jgi.doe.gov/
 
-## Trial install
+## Developer install using conda
 
 ```
 mamba create -y -n branchwater_web flask mongodb

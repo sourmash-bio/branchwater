@@ -114,9 +114,7 @@ def metadata():
 
 @app.route('/test', methods=['GET', "POST"])
 def testme():
-    x = render_template("test.md")
-    print(x)
-    return x
+    return render_template("test.md")
 
 @app.route('/contact', methods=['GET', "POST"])
 def contact():
