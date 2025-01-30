@@ -69,5 +69,4 @@ and was primarily authored by Suzanne Fleishman in a project led by
 Adam Rivers.  Check out their other work at https://tinyecology.com.
 As a work of the United States Government, the original code is
 available under the CC0 1.0 Universal Public Domain Dedication (CC0
-1.0).
-
+1.0) at https://github.com/USDA-ARS-GBRU/branchwater-web/.
