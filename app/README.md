@@ -6,9 +6,9 @@ The code underlying https://branchwater.jgi.doe.gov/
 
 ```
 mamba create -y -n branchwater_web flask mongodb
+mamba activate branchwater_web
 
-# also need:
-# pip install pymongo pyyaml pandas sentry_sdk urllib3
+pip install pymongo pyyaml pandas sentry_sdk urllib3 markdownify
 ```
 
 Then:

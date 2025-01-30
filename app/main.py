@@ -17,13 +17,17 @@ sentry_sdk.init(
 
 app = Flask(__name__)  # create flask/app instance
 # may not be needed/not yet integrated
-app.config['SECRET_KEY'] = 'my-secret-key'
+#app.config['SECRET_KEY'] = 'my-secret-key'
+
+# add markdownify filter to jinja2 (imported from functions.py)
+app.jinja_env.filters['markdownify'] = markdownify
 
 # Load configuration from config.yaml
 with open('config.yml', 'r') as file:
     config_data = yaml.safe_load(file)
 
     app.config.update(config_data)
+
 
 KSIZE = app.config.get('ksize', 21)
 THRESHOLD = app.config.get('threshold', 0.1)
@@ -107,6 +111,12 @@ def advanced():
 @app.route('/about', methods=['GET', "POST"])
 def metadata():
     return render_template('about.html')
+
+@app.route('/test', methods=['GET', "POST"])
+def testme():
+    x = render_template("test.md")
+    print(x)
+    return x
 
 @app.route('/contact', methods=['GET', "POST"])
 def contact():
