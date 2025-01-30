@@ -108,7 +108,7 @@ def home():
                     break
 
         return jsonify(result_list)  # return metadata results to client
-    return render_template('index.html', n_datasets=app.config.metadata['n_datasets'])
+    return render_template('index.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
 
 @app.route('/advanced', methods=['GET', "POST"])
@@ -149,7 +149,7 @@ def advanced():
 
 @app.route('/about', methods=['GET', "POST"])
 def metadata():
-    return render_template('about.html', n_datasets=app.config.metadata['n_datasets'])
+    return render_template('about.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
 @app.route('/contact', methods=['GET', "POST"])
 def contact():
@@ -158,7 +158,7 @@ def contact():
 @app.route('/examples', methods=['GET', "POST"])
 def examples():
     # note, fetch call sends to '/' route to return 'simple search' results
-    return render_template('examples.html', n_datasets=app.config.metadata['n_datasets'])
+    return render_template('examples.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
 
 # in production this changes:
