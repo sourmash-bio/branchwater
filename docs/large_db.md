@@ -27,12 +27,17 @@ But the signatures are available and can be individually downloaded from [wort](
 
 For this example we will use `k=21,s=100,000` to bring up a new local instance of branchwater.
 
-## Cloning the repo
+## Clone the repo
 
 ```bash
 git clone https://github.com/sourmash-bio/branchwater
 cd branchwater
 ```
+
+## Set up dependencies
+
+In case you haven't done the [deployment for the demo database](deploy.md) tutorial,
+follow the [setup instructions](deploy.md#set-up-dependencies) to download `pixi` and a docker runtime.
 
 ## Create a new directory to hold the index and metadata
 
@@ -40,40 +45,15 @@ Let's create a new directory to hold the data for this service:
 
 ```bash
 mkdir -p bw_k21
-cd bw_k21
 ```
 
 By the point we are ready to start the service it will look like this:
 ```
 bw_k21
-├── bqKey.json
-├── index/
-├── metadata.parquet
-└── sraids
-```
-
-## Download the `k=21` index
-
-Let's start by downloading the index. Here is a `wget` invocation to save it into `index/`:
-
-```bash
-pixi exec wget \
-    -c --recursive \
-    --no-parent -nH \
-    --cut-dirs=3 --reject "index.html*" \
-    -P index/ \
-    https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k21-s100000/
-```
-
-## Extract accessions from index
-
-`sraids` is a list of all the SRA accessions used to build the index,
-and we need it to retrieve the SRA metadata that is presented in the frontend.
-This information is contained in the manifest used to build the index,
-so we can extract it from the index and manifest by running
-
-```bash
-cargo run --release -p branchwater-index metadata index --acc-only -o sraids
+├── bqKey.json        # Only if building metadata yourself
+├── index/            # branchwater index
+├── metadata.parquet  # metadata for index, either prepared or built from index
+└── sraids            # Only if building metadata yourself
 ```
 
 ## Edit `docker-compose.yml`
@@ -103,7 +83,50 @@ we point `--location` to `/dev/null`.
 Weird, but it works =]
 :::
 
-## Edit `pyproject.toml`
+## Download the `k=21` index
+
+Let's start by downloading the index. Here is a `wget` invocation to save it into `index/`:
+
+```bash
+pixi exec wget \
+    -c --recursive \
+    --no-parent -nH \
+    --cut-dirs=3 --reject "index.html*" \
+    -P bw_k21/index/ \
+    https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-k21-s100000/
+```
+
+## Prepared metadata for index (or build your own!)
+
+::::{tab-set}
+
+:::{tab-item} Use prepared metadata
+
+The metadata for these indices is already available at
+<https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-metadata.parquet>
+so you don't need to build it locally.
+You can download it and put in the correct place with
+
+```bash
+pixi exec wget -c -O bw_k21/index/metadata.parquet \
+    https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-metadata.parquet
+```
+:::
+
+:::{tab-item} Build your own metadata
+
+### Extract accessions from index
+
+`sraids` is a list of all the SRA accessions used to build the index,
+and we need it to retrieve the SRA metadata that is presented in the frontend.
+This information is contained in the manifest used to build the index,
+so we can extract it from the index and manifest by running
+
+```bash
+pixi run cargo run --release -p branchwater-index metadata bw_k21/index --acc-only -o bw_k21/sraids
+```
+
+### Edit `pyproject.toml`
 
 There is one mention to `bw_db` in `pyproject.toml` that we need to change to
 `bw_k21`, it is in the `[tool.pixi.feature.metadata.tasks]` section,
@@ -114,15 +137,15 @@ for the `metadata_bq` task:
 +metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_k21/sraids", "-k", "../bw_k21/bqKey.json", "-o", "../bw_k21/metadata.parquet"], cwd = "metadata" }
 ```
 
-## BigQuery credentials
+### BigQuery credentials
 
 If you did the demo deployment you can copy and reuse it:
 ```
-cp ../bw_db/bqKey.json .
+cp bw_db/bqKey.json bw_k21/bqKey.json
 ```
 Otherwise, follow [these instructions](deploy.md#prepare-a-bigquery-access-key) to create the BigQuery credential file.
 
-## Prepare metadata
+### Build metadata
 
 The final file we need is `metadata.parquet`,
 and we have all the pieces in place to generate it.
@@ -131,6 +154,10 @@ Run
 pixi run metadata_bq
 ```
 to create it.
+
+:::
+
+::::
 
 ## Load metadata into mongodb
 
@@ -149,7 +176,7 @@ Full MongoDB size is 2304478866 bytes, average document size is 1985 bytes
 Did you notice that 1,160,375 != 1,161,119? What is up with the missing metadata?
 
 There is a longer discussion in <https://github.com/sourmash-bio/branchwater/issues/24#issuecomment-2067814713>
-but mostly because there are metadata changes and datasets that were in previous versions
+but it is mostly because there are metadata changes and datasets that were in previous versions
 of branchwater might not have updated metadata anymore (due to retractions),
 and we are downloading the most up-to-date metadata to serve.
 We avoid removing the datasets from the search index to keep maintenance easier,

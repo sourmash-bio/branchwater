@@ -1,8 +1,6 @@
-import pymongo as pm
 import pandas as pd
 import io
 import os
-import urllib3
 import gzip
 import string
 
@@ -14,7 +12,19 @@ class SearchError(Exception):
     """Search index errors"""
 
 
-def getacc(signatures, config):
+def getmetadata(config, http):
+    # GET metadata stats from index server
+    base_url = config.get('index_server', 'https://branchwater-api.jgi.doe.gov')
+    r = http.request('GET', f"{base_url}/metadata/stats")
+    if r.status != 200:
+        raise SearchError(r.data.decode('utf-8'), r.status)
+
+    metadata = r.json()
+
+    return metadata
+
+
+def getacc(signatures, config, http):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
     json_bytes = f"[{sig_str}]".encode('utf-8')
@@ -23,7 +33,6 @@ def getacc(signatures, config):
         fout.write(json_bytes)
 
     # POST to mastiff
-    http = urllib3.PoolManager()
     base_url = config.get('index_server', 'https://branchwater-api.jgi.doe.gov')
     r = http.request('POST',
                      f"{base_url}/search",
@@ -58,8 +67,7 @@ def getacc(signatures, config):
     return mastiff_df
 
 
-def getmongo(acc_t, meta_list, config):
-    client = pm.MongoClient(f"mongodb://mongodb")
+def getmongo(acc_t, meta_list, config, client):
     db = client["sradb"]
     sradb_col = db["sradb_list"]
 
