@@ -16,6 +16,9 @@ RUN echo 'exec "$@"' >> /shell-hook-prepare
 RUN pixi shell-hook -e mongo > /shell-hook-mongo
 RUN echo 'exec "$@"' >> /shell-hook-mongo
 
+RUN pixi shell-hook -e mongod > /shell-hook-mongod
+RUN echo 'exec "$@"' >> /shell-hook-mongod
+
 #--------------------
 
 FROM install AS rust_build
@@ -42,7 +45,7 @@ COPY app/ /app/web/
 
 WORKDIR /app/web
 
-#USER user 
+USER user
 
 ENTRYPOINT ["/bin/bash", "/shell-hook"]
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--access-logfile", "-", "main:app"]
@@ -61,7 +64,16 @@ CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data
 
 #--------------------
 
-FROM docker.io/mongo:latest AS mongo
+FROM ubuntu:24.04 AS mongo
 
-COPY --from=install /app/.pixi/envs/mongo /app/.pixi/envs/mongo
-COPY --from=install /shell-hook-mongo /shell-hook
+# only copy the production environment into prod container
+COPY --from=install /app/.pixi/envs/mongod /app/.pixi/envs/mongod
+COPY --from=install /shell-hook-mongod /shell-hook
+
+RUN groupadd user && \
+    useradd --create-home --home-dir /home/user -g user -s /bin/bash user
+
+USER user
+
+ENTRYPOINT ["/bin/bash", "/shell-hook"]
+CMD ["mongod", "--dbpath", "/data/db", "--bind_ip_all"]

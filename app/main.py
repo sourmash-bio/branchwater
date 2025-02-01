@@ -26,9 +26,9 @@ def http_pool():
 
     return g.pool
 
-def mongo_client():
+def mongo_client(config):
     if 'mongo_client' not in g:
-        g.mongo_client = pm.MongoClient(f"mongodb://mongodb")
+        g.mongo_client = pm.MongoClient(config.get("mongo_server", "mongodb://mongodb"))
 
     return g.mongo_client
 
@@ -96,7 +96,7 @@ def home():
                      'collection_date_sam', 'geo_loc_name_country_calc', 'organism', 'lat_lon')
 
         # get metadata from mongodb (imported from mongoquery.py)
-        result_list = getmongo(acc_t, meta_list, app.config, mongo_client())
+        result_list = getmongo(acc_t, meta_list, app.config, mongo_client(app.config))
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 
@@ -132,7 +132,7 @@ def advanced():
         meta_list = tuple([
                           key for key, value in meta_dic.items() if value])
 
-        result_list = getmongo(acc_t, meta_list, app.config, mongo_client())
+        result_list = getmongo(acc_t, meta_list, app.config, mongo_client(app.config))
         print(f"Metadata for {len(result_list)} acc returned.")
         mastiff_dict = mastiff_df.to_dict('records')
 

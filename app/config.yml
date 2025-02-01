@@ -1,3 +1,4 @@
 threshold: 0.1
 ksize: 21
-index_server: "http://index"
+index_server: "http://localhost:3059"
+mongo_server: "mongodb://localhost:27017"

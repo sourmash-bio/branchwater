@@ -8,16 +8,18 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [tool.pixi.environments]
-default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "mongo", "docs"], solve-group = "default" }
+default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "mongo", "mongod", "docs"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 web = { features = ["web", "mongo"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
 mongo = { features = ["mongo"], solve-group = "default" }
+mongod = { features = ["mongod", "mongo"], solve-group = "default" }
 
 [tool.pixi.tasks]
 demo = { depends-on = ["index", "metadata"] }
+local_demo = { depends-on = ["index", "local_metadata"] }
 
 [tool.pixi.feature.build.dependencies]
 rust = "~=1.84.0"
@@ -29,14 +31,23 @@ cargo-nextest = "~=0.9.78"
 
 [tool.pixi.feature.build.tasks]
 build-server = "cargo build --release -p branchwater-server"
+local-server = "cargo run --release -p branchwater-server -- -k 21 --scaled 100000 --location /dev/null bw_db/index"
 
 [tool.pixi.feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
 metadata = { depends-on = ["metadata_bq", "load_mongo"] }
+local_metadata = { depends-on = ["metadata_bq", "local_load_mongo"] }
 
 [tool.pixi.feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
 sourmash = ">=4.8.6,<4.9"
+
+[tool.pixi.feature.mongod.dependencies]
+mongodb = "~=6.0.16"
+
+[tool.pixi.feature.mongod.tasks]
+local_mongod = "mongod --dbpath ./mongodb_1 --logpath mongodb.log --fork"
+stop_mongod = "mongod --dbpath ./mongodb_1 --shutdown"
 
 [tool.pixi.feature.mongo.dependencies]
 pymongo = "~=4.10"
@@ -44,6 +55,7 @@ polars = ">=1.12.0,<2"
 
 [tool.pixi.feature.mongo.tasks]
 load_mongo = "docker compose up -d mongodb && docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/load_parquet.py /data/bw_db/metadata.parquet"
+local_load_mongo = "python3 metadata/load_parquet.py bw_db/metadata.parquet"
 
 [tool.pixi.feature.metadata.dependencies]
 polars = ">=1.12.0,<2"
@@ -90,3 +102,7 @@ sentry-sdk = { version = "*", extras = ["flask", "pymongo"] }
 linux = "3.10"
 libc = "2.17"
 macos = "12.0"
+
+[tool.pixi.activation.env]
+CARGO_HOME = "$CONDA_PREFIX/.cargo_cache"
+PATH = "$PATH:$CARGO_HOME/bin"

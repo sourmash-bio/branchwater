@@ -10,6 +10,13 @@ services:
       - ./bw_db:/data/
     env_file:
       - prod.index.env
+    command: >
+      /app/bin/branchwater-server
+        --port 80
+        -k 21
+        --scaled 100000
+        --location /dev/null
+        /data/index
 
   mongodb:
     image: ghcr.io/sourmash-bio/branchwater:mongo-0.3.0
@@ -30,7 +37,7 @@ services:
       dockerfile: Dockerfile
       target: web
     ports:
-      - "8000:8000"
+      - "8001:8000"
     restart: always
     depends_on:
       - mongodb
