@@ -20,8 +20,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install Nix
       uses: DeterminateSystems/nix-installer-action@v16
-    - name: Run the Magic Nix Cache
-      uses: DeterminateSystems/magic-nix-cache-action@v9
     - name: flake checks
       run: nix flake check --keep-going --print-build-logs
 

@@ -10,8 +10,11 @@ on:
       - 'main'
     tags:
       - 'v*'
-## disabling for PRs, too many builds
-#  pull_request:
+  pull_request:
+    paths:
+      - .github/workflows/docker-images.yml
+      - Dockerfile
+## disabling for most PRs, too many builds
 #    branches:
 #      - 'main'
 
@@ -81,6 +84,8 @@ jobs:
           outputs: type=image,"name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}",push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          # don't push on PRs
+          push: ${{ ! startsWith(github.ref, 'refs/pull/') }}
 
       - name: Export digest
         run: |
@@ -98,6 +103,8 @@ jobs:
 
   merge:
     runs-on: ubuntu-latest
+    # avoid tagging on PRs
+    if: ${{ ! startsWith(github.ref, 'refs/pull/') }}
     needs:
       - build
 
