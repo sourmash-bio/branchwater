@@ -108,7 +108,7 @@ so you don't need to build it locally.
 You can download it and put in the correct place with
 
 ```bash
-pixi exec wget -c -O bw_k21/index/metadata.parquet \
+pixi exec wget -c -O bw_k21/metadata.parquet \
     https://farm.cse.ucdavis.edu/~irber/branchwater/20241128-metadata.parquet
 ```
 :::
