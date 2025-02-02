@@ -1,23 +1,19 @@
 import os
 
-import pymongo as pm
+import duckdb
 import yaml
 import urllib3
 from flask import Flask, render_template, request, jsonify, g, current_app
 
 import sentry_sdk
-from sentry_sdk.integrations.pymongo import PyMongoIntegration
 sentry_sdk.init(
     os.environ.get("SENTRY_DSN"),
     enable_tracing=True,
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
-    integrations=[
-        PyMongoIntegration(),
-    ],
 )
 
-from functions import getacc, getmetadata, getmongo, SearchError
+from functions import getacc, getmetadata, getduckdb, SearchError
 
 
 def http_pool():
@@ -26,11 +22,12 @@ def http_pool():
 
     return g.pool
 
-def mongo_client():
-    if 'mongo_client' not in g:
-        g.mongo_client = pm.MongoClient(f"mongodb://mongodb")
+def duckdb_client(config):
+    if 'duckdb_client' not in g:
+        g.duckdb_client = duckdb.connect(database = config['metadata_duckdb'],
+                                         read_only=True)
 
-    return g.mongo_client
+    return g.duckdb_client
 
 def create_app():
     app = Flask(__name__)
@@ -45,8 +42,8 @@ def create_app():
 
             current_app.config.update(config_data)
 
-            metadata = getmetadata(current_app.config, http_pool())
-            current_app.config.metadata = metadata
+        metadata = getmetadata(current_app.config, http_pool())
+        current_app.config.metadata = metadata
 
     return app
 
@@ -60,11 +57,11 @@ def teardown_http_pool(exception):
         pool.clear()
 
 @app.teardown_appcontext
-def teardown_mongo_client(exception):
-    mc = g.pop('mongo_client', None)
+def teardown_duckdb_client(exception):
+    client = g.pop('duckdb_client', None)
 
-    if mc is not None:
-        mc.close()
+    if client is not None:
+        client.close()
 
 
 KSIZE = app.config.get('ksize', 21)
@@ -89,25 +86,15 @@ def home():
         except SearchError as e:
             return e.args
 
-        acc_t = tuple(mastiff_df.SRA_accession.tolist())
-
         # for 'basic' query, override metadata form with selected categories
         meta_list = ('bioproject', 'assay_type',
                      'collection_date_sam', 'geo_loc_name_country_calc', 'organism', 'lat_lon')
 
-        # get metadata from mongodb (imported from mongoquery.py)
-        result_list = getmongo(acc_t, meta_list, app.config, mongo_client())
+        # get metadata from duckdb
+        result_list = getduckdb(mastiff_df, meta_list, app.config, duckdb_client(app.config)).pl()
         print(f"Metadata for {len(result_list)} acc returned.")
-        mastiff_dict = mastiff_df.to_dict('records')
 
-        for r in result_list:
-            for m in mastiff_dict:
-                if r['acc'] == m['SRA_accession']:
-                    r['containment'] = round(m['containment'], 2)
-                    r['cANI'] = round(m['cANI'], 2)
-                    break
-
-        return jsonify(result_list)  # return metadata results to client
+        return result_list.write_json(None)  # return metadata results to client
     return render_template('index.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
 
@@ -121,29 +108,19 @@ def advanced():
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
         try:
-            mastiff_df = getacc(signatures, app.config, g.pool)
+            mastiff_df = getacc(signatures, app.config, http_pool())
         except SearchError as e:
             return e.args
 
-        acc_t = tuple(mastiff_df.SRA_accession.tolist())
-
-        # get metadata from mongodb (imported from mongoquery.py)
+        # get metadata from duckdb
         meta_dic = form_data['metadata']
         meta_list = tuple([
                           key for key, value in meta_dic.items() if value])
 
-        result_list = getmongo(acc_t, meta_list, app.config, mongo_client())
+        result_list = getduckdb(mastiff_df, meta_list, app.config, duckdb_client(app.config)).pl()
         print(f"Metadata for {len(result_list)} acc returned.")
-        mastiff_dict = mastiff_df.to_dict('records')
 
-        for r in result_list:
-            for m in mastiff_dict:
-                if r['acc'] == m['SRA_accession']:
-                    r['containment'] = round(m['containment'], 2)
-                    r['cANI'] = round(m['cANI'], 2)
-                    break
-
-        return jsonify(result_list)  # return metadata results to client
+        return result_list.write_json(None)  # return metadata results to client
     return render_template('advanced.html')
 
 

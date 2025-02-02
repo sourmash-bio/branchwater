@@ -8,13 +8,13 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [tool.pixi.environments]
-default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "mongo", "docs"], solve-group = "default" }
+default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
-web = { features = ["web", "mongo"], solve-group = "default" }
+web = { features = ["web", "duckdb"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
-mongo = { features = ["mongo"], solve-group = "default" }
+duckdb = { features = ["duckdb"], solve-group = "default" }
 
 [tool.pixi.tasks]
 demo = { depends-on = ["index", "metadata"] }
@@ -32,18 +32,20 @@ build-server = "cargo build --release -p branchwater-server"
 
 [tool.pixi.feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
-metadata = { depends-on = ["metadata_bq", "load_mongo"] }
+metadata = { depends-on = ["metadata_bq", "load_duckdb"] }
 
 [tool.pixi.feature.prepare.dependencies]
 snakemake = ">=8.5.3,<8.6"
 sourmash = ">=4.8.6,<4.9"
 
-[tool.pixi.feature.mongo.dependencies]
-pymongo = "~=4.10"
+[tool.pixi.feature.duckdb.dependencies]
+duckdb = "~=1.1.3"
+duckdb-cli = "~=1.1.3"
 polars = ">=1.12.0,<2"
+pyarrow = "*"
 
-[tool.pixi.feature.mongo.tasks]
-load_mongo = "docker compose up -d mongodb && docker compose exec mongodb /bin/bash /shell-hook python3 /docker-entrypoint-initdb.d/load_parquet.py /data/bw_db/metadata.parquet"
+[tool.pixi.feature.duckdb.tasks]
+load_duckdb = "cat metadata/load_duckdb.sql | duckdb bw_db/metadata.duckdb"
 
 [tool.pixi.feature.metadata.dependencies]
 polars = ">=1.12.0,<2"
@@ -78,13 +80,12 @@ pyright = "*"
 [tool.pixi.feature.web.dependencies]
 flask = "~=2.3.2"
 polars = ">=1.12.0,<2"
-pandas = "~=2.0"
 urllib3 = "~=2.0.4"
 pyyaml = "~=6.0"
 gunicorn = "~=23.0"
 
 [tool.pixi.feature.web.pypi-dependencies]
-sentry-sdk = { version = "*", extras = ["flask", "pymongo"] }
+sentry-sdk = { version = "*", extras = ["flask"] }
 
 [tool.pixi.system-requirements]
 linux = "3.10"

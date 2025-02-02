@@ -1,11 +1,15 @@
-import pandas as pd
+import polars as pl
 import io
 import os
 import gzip
 import string
 
 
-DEFAULT_COLUMNS = ["SRA_accession", "containment", "cANI"]
+DEFAULT_COLUMNS = {
+    "SRA_accession": pl.String,
+    "containment": pl.Float64,
+    "cANI": pl.Float64
+}
 
 
 class SearchError(Exception):
@@ -44,39 +48,47 @@ def getacc(signatures, config, http):
     query_results_text = r.data.decode('utf-8')
 
     results_wrap_fp = io.StringIO(query_results_text)
-    mastiff0_df = pd.read_csv(results_wrap_fp)
-    n_raw_results = len(mastiff0_df)
+    mastiff_df = pl.read_csv(results_wrap_fp, schema=DEFAULT_COLUMNS)
+    n_raw_results = len(mastiff_df)
 
     if n_raw_results == 0:
-        return pd.DataFrame(columns=DEFAULT_COLUMNS)
+        return pl.DataFrame(None, schema=DEFAULT_COLUMNS)
 
-    # containment to ANI
-    ksize = config.get('ksize', 21)
-    mastiff0_df['cANI'] = mastiff0_df['containment'] ** (1./ksize)
+    ksize = int(config.metadata['ksize'])
 
-    # filter for containment; potential to pass this from user
     threshold = config.get('threshold', 0.1)
     print(
         f"Search returned {n_raw_results} results. Now filtering results with <{threshold} containment...")
-    mastiff_df = mastiff0_df[mastiff0_df['containment'] >= threshold]
+
+    mastiff_df = (mastiff_df
+        # filter for containment; potential to pass this from user
+        .filter(pl.col("containment") >= threshold)
+        .with_columns(
+          # containment to ANI
+          cANI=pl.col('containment') ** (1./ksize)
+        ))
+
     print(
         f"Returning {len(mastiff_df)} filtered results!")
 
     # remove spaces from columns
-    mastiff_df.columns = [c.replace(' ', '_') for c in mastiff_df.columns]
+    mastiff_df = mastiff_df.rename(lambda c: c.replace(' ', '_'))
     return mastiff_df
 
 
-def getmongo(acc_t, meta_list, config, client):
-    db = client["sradb"]
-    sradb_col = db["sradb_list"]
+def getduckdb(mastiff_df, meta_list, config, client):
+    meta_list = ["acc", "biosample"] + list(meta_list)
 
-    # deselect ID; return acc and biosample html for every query
-    meta_dict = {'_id': 0, 'acc': 1, 'biosample_link': 1}
-    for item in meta_list:
-        meta_dict[item] = 1
+    query = f"""
+        SELECT
+            subset.acc,
+            round(accs.containment, 2) as containment,
+            round(accs.cANI, 2) as cANI,
+            subset.* EXCLUDE (acc)
+        FROM mastiff_df accs
+        LEFT JOIN (SELECT {", ".join(meta_list)} FROM metadata) subset
+        ON accs.SRA_accession = subset.acc;
+    """
+    result = client.sql(query)
 
-    query = list(sradb_col.find(
-        {'acc': {"$in": acc_t}}, meta_dict))
-
-    return (query)
+    return result
