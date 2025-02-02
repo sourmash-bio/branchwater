@@ -27,7 +27,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target: [web, index, mongo]
+        target: [web, index]
         platform:
           - linux/amd64
           - linux/arm64
@@ -110,7 +110,7 @@ jobs:
 
     strategy:
       matrix:
-        target: [web, index, mongo]
+        target: [web, index]
 
     permissions:
       contents: read
