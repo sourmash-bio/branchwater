@@ -94,7 +94,7 @@ def home():
         result_list = getduckdb(mastiff_df, meta_list, app.config, duckdb_client(app.config)).pl()
         print(f"Metadata for {len(result_list)} acc returned.")
 
-        return result_list.write_json(None)  # return metadata results to client
+        return result_list.fill_null("NP").write_json(None)  # return metadata results to client
     return render_template('index.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
 
@@ -120,7 +120,7 @@ def advanced():
         result_list = getduckdb(mastiff_df, meta_list, app.config, duckdb_client(app.config)).pl()
         print(f"Metadata for {len(result_list)} acc returned.")
 
-        return result_list.write_json(None)  # return metadata results to client
+        return result_list.fill_null("NP").write_json(None)  # return metadata results to client
     return render_template('advanced.html')
 
 
