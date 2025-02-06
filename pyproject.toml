@@ -82,6 +82,7 @@ pandas = "~=2.0"
 urllib3 = "~=2.0.4"
 pyyaml = "~=6.0"
 gunicorn = "~=23.0"
+Markdown = "~=3.6"
 
 [tool.pixi.feature.web.pypi-dependencies]
 sentry-sdk = { version = "*", extras = ["flask", "pymongo"] }
