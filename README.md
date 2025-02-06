@@ -46,7 +46,7 @@ with the tools developed to work with the new index:
 - `branchwater-query`,
   a command-line interface to submit queries to a search server.
 
-There are also additional resources:
+There are also additional resources external to this repository:
 
 * The code for monitoring the SRA and building sourmash sketches from genomes and metagenomes is in [wort](https://github.com/sourmash-bio/wort).
 * [sourmash_plugin_branchwater](https://github.com/sourmash-bio/sourmash_plugin_branchwater) is a sourmash plugin exposing more features from branchwater in sourmash.

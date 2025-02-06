@@ -17,7 +17,7 @@ sentry_sdk.init(
     ],
 )
 
-from functions import getacc, getmetadata, getmongo, SearchError
+from functions import getacc, getmetadata, getmongo, SearchError, markdownify
 
 
 def http_pool():
