@@ -3,7 +3,7 @@
 Deploying a new `branchwater` instance involves bringing up a couple of components:
 - `branchwater-web`, the web frontend at [https://branchwater.sourmash.bio](https://branchwater.sourmash.bio)
 - `branchwater-server`, the backend serving the RocksDB inverted index for sourmash signatures
-- a [mongo](https://www.mongodb.com/) database for the SRA metadata used for
+- a [duckdb](https://duckdb.org/) database for the SRA metadata used for
   `branchwater-web` results
 
 A diagram of how these components are connected:
@@ -136,14 +136,16 @@ bw_db
 └── sraids      # a list of SRA accessions to download signatures and build the index
 ```
 
-### Prepare a BigQuery access key
+### Option A: Prepare Metadata using BiqQuery
+
+#### Prepare a BigQuery access key
 
 ```{include} ../metadata/README.md
 :start-after: <!-- start sra-metadata-access -->
 :end-before: <!-- end sra-metadata-access -->
 ```
 
-### Checkpoint before metadata processing
+#### Checkpoint before metadata processing
 
 This is how the `bw_db` directory at the root of the repository should look like:
 ```
@@ -154,24 +156,45 @@ bw_db
 └── sraids         # a list of SRA accessions to download signatures and build the index
 ```
 
-### Download the SRA metadata from bigquery and load into mongo
-
-After the index is build and we have BigQuery credentials,
-we can bring up the `mongodb` that will hold the metadata:
-```
-pixi run deploy up -d mongodb
-```
-It is empty initially,
-so let's load the metadata next with
+#### Download the SRA metadata from bigquery
 
 ```
-pixi run metadata
+pixi run metadata_bq
 ```
+
+### Option B: Prepare Metadata from parquet
+
+#### Checkpoint before metadata processing
+
+This is how the `bw_db` directory at the root of the repository should look like:
+```
+bw_db
+├── index/         # the branchwater search index
+├── sigs.zip       # signatures indexed for search
+└── sraids         # a list of SRA accessions to download signatures and build the index
+```
+
+#### Download the SRA metadata via parquet file
+
+```
+pixi run metadata_sra
+```
+> to build a smaller dataset for testing, run `pixi run metadata_sra_test`
+
+
+### Load the metadata into duckdb
+```
+pixi run load_duckdb
+```
+> if reloading after switching from e.g. test db to full db, need to run:
+> `pixi run load_duckdb_force`
+
 
 ### Bring up search index and web frontend
 
 ```
-pixi run deploy up -d
+pixi run deploy build app
+pixi run deploy up -d app
 ```
 
 Web frontend will be available at [http://localhost:8000](http://localhost:8000)
