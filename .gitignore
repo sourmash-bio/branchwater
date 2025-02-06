@@ -21,3 +21,6 @@ mongodb/
 
 docs/doctree/
 docs/out/
+
+*~
+__pycache__
