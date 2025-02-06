@@ -102,6 +102,8 @@ if __name__ == "__main__":
         "-s", "--sra-metadata", default="s3://sra-pub-metadata-us-east-1/sra/metadata/"
     )
     parser.add_argument("-o", "--output", default="/data/bw_db/metadata.parquet")
+    parser.add_argument('--build-full-db', action="store_true", default=True)
+    parser.add_argument('--build-test-db', dest="build_full_db", action="store_false")
 
     args = parser.parse_args()
-    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output)
+    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output, build_full_db=args.build_full_db)
