@@ -47,6 +47,7 @@ pyarrow = "*"
 [tool.pixi.feature.duckdb.tasks]
 #load_duckdb = "cat metadata/load_duckdb.sql | duckdb bw_db/metadata.duckdb"
 load_duckdb = "python metadata/load_duckdb.py -o bw_db/metadata.duckdb bw_db/metadata.parquet"
+load_duckdb_force = "python metadata/load_duckdb.py -o bw_db/metadata.duckdb bw_db/metadata.parquet --force"
 
 
 [tool.pixi.feature.metadata.dependencies]
