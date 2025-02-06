@@ -3,7 +3,7 @@ import os
 import duckdb
 import yaml
 import urllib3
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify, g, current_app
 
 import sentry_sdk
 sentry_sdk.init(
@@ -34,16 +34,16 @@ def create_app():
 
     with app.app_context():
         # may not be needed/not yet integrated
-        app.config['SECRET_KEY'] = 'my-secret-key'
+        current_app.config['SECRET_KEY'] = 'my-secret-key'
 
         # Load configuration from config.yaml
         with open('config.yml', 'r') as file:
             config_data = yaml.safe_load(file)
 
-            app.config.update(config_data)
+            current_app.config.update(config_data)
 
-        metadata = getmetadata(app.config, http_pool())
-        app.config.metadata = metadata
+            metadata = getmetadata(current_app.config, http_pool())
+            current_app.config.metadata = metadata
 
     return app
 
