@@ -42,14 +42,12 @@ def main(
     output="/data/bw_db/metadata.duckdb",
     force=False,
 ):
-    orig_metadata = pl.read_parquet(parquet_metadata)
+    orig_metadata = pl.scan_parquet(parquet_metadata)
     orig_metadata = orig_metadata.with_columns(
-        pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True)#, return_dtype=pl.List)
+        pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True)
     )
 
     conn = duckdb.connect(database=output, read_only=False)
-    conn.install_extension("parquet")
-    conn.load_extension("parquet")
 
     if force:
         conn.sql("DROP TABLE IF EXISTS metadata")
