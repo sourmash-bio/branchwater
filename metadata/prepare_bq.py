@@ -83,10 +83,10 @@ def main(
         attr_col = attr_col + f"""json_query(jattr,'$.{item}') as {item}, """
 
     if not limit:
-        print(f"building full mongodb database.")
+        print(f"building full metadata database.")
         limit = ";"
     else:
-        print(f"limiting mongodb to 150,000 for testing.")
+        print(f"limiting metadata to 150,000 for testing.")
         ## set LIMIT of 150,000 for testing (faster build) ##
         limit = "LIMIT 150000;"
 

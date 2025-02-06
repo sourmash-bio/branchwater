@@ -13,6 +13,7 @@ result
 docs/_build
 prod.env
 mongodb/
+**/__pycache__/
 
 # pixi environments
 .pixi

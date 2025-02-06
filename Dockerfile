@@ -13,9 +13,6 @@ RUN echo 'exec "$@"' >> /shell-hook-web
 RUN pixi shell-hook -e prepare > /shell-hook-prepare
 RUN echo 'exec "$@"' >> /shell-hook-prepare
 
-RUN pixi shell-hook -e mongo > /shell-hook-mongo
-RUN echo 'exec "$@"' >> /shell-hook-mongo
-
 #--------------------
 
 FROM install AS rust_build
@@ -58,10 +55,3 @@ WORKDIR /data
 EXPOSE 80/tcp
 
 CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data/sigs.zip", "/data/index"]
-
-#--------------------
-
-FROM docker.io/mongo:latest AS mongo
-
-COPY --from=install /app/.pixi/envs/mongo /app/.pixi/envs/mongo
-COPY --from=install /shell-hook-mongo /shell-hook

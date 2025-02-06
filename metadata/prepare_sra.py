@@ -4,7 +4,6 @@ import datetime
 import os
 
 import polars as pl
-import pymongo as pm
 
 
 def main(
@@ -84,9 +83,9 @@ def main(
     )
 
     if build_full_db:
-        print(f"building full mongodb database.")
+        print(f"building full metadata database.")
     else:
-        print(f"limiting mongodb to 150,000 for testing.")
+        print(f"limiting metadata to 150,000 for testing.")
         sra_metadata = sra_metadata.head(150000)
 
     # print(sra_metadata.explain(optimized=True))
