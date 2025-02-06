@@ -40,6 +40,7 @@ def main(
     *,
     parquet_metadata="/data/bw_db/metadata.parquet",
     output="/data/bw_db/metadata.duckdb",
+    force=False,
 ):
     orig_metadata = pl.read_parquet(parquet_metadata)
     orig_metadata = orig_metadata.with_columns(
@@ -49,6 +50,9 @@ def main(
     conn = duckdb.connect(database=output, read_only=False)
     conn.install_extension("parquet")
     conn.load_extension("parquet")
+
+    if force:
+        conn.sql("DROP TABLE IF EXISTS metadata")
 
     conn.sql("""
         CREATE TABLE metadata AS
@@ -64,6 +68,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("parquet_metadata")
     parser.add_argument("-o", "--output", default="/data/bw_db/metadata.duckdb")
+    parser.add_argument("--force", action="store_true", help="force reload duckdb")
 
     args = parser.parse_args()
-    main(parquet_metadata=args.parquet_metadata, output=args.output)
+    main(parquet_metadata=args.parquet_metadata, output=args.output, force=args.force)

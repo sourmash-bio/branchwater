@@ -47,6 +47,7 @@ pyarrow = "*"
 [tool.pixi.feature.duckdb.tasks]
 #load_duckdb = "cat metadata/load_duckdb.sql | duckdb bw_db/metadata.duckdb"
 load_duckdb = "python metadata/load_duckdb.py -o bw_db/metadata.duckdb bw_db/metadata.parquet"
+load_duckdb_force = "python metadata/load_duckdb.py -o bw_db/metadata.duckdb bw_db/metadata.parquet --force"
 
 
 [tool.pixi.feature.metadata.dependencies]
@@ -55,7 +56,8 @@ pyarrow = "*"
 google-cloud-bigquery = ">=3.28.0,<4"
 
 [tool.pixi.feature.metadata.tasks]
-metadata_sra = { cmd = ["python3", "prepare_sra.py"], cwd = "metadata" }
+metadata_sra = { cmd = ["python3", "prepare_sra.py", "-a", "../bw_db/sraids", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
+metadata_sra_test = { cmd = ["python3", "prepare_sra.py", "-a", "../bw_db/sraids", "-o", "../bw_db/metadata.parquet", "--build-test-db"], cwd = "metadata" }
 metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
 
 [tool.pixi.feature.deploy.tasks]

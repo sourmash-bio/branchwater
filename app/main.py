@@ -42,8 +42,8 @@ def create_app():
 
             current_app.config.update(config_data)
 
-        metadata = getmetadata(current_app.config, http_pool())
-        current_app.config.metadata = metadata
+            metadata = getmetadata(current_app.config, http_pool())
+            current_app.config.metadata = metadata
 
     return app
 
