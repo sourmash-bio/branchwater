@@ -13,12 +13,12 @@ graph LR;
 classDef server fill:#4A902A,stroke:#333,stroke-width:4px,color:#fff;
 classDef web fill:#dc6c11,stroke:#333,stroke-width:4px,color:#fff;
 classDef index fill:#3c48cc,stroke:#333,stroke-width:4px,color:#fff;
-classDef mongodb fill:#6980e9,stroke:#333,stroke-width:4px,color:#fff;
+classDef duckdb fill:#6980e9,stroke:#333,stroke-width:4px,color:#fff;
 classDef client fill:#8450e1,stroke:#333,stroke-width:4px,color:#fff;
 
 A01(browser):::client --> B01(web):::web
 B01 --> C01(server):::server
-B01 --> D01[(mongo)]:::mongodb
+B01 --> D01[(duckdb)]:::duckdb
 C01 --> E01[(index)]:::index
 :::
 
@@ -136,7 +136,11 @@ bw_db
 └── sraids      # a list of SRA accessions to download signatures and build the index
 ```
 
-### Option A: Prepare Metadata using BiqQuery
+### Prepare Metadata
+
+::::{tab-set}
+
+:::{tab-item} Using BiqQuery
 
 #### Prepare a BigQuery access key
 
@@ -162,7 +166,9 @@ bw_db
 pixi run metadata_bq
 ```
 
-### Option B: Prepare Metadata from parquet
+:::
+
+:::{tab-item} From SRA parquet in AWS Open Data
 
 #### Checkpoint before metadata processing
 
@@ -179,16 +185,22 @@ bw_db
 ```
 pixi run metadata_sra
 ```
-> to build a smaller dataset for testing, run `pixi run metadata_sra_test`
-
+```{note}
+to build a smaller dataset for testing, run `pixi run metadata_sra_test`
+```
 
 ### Load the metadata into duckdb
 ```
 pixi run load_duckdb
 ```
-> if reloading after switching from e.g. test db to full db, need to run:
-> `pixi run load_duckdb_force`
+```{note}
+if reloading after switching from e.g. test db to full db, need to run:
+`pixi run load_duckdb --force`
+```
 
+:::
+
+::::
 
 ### Bring up search index and web frontend
 

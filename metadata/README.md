@@ -1,4 +1,4 @@
-Building the mongoDB database for the webapp to access is dependent on bigquery.
+Building the duckdb database for the webapp to access is dependent on bigquery.
 To build the db a bigquery service account is needed -
 it should be associated with a project 'sraproject',
 and a project needs to have a dataset called 'mastiffdata'.

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import re
-import os
+from pathlib import Path
 
 import duckdb
 import polars as pl
@@ -47,10 +47,10 @@ def main(
         pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True)
     )
 
-    conn = duckdb.connect(database=output, read_only=False)
-
     if force:
-        conn.sql("DROP TABLE IF EXISTS metadata")
+        Path(output).unlink()
+
+    conn = duckdb.connect(database=output, read_only=False)
 
     conn.sql("""
         CREATE TABLE metadata AS
@@ -58,6 +58,13 @@ def main(
 
         CREATE UNIQUE INDEX acc_idx ON metadata (acc);
     """)
+
+    n_datasets = conn.sql("SELECT count(acc) FROM metadata").fetchall()[0][0];
+    n_mbytes = float(conn.sql("PRAGMA database_size").fetchall()[0][1].split(" ")[0])
+
+    print(f"{n_datasets:,} accessions imported to duckdb\n"
+          f"Full duckdb size is {n_mbytes} MiB, "
+          f"average document size is {int((n_mbytes * 1024 ** 2) / n_datasets)} bytes")
 
 
 if __name__ == "__main__":

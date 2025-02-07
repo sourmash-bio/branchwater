@@ -50,15 +50,16 @@ mkdir -p bw_k21
 By the point we are ready to start the service it will look like this:
 ```
 bw_k21
-├── bqKey.json        # Only if building metadata yourself
+├── bqKey.json        # Only if building metadata yourself using BigQuery
 ├── index/            # branchwater index
-├── metadata.parquet  # metadata for index, either prepared or built from index
+├── metadata.duckdb   # metadata for accesions, either prepared or built from index. Loaded from parquet.
+├── metadata.parquet  # metadata for accesions, either prepared or built from index
 └── sraids            # Only if building metadata yourself
 ```
 
 ## Edit `docker-compose.yml`
 
-In the `volumes` section for the `index` and `mongodb` services,
+In the `volumes` section for the `index` service,
 replace `bw_db` with `bw_k21`:
 ```diff
      volumes:
@@ -159,17 +160,17 @@ to create it.
 
 ::::
 
-## Load metadata into mongodb
+## Load metadata into duckdb
 
-We can load `metadata.parquet` into mongodb by running
+We can load `metadata.parquet` into duckdb by running
 ```bash
-pixi run load_mongo
+pixi run load_duckdb
 ```
 
 This will be printed after the command finishes:
 ```bash
-1160375 acc documents imported to mongoDB collection
-Full MongoDB size is 2304478866 bytes, average document size is 1985 bytes
+1,160,375 accessions imported to duckdb
+Full duckdb size is 350.7 MiB, average document size is 316 bytes
 ```
 
 :::{note}
