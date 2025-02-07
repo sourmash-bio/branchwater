@@ -54,7 +54,6 @@ google-cloud-bigquery = ">=3.28.0,<4"
 
 [tool.pixi.feature.metadata.tasks]
 metadata_sra = { cmd = ["python3", "prepare_sra.py", "-a", "../bw_db/sraids", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
-metadata_sra_test = { cmd = ["python3", "prepare_sra.py", "-a", "../bw_db/sraids", "-o", "../bw_db/metadata.parquet", "--build-test-db"], cwd = "metadata" }
 metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
 
 [tool.pixi.feature.deploy.tasks]

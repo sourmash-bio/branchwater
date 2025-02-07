@@ -24,7 +24,6 @@ services:
       - index
     volumes:
       - ./bw_db:/data/
-      - ./app:/app/web
     env_file:
       - prod.env
     command: >
@@ -33,5 +32,4 @@ services:
         --timeout 120
         --workers 4
         --access-logfile -
-        --reload
         main:app
