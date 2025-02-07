@@ -10,13 +10,6 @@ services:
       - ./bw_db:/data/
     env_file:
       - prod.index.env
-    command: >
-      /app/bin/branchwater-server
-        --port 80
-        -k 21
-        --scaled 100000
-        --location /dev/null
-        /data/index
 
   app:
     image: ghcr.io/sourmash-bio/branchwater:web-0.3.0
@@ -31,7 +24,6 @@ services:
       - index
     volumes:
       - ./bw_db:/data/
-      - ./app:/app/web
     env_file:
       - prod.env
     command: >
@@ -40,5 +32,4 @@ services:
         --timeout 120
         --workers 4
         --access-logfile -
-        --reload
         main:app

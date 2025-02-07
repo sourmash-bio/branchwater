@@ -77,7 +77,9 @@ def getacc(signatures, config, http):
 
 
 def getduckdb(mastiff_df, meta_list, config, client):
-    meta_list = ["acc", "biosample"] + list(meta_list)
+    required = ["acc"]
+    # make sure required keys are present, and show up first
+    meta_list = list(dict.fromkeys(required + list(meta_list)))
 
     query = f"""
         SELECT
