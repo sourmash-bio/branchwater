@@ -186,7 +186,7 @@ bw_db
 pixi run metadata_sra
 ```
 ```{note}
-to build a smaller dataset for testing, run `pixi run metadata_sra_test`
+to build a smaller dataset for testing, run `pixi run metadata_sra --build-test-db`
 ```
 
 ### Load the metadata into duckdb
