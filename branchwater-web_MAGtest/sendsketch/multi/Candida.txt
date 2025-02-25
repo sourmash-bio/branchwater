@@ -1,0 +1,126 @@
+
+Query: MEGAHIT-MetaBAT2-SRR11734772.31.fa.gz	DB: RefSeq	SketchLen: 30576	Seqs: 1437 	Bases: 11803860	gSize: 11759313	GC: 0.450	File: MEGAHIT-MetaBAT2-SRR11734772.31.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m69.64%	66.57%	98.71%	.	95.30%	0.31%	20702	20088	498019	12317K	22	[Candida] auris[0m
+[33;1m1.29%	1.01%	85.37%	.	42.00%	67.04%	309	15	59510	9263684	3098	Pseudomonas syringae pv. pisi[0m
+[31m0.42%	0.37%	81.72%	.	27.40%	69.58%	119	3	45357	13059K	15	[Candida] haemuloni[0m
+[33;1m0.44%	0.33%	82.11%	.	23.11%	69.57%	113	0	318	15473K	25934	Pseudomonas savastanoi pv. glycinea[0m
+[31m0.35%	0.33%	81.28%	.	28.41%	69.58%	102	1	418784	12590K	38	[Candida] pseudohaemulonii[0m
+[31m0.32%	0.30%	80.97%	.	28.64%	69.64%	95	1	1231522	12475K	11	[Candida] duobushaemulonis[0m
+[35;1m0.13%	0.08%	78.43%	.	51.18%	67.97%	24	24	76775	7359923	12	Malassezia restricta[0m
+[31m0.08%	0.08%	76.76%	.	31.19%	68.41%	24	1	306902	11926K	9	Clavispora lusitaniae ATCC 42720[0m
+[31m[4m0.06%	0.05%	75.94%	.	29.48%	69.41%	17	1	1882742	12216K	1221	Rhodococcus sp. WS4[0m
+[31m[4m0.07%	0.05%	76.33%	.	23.32%	69.90%	17	0	280587	15169K	48	Metschnikowia bicuspidata var. bicuspidata[0m
+[35m0.05%	0.05%	75.83%	.	26.81%	69.96%	15	1	984487	13095K	16	Suhomyces tanzawaensis NRRL Y-17324[0m
+[35m0.04%	0.04%	75.26%	.	35.61%	68.01%	12	0	294746	10569K	9	Meyerozyma guilliermondii ATCC 6260[0m
+[33;1m0.13%	0.02%	78.47%	.	100.00%	68.03%	7	0	888048	2075851	14	Streptococcus parasanguinis ATCC 903[0m
+[33;1m0.12%	0.02%	78.22%	.	100.00%	68.03%	7	0	1715183	2207629	48	Streptococcus sp. HMSC076C09[0m
+[35m0.03%	0.03%	73.53%	.	32.34%	68.02%	9	1	58627	11632K	541	Debaryomyces fabryi[0m
+[35m0.03%	0.03%	74.39%	.	35.60%	68.02%	9	0	590646	10579K	25	Yamadazyma tenuis ATCC 10573[0m
+[35m0.03%	0.03%	69.70%	.	32.01%	68.02%	9	0	284592	11764K	7	Debaryomyces hansenii CBS767[0m
+[35m0.03%	0.03%	74.44%	.	24.75%	69.94%	9	0	379508	14300K	28	Lodderomyces elongisporus NRRL YB-4239[0m
+[35m0.03%	0.03%	74.49%	.	24.06%	69.95%	9	0	322104	14691K	8	Scheffersomyces stipitis CBS 6054[0m
+[33;1m0.09%	0.02%	77.54%	.	100.00%	68.04%	5	0	1715165	2084777	24	Streptococcus sp. HMSC057G03[0m
+
+Query: MEGAHIT-MetaBAT2-SRR11734772.32.fa.gz	DB: RefSeq	SketchLen: 14892	Seqs: 682 	Bases: 1425457	gSize: 1380211	GC: 0.390	File: MEGAHIT-MetaBAT2-SRR11734772.32.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[33;1m1.31%	0.86%	85.40%	.	64.33%	2.45%	147	5	1715165	2084777	24	Streptococcus sp. HMSC057G03[0m
+[33;1m1.36%	0.86%	85.52%	.	61.73%	2.44%	148	3	1739505	2161956	29	Streptococcus sp. HMSC065E03[0m
+[33;1m1.21%	0.80%	85.16%	.	64.55%	2.55%	137	3	888048	2075851	14	Streptococcus parasanguinis ATCC 903[0m
+[33;1m1.22%	0.76%	85.18%	.	61.04%	2.60%	132	2	1739408	2192372	50	Streptococcus sp. HMSC072G04[0m
+[33;1m1.15%	0.75%	85.02%	.	63.25%	2.61%	128	0	1739397	2116156	27	Streptococcus sp. HMSC072C09[0m
+[33;1m1.18%	0.73%	85.09%	.	60.23%	2.62%	127	1	1715183	2207629	48	Streptococcus sp. HMSC076C09[0m
+[33;1m1.12%	0.74%	84.93%	.	64.41%	2.63%	126	2	1715164	2078028	21	Streptococcus sp. HMSC074F05[0m
+[33;1m1.13%	0.72%	84.92%	.	62.12%	2.65%	124	0	1739430	2154090	31	Streptococcus sp. HMSC078D09[0m
+[33;1m1.09%	0.68%	84.83%	.	61.32%	2.72%	118	1	1739422	2178712	51	Streptococcus sp. HMSC065C01[0m
+[33;1m1.07%	0.67%	84.75%	.	60.72%	2.74%	116	0	1739421	2200217	30	Streptococcus sp. HMSC061E03[0m
+[33;1m0.98%	0.65%	84.46%	.	64.25%	2.77%	110	1	2610896	2080439	1	Streptococcus sp. LPB0220[0m
+[33;1m0.90%	0.61%	84.22%	.	66.27%	2.83%	103	2	1739336	2015195	25	Streptococcus sp. HMSC073D05[0m
+[33;1m0.92%	0.58%	84.34%	.	61.36%	2.87%	101	1	1316408	2175514	1	Streptococcus sp. HSISM1[0m
+[33;1m0.60%	0.45%	82.93%	.	72.82%	2.94%	73	0	1123307	1833488	84	Streptococcus massiliensis DSM 18628[0m
+[33;1m0.50%	0.32%	82.46%	.	61.24%	3.29%	55	0	999425	2169903	3	Streptococcus sp. F0442[0m
+[35m0.87%	0.10%	83.56%	.	10.54%	4.22%	30	24	1136231	12394K	8	Candida orthopsilosis Co 90-125[0m
+[33;1m0.13%	0.10%	78.53%	.	73.32%	3.39%	16	0	1739467	1801721	45	Streptococcus sp. HMSC067A03[0m
+[33;1m0.13%	0.10%	78.55%	.	72.25%	3.42%	16	0	1095730	1838209	143	Streptococcus constellatus subsp. constellatus SK53[0m
+[33;1m0.13%	0.10%	78.59%	.	70.65%	3.46%	16	0	1702171	1880154	1	Streptococcus sp. FDAARGOS_146[0m
+[33;1m0.13%	0.10%	78.62%	.	69.73%	3.48%	16	0	857292	1905408	11	Streptococcus intermedius F0395[0m
+
+Query: MEGAHIT-MetaBAT2-SRR11734780.1.fa.gz	DB: RefSeq	SketchLen: 27389	Seqs: 2562 	Bases: 8562820	gSize: 8471664	GC: 0.453	File: MEGAHIT-MetaBAT2-SRR11734780.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m70.51%	48.61%	98.75%	.	68.65%	0.44%	15117	14687	498019	12317K	22	[Candida] auris[0m
+[33;1m0.97%	0.89%	84.49%	.	38.20%	58.28%	250	53	59510	9263684	3098	Pseudomonas syringae pv. pisi[0m
+[31m0.43%	0.28%	81.79%	.	19.15%	70.54%	89	5	45357	13059K	15	[Candida] haemuloni[0m
+[33;1m0.42%	0.23%	81.94%	.	16.15%	70.57%	77	0	318	15473K	25934	Pseudomonas savastanoi pv. glycinea[0m
+[33;1m[4m0.48%	0.14%	82.36%	.	100.00%	55.70%	39	0	184246	2520296	58	Streptococcus constellatus subsp. constellatus[0m
+[33;1m0.31%	0.15%	81.02%	.	90.29%	55.69%	41	0	33040	4191146	4	Streptococcus milleri[0m
+[33;1m0.56%	0.13%	82.84%	.	100.00%	55.72%	35	0	857292	1905408	11	Streptococcus intermedius F0395[0m
+[33;1m0.55%	0.12%	82.80%	.	100.00%	55.72%	34	0	936578	1854713	17	Streptococcus sp. AS20[0m
+[31m0.31%	0.21%	80.87%	.	19.80%	70.61%	66	0	418784	12590K	38	[Candida] pseudohaemulonii[0m
+[31m0.30%	0.20%	80.63%	.	19.97%	70.67%	64	0	1231522	12475K	11	[Candida] duobushaemulonis[0m
+[33;1m0.49%	0.11%	82.37%	.	100.00%	55.73%	31	0	1715022	1898445	50	Streptococcus sp. HMSC034B05[0m
+[33;1m0.48%	0.11%	82.32%	.	100.00%	55.73%	30	0	1702171	1880154	1	Streptococcus sp. FDAARGOS_146[0m
+[35;1m0.13%	0.11%	78.46%	.	50.93%	55.73%	30	30	76775	7359923	12	Malassezia restricta[0m
+[33;1m0.48%	0.10%	82.33%	.	100.00%	55.74%	28	0	1739467	1801721	45	Streptococcus sp. HMSC067A03[0m
+[33;1m0.08%	0.06%	77.29%	.	20.58%	70.28%	18	0	1328	12268K	2355	Streptococcus anginosus[0m
+[31m0.08%	0.06%	76.81%	.	21.84%	69.35%	17	1	306902	11926K	9	Clavispora lusitaniae ATCC 42720[0m
+[33;1m0.10%	0.04%	77.43%	.	100.00%	55.81%	10	0	2282136	3035647	1087	Streptococcus sp. BCA20[0m
+[33;1m0.13%	0.03%	78.56%	.	100.00%	55.81%	8	0	1715113	1902585	23	Streptococcus sp. HMSC034B03[0m
+[35m0.05%	0.04%	75.67%	.	28.68%	64.27%	12	3	294746	10569K	9	Meyerozyma guilliermondii ATCC 6260[0m
+[31m0.06%	0.04%	76.09%	.	20.60%	70.37%	13	1	1882742	12216K	1221	Rhodococcus sp. WS4[0m
+
+Query: MEGAHIT-MetaBAT2-SRR11734785.3.fa.gz	DB: RefSeq	SketchLen: 30968	Seqs: 866 	Bases: 12272493	gSize: 12215915	GC: 0.449	File: MEGAHIT-MetaBAT2-SRR11734785.3.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m69.60%	69.03%	98.75%	.	98.98%	0.19%	21466	20834	498019	12317K	22	[Candida] auris[0m
+[33;1m1.33%	1.01%	85.47%	.	41.53%	68.51%	312	9	59510	9263684	3098	Pseudomonas syringae pv. pisi[0m
+[31m0.42%	0.39%	81.77%	.	28.58%	69.43%	125	5	45357	13059K	15	[Candida] haemuloni[0m
+[33;1m0.44%	0.35%	82.11%	.	24.05%	69.46%	117	0	318	15473K	25934	Pseudomonas savastanoi pv. glycinea[0m
+[31m0.35%	0.34%	81.25%	.	29.63%	69.42%	105	1	418784	12590K	38	[Candida] pseudohaemulonii[0m
+[31m0.32%	0.31%	80.96%	.	29.85%	69.50%	98	1	1231522	12475K	11	[Candida] duobushaemulonis[0m
+[31m0.07%	0.07%	76.60%	.	31.30%	69.45%	22	0	306902	11926K	9	Clavispora lusitaniae ATCC 42720[0m
+[31m0.07%	0.05%	76.50%	.	24.25%	69.83%	18	0	280587	15169K	48	Metschnikowia bicuspidata var. bicuspidata[0m
+[31m[4m0.05%	0.05%	75.86%	.	30.54%	69.46%	17	1	1882742	12216K	1221	Rhodococcus sp. WS4[0m
+[35m0.05%	0.05%	75.73%	.	27.93%	69.83%	15	1	984487	13095K	16	Suhomyces tanzawaensis NRRL Y-17324[0m
+[35m0.04%	0.04%	75.33%	.	35.25%	69.48%	12	0	294746	10569K	9	Meyerozyma guilliermondii ATCC 6260[0m
+[35m0.03%	0.03%	74.46%	.	35.21%	69.49%	9	0	590646	10579K	25	Yamadazyma tenuis ATCC 10573[0m
+[35m0.03%	0.03%	74.34%	.	25.75%	69.85%	9	0	379508	14300K	28	Lodderomyces elongisporus NRRL YB-4239[0m
+[35m0.03%	0.03%	69.43%	.	31.68%	69.49%	8	0	284592	11764K	7	Debaryomyces hansenii CBS767[0m
+[35m0.03%	0.02%	74.16%	.	25.02%	69.87%	8	0	322104	14691K	8	Scheffersomyces stipitis CBS 6054[0m
+[32;1m0.03%	0.02%	73.91%	.	42.31%	69.49%	7	0	871575	8863372	7	Ogataea parapolymorpha DL-1[0m
+[35m0.02%	0.02%	73.16%	.	32.05%	69.49%	7	0	58627	11632K	541	Debaryomyces fabryi[0m
+[32;1m0.03%	0.02%	73.63%	.	42.27%	69.50%	6	1	460523	8838630	10	Ogataea polymorpha[0m
+[35m0.02%	0.02%	73.61%	.	35.18%	69.50%	6	0	28985	10601K	10	Kluyveromyces lactis[0m
+[35m0.02%	0.02%	73.13%	.	35.17%	69.50%	6	0	1003335	10592K	9	Kluyveromyces marxianus DMKU3-1042[0m
+
+Query: MEGAHIT-MetaBAT2-SRR9016984.7.fa.gz	DB: RefSeq	SketchLen: 16246	Seqs: 780 	Bases: 1836287	gSize: 1811333	GC: 0.446	File: MEGAHIT-MetaBAT2-SRR9016984.7.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m86.40%	12.77%	99.48%	.	14.71%	0.50%	3971	3866	498019	12317K	22	[Candida] auris[0m
+[33;1m1.13%	0.22%	84.93%	.	5.55%	71.66%	62	12	59510	9263684	3098	Pseudomonas syringae pv. pisi[0m
+[32m2.67%	0.06%	87.21%	.	100.00%	24.74%	10	1	1221835	45070	1	Acinetobacter phage YMC/09/02/B1251[0m
+[32m2.31%	0.06%	86.87%	.	100.00%	24.75%	9	0	1628721	46985	1	Acinetobacter phage YMC11/11/R3177[0m
+[33;1m0.17%	0.05%	79.23%	.	12.03%	57.27%	12	0	381754	6416811	2	Pseudomonas aeruginosa PA7[0m
+[31m0.09%	0.04%	77.39%	.	29.70%	39.48%	9	0	1310567	3717188	203	Acinetobacter baumannii 1046674[0m
+[31m[4m0.43%	0.06%	81.93%	.	1.88%	86.51%	19	0	45357	13059K	15	[Candida] haemuloni[0m
+[33;1m0.15%	0.04%	78.51%	.	11.02%	59.00%	10	0	1125698	6734789	13	Pseudomonas sp. P179[0m
+[33;1m0.45%	0.05%	82.15%	.	1.63%	86.25%	18	0	318	15473K	25934	Pseudomonas savastanoi pv. glycinea[0m
+[31m0.07%	0.03%	76.82%	.	26.43%	41.66%	7	0	2420305	4029469	3	Acinetobacter sp. FDAARGOS_560[0m
+[31m[4m0.35%	0.05%	81.42%	.	1.94%	86.57%	16	0	418784	12590K	38	[Candida] pseudohaemulonii[0m
+[31m0.26%	0.04%	80.50%	.	1.96%	86.60%	12	0	1231522	12475K	11	[Candida] duobushaemulonis[0m
+[31m[4m0.03%	0.01%	74.41%	.	28.49%	40.32%	3	0	2609153	3825965	59	Acinetobacter sp. TUM15429[0m
+[31m0.03%	0.01%	74.22%	.	28.55%	40.21%	3	0	2608386	3823895	114	Acinetobacter sp. AB116925[0m
+[31m0.03%	0.01%	74.22%	.	28.43%	40.29%	3	0	2608387	3834814	116	Acinetobacter sp. AB118710[0m
+[31m0.03%	0.01%	74.22%	.	28.41%	40.31%	3	0	1310914	3836989	187	Acinetobacter sp. 25977_10[0m
+[31m0.03%	0.01%	74.23%	.	28.35%	40.36%	3	0	2420301	3843050	2	Acinetobacter sp. FDAARGOS_494[0m
+[31m0.03%	0.01%	74.22%	.	28.38%	40.31%	3	0	2302372	3841753	57	Acinetobacter sp. S131434[0m
+[31m0.03%	0.01%	74.25%	.	27.84%	40.70%	3	0	1310833	3887208	93	Acinetobacter sp. 796380-1375[0m
+[31m0.03%	0.01%	74.25%	.	27.84%	40.70%	3	0	1310905	3887161	84	Acinetobacter sp. 25977_1[0m
+
+Query: MEGAHIT-MetaBAT2-SRR9016985.4.fa.gz	DB: RefSeq	SketchLen: 15162	Seqs: 698 	Bases: 1490710	gSize: 1469072	GC: 0.452	File: MEGAHIT-MetaBAT2-SRR9016985.4.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m90.61%	11.01%	99.65%	.	12.10%	0.40%	3424	3336	498019	12317K	22	[Candida] auris[0m
+[33;1m1.54%	0.25%	85.86%	.	4.15%	74.32%	70	20	59510	9263684	3098	Pseudomonas syringae pv. pisi[0m
+[33;1m0.74%	0.07%	83.21%	.	0.95%	90.14%	24	1	318	15473K	25934	Pseudomonas savastanoi pv. glycinea[0m
+[31m0.40%	0.05%	81.64%	.	1.11%	90.65%	15	0	418784	12590K	38	[Candida] pseudohaemulonii[0m
+[31m0.38%	0.04%	81.54%	.	1.08%	90.58%	14	0	45357	13059K	15	[Candida] haemuloni[0m
+[31m0.35%	0.04%	81.28%	.	1.11%	90.74%	13	0	1231522	12475K	11	[Candida] duobushaemulonis[0m
+[31m0.08%	0.01%	77.04%	.	1.33%	89.37%	3	0	306902	11926K	9	Clavispora lusitaniae ATCC 42720[0m
+[31m0.09%	0.01%	77.47%	.	0.91%	90.80%	3	0	280587	15169K	48	Metschnikowia bicuspidata var. bicuspidata[0m
