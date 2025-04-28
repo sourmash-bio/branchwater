@@ -24,7 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@v16
+      uses: DeterminateSystems/nix-installer-action@v17
     - name: flake checks
       run: nix flake check --keep-going --print-build-logs
 
