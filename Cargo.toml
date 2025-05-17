@@ -26,6 +26,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
 
 # axum deps
+aide = { version = "0.14.2", features = ["axum", "axum-json", "scalar"] }
 axum = { version = "0.8", features = ["multipart"] }
 tokio = { version = "1.0", features = ["full"] }
 tower = { version = "0.5", features = ["util", "timeout", "load-shed", "limit"] }

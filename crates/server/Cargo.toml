@@ -16,6 +16,7 @@ sourmash = { workspace = true, features = ["branchwater"] }
 serde.workspace = true
 serde_json.workspace = true
 
+aide.workspace = true
 axum.workspace = true
 tokio.workspace = true
 tower.workspace = true

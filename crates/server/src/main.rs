@@ -4,12 +4,20 @@ use axum::{
     body::{Body, Bytes},
     error_handling::HandleErrorLayer,
     extract::{DefaultBodyLimit, State},
-    handler::Handler,
     http::{header, StatusCode},
     response::{IntoResponse, Response},
-    routing::{get, post_service},
-    Json, Router,
+    Extension, Json,
 };
+
+use aide::{
+    axum::{
+        routing::{get, get_with, post},
+        ApiRouter, IntoApiResponse,
+    },
+    openapi::{Info, OpenApi},
+    scalar::Scalar,
+};
+
 use sentry::integrations::tower::{NewSentryLayer, SentryHttpLayer};
 use sentry::integrations::tracing as sentry_tracing;
 use tokio::net::TcpListener;
@@ -105,33 +113,42 @@ fn main() -> Result<()> {
     });
 
     // Build our application by composing routes
-    let app = Router::new()
-        .route(
+    let app = ApiRouter::new()
+        .api_route(
             "/search",
-            post_service(
-                search
-                    .layer((
-                        DefaultBodyLimit::disable(),
-                        RequestBodyLimitLayer::new(1024 * 5_000 /* ~5mb */),
-                    ))
-                    .with_state(Arc::clone(&state)),
-            ),
+            post(search)
+                .layer((
+                    DefaultBodyLimit::disable(),
+                    RequestBodyLimitLayer::new(1024 * 5_000 /* ~5mb */),
+                ))
+                .with_state(Arc::clone(&state)),
         )
         .route("/health", get(health))
         //.route("/metadata", get(metadata).with_state(Arc::clone(&state)))
-        .route(
+        .api_route(
             "/metadata/accessions",
             get(metadata_accessions).with_state(Arc::clone(&state)),
         )
-        .route(
+        .api_route(
             "/metadata/stats",
             get(metadata_stats).with_state(Arc::clone(&state)),
         )
-        .route(
+        .api_route(
             "/metadata/manifest",
             get(metadata_manifest).with_state(Arc::clone(&state)),
         )
         //.route("/gather", post(gather))
+        .api_route_with(
+            "/scalar",
+            get_with(
+                Scalar::new("/api.json")
+                    .with_title("Aide Axum")
+                    .axum_handler(),
+                |op| op.description("This documentation page."),
+            ),
+            |p| p.security_requirement("ApiKey"),
+        )
+        .route("/api.json", get(serve_docs))
         // Add middleware to all routes
         .layer(
             ServiceBuilder::new()
@@ -146,6 +163,14 @@ fn main() -> Result<()> {
                 .into_inner(),
         );
 
+    let mut api = OpenApi {
+        info: Info {
+            description: Some("branchwater API".to_string()),
+            ..Info::default()
+        },
+        ..OpenApi::default()
+    };
+
     // Create the runtime
     let rt = Runtime::new()?;
 
@@ -156,7 +181,14 @@ fn main() -> Result<()> {
             .unwrap();
         tracing::debug!("listening on http://{listener:?}");
         // Run our app with hyper
-        axum::serve(listener, app).await.unwrap();
+        axum::serve(
+            listener,
+            app.finish_api(&mut api)
+                .layer(Extension(api))
+                .into_make_service(),
+        )
+        .await
+        .unwrap();
     });
 
     Ok(())
@@ -235,7 +267,7 @@ async fn search(
     State(state): State<SharedState>,
     bytes: Bytes,
     //) -> Result<Json<serde_json::Value>, StatusCode> {
-) -> impl IntoResponse {
+) -> impl IntoApiResponse {
     let sig = match state.parse_sig(&bytes) {
         Ok(sig) => sig,
         Err(e) => {
@@ -264,7 +296,7 @@ async fn search(
     }
 }
 
-async fn health() -> Response<Body> {
+async fn health() -> impl IntoApiResponse {
     (StatusCode::OK, "I'm doing science and I'm still alive").into_response()
 }
 
@@ -301,7 +333,7 @@ async fn metadata_stats(State(state): State<SharedState>) -> Response<Body> {
     (StatusCode::OK, Json(stats)).into_response()
 }
 
-async fn handle_error(error: BoxError) -> impl IntoResponse {
+async fn handle_error(error: BoxError) -> impl IntoApiResponse {
     if error.is::<tower::timeout::error::Elapsed>() {
         return (StatusCode::REQUEST_TIMEOUT, Cow::from("request timed out"));
     }
@@ -317,6 +349,12 @@ async fn handle_error(error: BoxError) -> impl IntoResponse {
         StatusCode::INTERNAL_SERVER_ERROR,
         Cow::from(format!("Unhandled internal error: {}", error)),
     )
+}
+
+async fn serve_docs(Extension(api): Extension<OpenApi>) -> impl IntoApiResponse {
+    // TODO: wrap into an Arc or store serialized string,
+    // avoid cloning/creating a new one on every request
+    Json(api).into_response()
 }
 
 #[test]

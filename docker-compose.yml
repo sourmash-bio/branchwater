@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
       target: index
     restart: always
+    ports:
+      - "8001:80"
     volumes:
       - ./bw_db:/data/
     env_file:
