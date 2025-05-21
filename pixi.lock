@@ -638,8 +638,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-64/snappy-1.2.1-h8bd8927_1.conda
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.8.14-py312h3753b3a_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.9.0-py312h47ec9a3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/sqlite-3.49.2-h9eae976_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
@@ -1060,8 +1060,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/snappy-1.2.1-hd4fb6f5_1.conda
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.8.14-py312h4016161_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.9.0-py312hb7be0f6_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sqlite-3.49.2-h578a6b9_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
@@ -1477,8 +1477,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/osx-64/snappy-1.2.1-haf3c120_1.conda
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.8.14-py312h0f2eb03_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.9.0-py312h1612acb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/sqlite-3.49.2-h2e4c9dc_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
@@ -1894,8 +1894,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/snappy-1.2.1-h98b9ce2_1.conda
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.8.14-py312h67dee5e_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.9.0-py312h161671a_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sqlite-3.49.2-hd7222ec_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
@@ -3741,8 +3741,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-report-plugins-1.1.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.8.14-py312h3753b3a_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.9.0-py312h47ec9a3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.17-h0157908_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tabulate-0.9.0-pyhd8ed1ab_2.conda
@@ -3991,8 +3991,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-report-plugins-1.1.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.8.14-py312h4016161_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.9.0-py312hb7be0f6_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-aarch64-2.17-h68829e0_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tabulate-0.9.0-pyhd8ed1ab_2.conda
@@ -4237,8 +4237,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-report-plugins-1.1.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.8.14-py312h0f2eb03_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.9.0-py312h1612acb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tabulate-0.9.0-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/tapi-1300.6.5-h390ca13_0.conda
@@ -4484,8 +4484,8 @@ environments:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-report-plugins-1.1.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-storage-plugins-3.5.0-pyhdfd78af_0.tar.bz2
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-minimal-8.5.5-pyhdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.8.14-py312h67dee5e_1.conda
+      - conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.9.0-py312h161671a_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/stopit-1.1.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tabulate-0.9.0-pyhd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tapi-1300.6.5-h03f4b80_0.conda
@@ -18931,20 +18931,20 @@ packages:
   version: '2.7'
   sha256: 6e60cc5c1ffaf1cebcc12e8188320b72071e922c2e897f737cadce79ad5d30c4
   requires_python: '>=3.8'
-- conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.8.14-hdfd78af_0.tar.bz2
-  sha256: b0f167bbb5de85fd3a8217b9ae7efccb9896735b7193c68c17bdeaa472645f2d
-  md5: a2e6a95cd6b05f30e05cdf6d4386bf0d
+- conda: https://conda.anaconda.org/bioconda/noarch/sourmash-4.9.0-hdfd78af_0.tar.bz2
+  sha256: 1d4cab8b528bc975245e475eced9d5095b5fb236af39ab95c9e1d8e100ea60c7
+  md5: 218bfa908540b4665f068eaf55f590b1
   depends:
   - python
-  - sourmash-minimal 4.8.14.*
+  - sourmash-minimal 4.9.0.*
   license: BSD-3-Clause
   license_family: BSD
   purls: []
-  size: 8293
-  timestamp: 1736963859438
-- conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.8.14-py312h3753b3a_1.conda
-  sha256: 7e6fb72c24aa4423c04bd8cca9419c672f38f09bcfd5fd76cccd8b37323189c0
-  md5: 8d752aa01662c241deb1fda569ffd3ec
+  size: 8273
+  timestamp: 1746720700203
+- conda: https://conda.anaconda.org/conda-forge/linux-64/sourmash-minimal-4.9.0-py312h47ec9a3_0.conda
+  sha256: ab3f01b711c98503abd88a4d505067e0e6f5b9939a153867ae05cb346c2384d0
+  md5: ee51300963cd8d272101e4d3d41f2faa
   depends:
   - python
   - screed >=1.1.3
@@ -18955,8 +18955,8 @@ packages:
   - matplotlib-base
   - scipy
   - bitstring >=3.1.9,<5
+  - libgcc >=13
   - __glibc >=2.17,<3.0.a0
-  - libgcc >=13
   - libstdcxx >=13
   - libgcc >=13
   - python_abi 3.12.* *_cp312
@@ -18966,11 +18966,11 @@ packages:
   license_family: BSD
   purls:
   - pkg:pypi/sourmash?source=hash-mapping
-  size: 17797715
-  timestamp: 1737491359725
-- conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.8.14-py312h4016161_1.conda
-  sha256: 3c6e001cae97e9e02f13823ab251d070498007690aca06684869c6b85f42aee4
-  md5: 856e0ab0f37ff3d3bc20f8deb01e08aa
+  size: 20915324
+  timestamp: 1746710093155
+- conda: https://conda.anaconda.org/conda-forge/linux-aarch64/sourmash-minimal-4.9.0-py312hb7be0f6_0.conda
+  sha256: 0654168a002ed6345ff71753b8807e100b0f5ae5d24acc72f40aaf5a51435c61
+  md5: 91d0e33da80837edfc7caccf76db6106
   depends:
   - python
   - screed >=1.1.3
@@ -18981,9 +18981,9 @@ packages:
   - matplotlib-base
   - scipy
   - bitstring >=3.1.9,<5
+  - libstdcxx >=13
+  - libgcc >=13
   - python 3.12.* *_cpython
-  - libstdcxx >=13
-  - libgcc >=13
   - python_abi 3.12.* *_cp312
   constrains:
   - __glibc >=2.17
@@ -18991,11 +18991,11 @@ packages:
   license_family: BSD
   purls:
   - pkg:pypi/sourmash?source=hash-mapping
-  size: 18778767
-  timestamp: 1737491378016
-- conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.8.14-py312h0f2eb03_1.conda
-  sha256: 01d09d2e33dea4aaccadc21a5eb0b54acaf1edb47504a67cf0a1e361f20e1a90
-  md5: 0b68b51f0c955a9ba87467ca9bf5d979
+  size: 22141583
+  timestamp: 1746710116786
+- conda: https://conda.anaconda.org/conda-forge/osx-64/sourmash-minimal-4.9.0-py312h1612acb_0.conda
+  sha256: 246a8dd933ec3bd7afe87a6f74ff6bfde30a420eb65a0ff9f42dcb6adce26b06
+  md5: 4bd2974e435d010e91d93a6fc3c3f32a
   depends:
   - python
   - screed >=1.1.3
@@ -19006,8 +19006,8 @@ packages:
   - matplotlib-base
   - scipy
   - bitstring >=3.1.9,<5
-  - libcxx >=18
   - __osx >=10.14
+  - libcxx >=18
   - python_abi 3.12.* *_cp312
   constrains:
   - __osx >=10.13
@@ -19015,11 +19015,11 @@ packages:
   license_family: BSD
   purls:
   - pkg:pypi/sourmash?source=hash-mapping
-  size: 15411403
-  timestamp: 1737491378183
-- conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.8.14-py312h67dee5e_1.conda
-  sha256: d582edbf3bb27d44a2694524da83abdcb5bfd5bcc2881cab47c424d935ab1d00
-  md5: 1e25e979a98c628ffa0c979d449f5dd0
+  size: 17963110
+  timestamp: 1746710095729
+- conda: https://conda.anaconda.org/conda-forge/osx-arm64/sourmash-minimal-4.9.0-py312h161671a_0.conda
+  sha256: ad1710941be010499604eca7d5ea194482fd9fab4ddfcec1c037682acfd27764
+  md5: cfb66982f8aee1b2eebf1d03839b7e4e
   depends:
   - python
   - screed >=1.1.3
@@ -19030,8 +19030,8 @@ packages:
   - matplotlib-base
   - scipy
   - bitstring >=3.1.9,<5
-  - __osx >=11.0
   - libcxx >=18
+  - __osx >=11.0
   - python 3.12.* *_cpython
   - python_abi 3.12.* *_cp312
   constrains:
@@ -19040,8 +19040,8 @@ packages:
   license_family: BSD
   purls:
   - pkg:pypi/sourmash?source=hash-mapping
-  size: 14782215
-  timestamp: 1737491374934
+  size: 17029154
+  timestamp: 1746710112009
 - pypi: https://files.pythonhosted.org/packages/31/53/136e9eca6e0b9dc0e1962e2c908fbea2e5ac000c2a2fbd9a35797958c48b/sphinx-8.2.3-py3-none-any.whl
   name: sphinx
   version: 8.2.3
