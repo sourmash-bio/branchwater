@@ -15,7 +15,7 @@ branchwater had a couple of names over time:
 - [rocksdb-eval](https://github.com/luizirber/2022-06-26-rocksdb-eval)
 - [mastiff](https://github.com/sourmash-bio/mastiff)
 
-ae finally brought it all together under the same umbrella named 'branchwater'!
+We finally brought it all together under the same umbrella named 'branchwater'!
 
 Here are a few blog posts:
 * [MinHashing all the things: searching for MAGs in the SRA](https://blog.luizirber.org/2020/07/22/mag-search/)
