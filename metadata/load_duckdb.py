@@ -42,6 +42,8 @@ def main(
     output="/data/bw_db/metadata.duckdb",
     force=False,
 ):
+    print('YYY', parquet_metadata) # @CTB
+    print('YYY 2', output)         # @CTB
     orig_metadata = pl.scan_parquet(parquet_metadata)
     orig_metadata = orig_metadata.with_columns(
         pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True)
@@ -61,6 +63,8 @@ def main(
 
     n_datasets = conn.sql("SELECT count(acc) FROM metadata").fetchall()[0][0];
     n_mbytes = float(conn.sql("PRAGMA database_size").fetchall()[0][1].split(" ")[0])
+
+    print('XXX', n_datasets)    # @CTB
 
     print(f"{n_datasets:,} accessions imported to duckdb\n"
           f"Full duckdb size is {n_mbytes} MiB, "
