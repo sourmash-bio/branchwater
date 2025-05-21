@@ -11,18 +11,6 @@ services:
     env_file:
       - prod.index.env
 
-  mongodb:
-    image: ghcr.io/sourmash-bio/branchwater:mongo-0.3.0
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: mongo
-    restart: always
-    volumes:
-      - ./bw_db:/data/bw_db
-      - ./mongodb:/data/db
-      - ./metadata:/docker-entrypoint-initdb.d
-
   app:
     image: ghcr.io/sourmash-bio/branchwater:web-0.3.0
     build:
@@ -33,7 +21,15 @@ services:
       - "8000:8000"
     restart: always
     depends_on:
-      - mongodb
       - index
+    volumes:
+      - ./bw_db:/data/
     env_file:
       - prod.env
+    command: >
+      gunicorn
+        --bind 0.0.0.0:8000
+        --timeout 120
+        --workers 4
+        --access-logfile -
+        main:app

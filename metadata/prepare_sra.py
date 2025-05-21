@@ -4,7 +4,6 @@ import datetime
 import os
 
 import polars as pl
-import pymongo as pm
 
 
 def main(
@@ -84,9 +83,9 @@ def main(
     )
 
     if build_full_db:
-        print(f"building full mongodb database.")
+        print(f"building full metadata database.")
     else:
-        print(f"limiting mongodb to 150,000 for testing.")
+        print(f"limiting metadata to 150,000 for testing.")
         sra_metadata = sra_metadata.head(150000)
 
     # print(sra_metadata.explain(optimized=True))
@@ -103,6 +102,8 @@ if __name__ == "__main__":
         "-s", "--sra-metadata", default="s3://sra-pub-metadata-us-east-1/sra/metadata/"
     )
     parser.add_argument("-o", "--output", default="/data/bw_db/metadata.parquet")
+    parser.add_argument('--build-full-db', action="store_true", default=True)
+    parser.add_argument('--build-test-db', dest="build_full_db", action="store_false")
 
     args = parser.parse_args()
-    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output)
+    main(accs=args.acc, sra_metadata=args.sra_metadata, output=args.output, build_full_db=args.build_full_db)
