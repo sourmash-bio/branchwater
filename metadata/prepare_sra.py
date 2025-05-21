@@ -51,14 +51,16 @@ def main(
     print(
         pl.scan_parquet(
             sra_metadata,
-            storage_options={"skip_signature": "true"},
+            storage_options={"skip_signature": "true",
+                             "aws_region": "us-east-1"},
         ).collect_schema()
     )
 
     sra_metadata = (
         pl.scan_parquet(
             sra_metadata,
-            storage_options={"skip_signature": "true"},
+            storage_options={"skip_signature": "true",
+                             "aws_region": "us-east-1"},
         )
         .select(
             [pl.col(col) for col in column_list]
@@ -81,6 +83,10 @@ def main(
         )
         .with_columns(lat_lon=pl.col("lat_lon").str.replace("", ""))
     )
+
+    #sra_metadata = sra_metadata.collect()
+    #sra_metadata.write_csv('xxx.csv')
+    #print('writing')
 
     if build_full_db:
         print(f"building full metadata database.")
