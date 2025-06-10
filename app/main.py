@@ -135,9 +135,9 @@ def advanced():
 def metadata():
     return render_template('about.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
-@app.route('/test', methods=['GET', "POST"])
-def testme():
-    return render_template("test.md")
+@app.route('/faq', methods=['GET', "POST"])
+def faq():
+    return render_template("faq.md")
 
 @app.route('/contact', methods=['GET', "POST"])
 def contact():
