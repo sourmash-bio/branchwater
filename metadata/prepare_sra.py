@@ -84,10 +84,6 @@ def main(
         .with_columns(lat_lon=pl.col("lat_lon").str.replace("", ""))
     )
 
-    #sra_metadata = sra_metadata.collect()
-    #sra_metadata.write_csv('xxx.csv')
-    #print('writing')
-
     if build_full_db:
         print(f"building full metadata database.")
     else:
