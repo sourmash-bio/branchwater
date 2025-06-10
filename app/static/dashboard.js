@@ -202,7 +202,7 @@ function createdashboard(jsonData, paragraphElement, navElement) {
   //////////////////////////////////////////////////////////////////
   // Create the column definitions for the Tabulator table
   const columns = Object.keys(jsonData[0]).map((key) => {
-    // check if the column is numeric or not
+    // check if columns are numeric or not
     const isNumericColumn = jsonData.every(
       (row) => !isNaN(parseFloat(row[key]))
     );
@@ -222,8 +222,8 @@ function createdashboard(jsonData, paragraphElement, navElement) {
     let columnDef = {
       title: key,   // column title
       field: key,   // field name in the data
-      sorter: isNumericColumn ? "number" : "string", // sort method (numberic or string)
-      ...headerFilterOptions,   // include appropriate header filter options
+      sorter: isNumericColumn ? "number" : "string", // sort method (numeric or string)
+      ...headerFilterOptions,   // include filter options defined above
       headerFilterLiveFilter: false, // disable filtering while typing
     };
 
