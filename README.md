@@ -33,7 +33,7 @@ branchwater is currently (Jan 2024) mostly contained in this repo,
 with the tools developed to work with the new index:
 
 - [branchwater-api](https://branchwater-api.jgi.doe.gov/search),
-  a search server indexing ~946,000 SRA metagenomes.
+  a search server indexing ~1.1m SRA metagenomes.
 - [branchwater-web](https://branchwater.jgi.doe.gov),
   a webapp that takes a genome of interest and rapidly searches for publicly-available
   metagenomes within NCBI's [sequence read archive](https://www.ncbi.nlm.nih.gov/sra)
@@ -49,7 +49,10 @@ with the tools developed to work with the new index:
 There are also additional resources external to this repository:
 
 * The code for monitoring the SRA and building sourmash sketches from genomes and metagenomes is in [wort](https://github.com/sourmash-bio/wort).
-* Client-side sketching via WebAssembly is implemented in the [MGnify-sourmash-component](https://github.com/EBI-Metagenomics/mgnify-sourmash-component) repository.
+* Client-side sketching via WebAssembly is implemented in the
+  [MGnify-sourmash-component](https://github.com/EBI-Metagenomics/mgnify-sourmash-component)
+  repository, which is then copied into the
+  `app/static/mgnify-component/` directory in this repository.
 * [sourmash_plugin_branchwater](https://github.com/sourmash-bio/sourmash_plugin_branchwater) is a sourmash plugin exposing more features from branchwater in sourmash.
 
 ## Need help? Have questions? Want to make a suggestion?
