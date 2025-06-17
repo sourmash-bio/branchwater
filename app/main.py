@@ -65,10 +65,10 @@ def teardown_duckdb_client(exception):
 
 
 KSIZE = app.config.get('ksize', 21)
-THRESHOLD = app.config.get('threshold', 0.1)
+DEFAULT_THRESHOLD = app.config.get('threshold', 0.1)
 METADATA = app.config.get('metadata', {})
 print(f'ksize: {KSIZE}')
-print(f'threshold: {THRESHOLD}')
+print(f'default threshold: {DEFAULT_THRESHOLD}')
 
 
 # define '/' and 'home' route
@@ -81,8 +81,9 @@ def home():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
+        threshold = form_data.get('threshold', DEFAULT_THRESHOLD)
         try:
-            mastiff_df = getacc(signatures, app.config, http_pool())
+            mastiff_df = getacc(signatures, app.config, http_pool(), threshold=threshold)
         except SearchError as e:
             return e.args
 
@@ -107,8 +108,16 @@ def advanced():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
+        # to be extra safe, ensure threshold is a float between 0 and 1 here too (we're also checking in javascript client)
         try:
-            mastiff_df = getacc(signatures, app.config, http_pool())
+            threshold = form_data.get('threshold', DEFAULT_THRESHOLD)
+            if not 0 <= threshold <= 1:
+                raise ValueError("Threshold must be between 0 and 1.")
+        except ValueError as e:
+            return jsonify({"error": str(e)}), 400
+        # try getting acc from mastiff
+        try:
+            mastiff_df = getacc(signatures, app.config, http_pool(), threshold=threshold)
         except SearchError as e:
             return e.args
 
