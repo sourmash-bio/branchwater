@@ -108,13 +108,7 @@ def advanced():
 
         # get acc from mastiff (imported from acc.py)
         signatures = form_data['signatures']
-        # to be extra safe, ensure threshold is a float between 0 and 1 here too (we're also checking in javascript client)
-        try:
-            threshold = form_data.get('threshold', DEFAULT_THRESHOLD)
-            if not 0 <= threshold <= 1:
-                raise ValueError("Threshold must be between 0 and 1.")
-        except ValueError as e:
-            return jsonify({"error": str(e)}), 400
+        threshold = form_data.get('threshold', DEFAULT_THRESHOLD)
         # try getting acc from mastiff
         try:
             mastiff_df = getacc(signatures, app.config, http_pool(), threshold=threshold)
