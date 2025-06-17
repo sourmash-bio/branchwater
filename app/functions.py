@@ -3,6 +3,7 @@ import io
 import os
 import gzip
 import string
+import markdown
 
 
 DEFAULT_COLUMNS = {
@@ -91,5 +92,7 @@ def getduckdb(mastiff_df, meta_list, config, client):
         ON accs.SRA_accession = subset.acc;
     """
     result = client.sql(query)
-
     return result
+
+def markdownify(md):
+    return markdown.markdown(md)

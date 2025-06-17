@@ -51,14 +51,16 @@ def main(
     print(
         pl.scan_parquet(
             sra_metadata,
-            storage_options={"skip_signature": "true"},
+            storage_options={"skip_signature": "true",
+                             "aws_region": "us-east-1"},
         ).collect_schema()
     )
 
     sra_metadata = (
         pl.scan_parquet(
             sra_metadata,
-            storage_options={"skip_signature": "true"},
+            storage_options={"skip_signature": "true",
+                             "aws_region": "us-east-1"},
         )
         .select(
             [pl.col(col) for col in column_list]
