@@ -32,12 +32,38 @@
     </div>
     <hr style="border-width: 3px; border-color: black" />
     <br />
-    <h3 style="margin: 20px">1) Upload your genome (fasta format only)</h3>
-    <div style="margin: 50px">
+    <h3 style="margin: 20px">1) Upload your genome</h3>
+    <p class="text-muted" style="margin-left: 50px; margin-top: -20px">
+      Supported files: FASTA/FASTQ; optional compression: gz.
+    </p>
+    <div style="margin: 50px; margin-top: 20px">
       <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
     </div>
-    <h3 style="margin: 20px">2) Select metadata</h3>
-    <p style="margin: 20px">
+    <!-- Start form -->
+    <form id="form" style="margin-top: 40px">
+
+      <!-- Add threshold input box -->
+      <div style="margin-left: 50px">
+        <label for="threshold">Minimum Containment:</label>
+        <input
+          type="number"
+          id="threshold"
+          name="threshold"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.1"
+          required
+          style="width: 80px; margin-left: 10px"
+        />
+      <p class="form-text text-muted">
+        Enter a value between 0.00 and 1. Defaults to 0.1 if left blank.
+      </p>
+    </div>
+
+    <!-- Step 2: add metadata selection -->
+    <h3 style="margin-left: 20px; margin-top: 40px">2) Select metadata</h3>
+    <p style="margin-left: 20px; margin-right: 20px; margin-top: 20px">
       Metadata options below and their percent (%) availability were curated
       from information provided by NCBI. Where possible, definitions of metadata
       can be seen by hovering your mouse over the name of the metadata option in
@@ -49,13 +75,18 @@
       associated metadata can be found on the
       <a href="https://www.ncbi.nlm.nih.gov/sra/">NCBI SRA website</a>.
     </p>
-    <!-- Create form -->
-    <div id="form-container"></div>
-    <form id="form" style="margin: 40px"></form>
+
+      <!-- Metadata checkboxes will be injected here -->
+      <div id="form-container" style="margin-left: 50px"></div>
+      <br /><br />
+      <button type="submit" id="myButton" class="btn btn-light" disabled>
+        <strong>Submit</strong>
+      </button>
+    </form>
+
     <script>
-      document.getElementById("form").innerHTML =
-        html +
-        "<br /><br /><button type='submit' id='myButton' class='btn btn-light' disabled><strong>Submit</strong></button>";
+      // Inject metadata fields into the form
+      document.getElementById("form-container").innerHTML = html;
     </script>
 
     <!-- Create container for dashboard -->
@@ -65,7 +96,7 @@
 
     <script>
       var signature;
-      //once sketeched, signatures saved and submit button enabled
+      //once sketched, signatures saved and submit button enabled
       document.addEventListener("sketched", (evt) => {
         evt.preventDefault();
         signature = evt.detail.signature;
@@ -75,7 +106,17 @@
       //Once data submitted, add notification and send data to flask app
       form.addEventListener("submit", (event) => {
         event.preventDefault();
+
+        if (!form.checkValidity()) {
+          form.reportValidity(); // native browser popup
+          document.getElementById("myButton").disabled = false;
+          return;
+        }
+
         document.querySelector("#myButton").disabled = true;
+
+        const thresholdValue = parseFloat(form.elements.threshold.value);
+
         // Create a new <nav> element
         const navElement = document.createElement("nav");
         navElement.classList.add(
@@ -100,6 +141,7 @@
         dashboard.appendChild(navElement);
         const formdata = {
           signatures: signature,
+          threshold: thresholdValue,
           metadata: {
             bases: form.elements.bases.checked,
             bytes: form.elements.bytes.checked,

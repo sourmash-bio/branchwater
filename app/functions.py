@@ -29,7 +29,7 @@ def getmetadata(config, http):
     return metadata
 
 
-def getacc(signatures, config, http):
+def getacc(signatures, config, http, threshold=0.1):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
     json_bytes = f"[{sig_str}]".encode('utf-8')
@@ -57,7 +57,6 @@ def getacc(signatures, config, http):
 
     ksize = int(config.metadata['ksize'])
 
-    threshold = config.get('threshold', 0.1)
     print(
         f"Search returned {n_raw_results} results. Now filtering results with <{threshold} containment...")
 
