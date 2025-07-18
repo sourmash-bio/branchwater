@@ -1,0 +1,68 @@
+
+Query: MEGAHIT-MetaBAT2-ERR2185279.39.fa.gz	DB: RefSeq	SketchLen: 13305	Seqs: 224 	Bases: 995329	gSize: 988385	GC: 0.343	File: MEGAHIT-MetaBAT2-ERR2185279.39.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32;1m92.44%	65.40%	99.72%	.	67.82%	4.13%	9749	9339	1122146	1400031	43	Ligilactobacillus ceti DSM 22408[0m
+[36m3.44%	0.53%	88.36%	.	100.00%	76.17%	71	38	145522	150126	2	Nannochloropsis oceanica[0m
+[32;1m1.74%	0.92%	86.27%	.	2.45%	95.39%	152	1	427140	1869403	1	Leuconostoc mesenteroides KFRI-MG[0m
+[36m1.07%	0.16%	84.59%	.	100.00%	76.54%	21	0	43925	148599	2	Nannochloropsis oculata[0m
+[36;1m0.70%	0.39%	83.44%	.	2.00%	96.37%	63	57	456320	1804743	1	Methanococcus voltae A3[0m
+[36m0.73%	0.11%	83.53%	.	100.00%	76.60%	14	0	120807	146142	2	Nannochloropsis limnetica[0m
+[36m0.69%	0.11%	83.37%	.	100.00%	76.60%	14	0	43926	151193	2	Nannochloropsis granulata[0m
+[33;1m0.60%	0.21%	82.91%	.	1.15%	96.82%	40	40	313594	2721536	2	Polaribacter irgensii 23-P[0m
+[36m0.34%	0.16%	81.33%	.	1.42%	96.94%	27	19	563040	2129811	1	Sulfurimonas autotrophica DSM 16294[0m
+[33m0.33%	0.13%	80.93%	.	1.23%	97.01%	24	24	317025	2401195	1	Hydrogenovibrio crunogenus XCL-2[0m
+[32;1m0.28%	0.16%	80.63%	.	1.95%	96.71%	26	0	1423755	1678053	190	Ligilactobacillus hayakitensis DSM 18933 = JCM 14209[0m
+[36m0.10%	0.09%	77.23%	.	13.10%	84.74%	12	0	1128151	1158041	1	Mimivirus terra2[0m
+[36m0.10%	0.09%	77.24%	.	12.83%	84.96%	12	0	212035	1165356	1	Acanthamoeba polyphaga mimivirus[0m
+[32;1m0.30%	0.13%	80.73%	.	1.33%	96.99%	23	0	1511761	2236522	59	Leuconostoc suionicum[0m
+[32;1m0.22%	0.12%	79.95%	.	1.61%	96.95%	19	0	930942	1879080	65	Ligilactobacillus animalis KCTC 3501 = DSM 20602[0m
+[36;1m0.26%	0.11%	80.51%	.	1.15%	97.10%	19	0	1234593	2465737	118	Staphylococcus sp. E463[0m
+[36;1m0.27%	0.10%	80.57%	.	1.10%	97.14%	19	0	1581093	2553358	69	Staphylococcus sp. HMSC13A10[0m
+[36;1m0.27%	0.10%	80.56%	.	1.11%	97.15%	19	0	1380374	2534259	28	Staphylococcus sp. URHA0057[0m
+[32;1m0.21%	0.11%	79.81%	.	1.52%	96.97%	18	0	1235801	1965001	11	Ligilactobacillus murinus ASF361[0m
+[34;1m0.69%	0.05%	83.43%	.	0.21%	97.31%	17	10	661	12505K	1554	Photobacterium angustum[0m
+
+Query: MEGAHIT-MetaBAT2-ERR2185279.73.fa.gz	DB: RefSeq	SketchLen: 15762	Seqs: 435 	Bases: 1674462	gSize: 1650588	GC: 0.308	File: MEGAHIT-MetaBAT2-ERR2185279.73.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[35m66.19%	49.27%	98.51%	.	70.23%	47.72%	7766	7621	1069083	1232512	83	Methanocaldococcus villosus KIN24-T80[0m
+[35m20.02%	19.32%	94.31%	.	21.73%	77.48%	3076	2626	243232	1711318	3	Methanocaldococcus jannaschii DSM 2661[0m
+[35m17.01%	15.41%	93.75%	.	20.33%	81.58%	2429	2248	573064	1496054	2	Methanocaldococcus fervens AG86[0m
+[35m15.45%	12.37%	93.42%	.	19.21%	84.63%	1949	1905	573063	1309424	1	Methanocaldococcus infernus ME[0m
+[35m1.85%	1.76%	86.34%	.	4.99%	95.23%	278	4	1301915	1579564	1	Methanocaldococcus bathoardescens[0m
+[35m1.37%	1.32%	85.50%	.	3.74%	96.11%	211	116	579137	1717131	3	Methanocaldococcus vulcanius M7[0m
+[35m1.60%	1.52%	85.94%	.	3.91%	95.89%	244	0	644281	1733690	2	Methanocaldococcus sp. FS406-22[0m
+[35m0.49%	0.46%	82.43%	.	2.81%	97.00%	74	25	880724	1767635	1	Methanotorris igneus Kol 5[0m
+[35m0.26%	0.25%	80.52%	.	2.64%	97.22%	40	20	647171	1736998	121	Methanotorris formicicus Mc-S-70[0m
+[36;1m0.06%	0.06%	75.39%	.	3.19%	96.94%	9	0	647113	1588304	2	Methanothermococcus okinawensis IH1[0m
+[36m0.06%	0.04%	76.48%	.	5.02%	96.95%	6	6	1269028	1007476	1	Acanthamoeba polyphaga moumouvirus[0m
+[36;1m0.03%	0.03%	69.88%	.	3.08%	96.96%	5	1	523845	1626708	55	Methanothermococcus thermolithotrophicus DSM 2095[0m
+[31m0.03%	0.03%	73.92%	.	3.19%	96.97%	4	4	591019	1569199	1	Staphylothermus hellenicus DSM 12710[0m
+[35;1m0.03%	0.03%	74.47%	.	3.90%	96.97%	4	0	2082189	1283657	5	Methanofervidicoccus abyssi[0m
+[36;1m0.03%	0.03%	69.24%	.	3.00%	96.99%	4	0	406327	1655558	1	Methanococcus vannielii SB[0m
+[36;1m[4m0.02%	0.02%	70.95%	.	1.75%	97.40%	3	3	639282	2456730	2	Deferribacter desulfuricans SSM1[0m
+[31m0.07%	0.01%	76.37%	.	0.36%	97.64%	3	3	28229	10725K	134	Colwellia psychrerythraea[0m
+[36;1m0.02%	0.02%	68.57%	.	2.31%	97.48%	3	0	456320	1804743	1	Methanococcus voltae A3[0m
+[35;1m0.03%	0.01%	74.60%	.	1.01%	97.51%	3	0	1052585	4111827	1	Bacillus subtilis subsp. spizizenii TU-B-10[0m
+
+Query: MEGAHIT-MetaBAT2-ERR2185279.98.fa.gz	DB: RefSeq	SketchLen: 13513	Seqs: 319 	Bases: 1050552	gSize: 1025187	GC: 0.345	File: MEGAHIT-MetaBAT2-ERR2185279.98.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m95.46%	60.23%	99.83%	.	62.30%	1.25%	9435	8323	436308	1611298	1	Nitrosopumilus maritimus SCM1[0m
+[31m6.00%	4.13%	90.27%	.	9.89%	85.64%	629	32	2508726	1480530	1	Candidatus Nitrosopumilus sp. SW[0m
+[31m3.75%	2.31%	88.69%	.	4.34%	92.94%	364	0	1027374	1650360	15	Nitrosopumilus sp. SJ[0m
+[31m3.65%	2.26%	88.60%	.	4.30%	93.03%	355	0	1229908	1639933	1	Candidatus Nitrosopumilus koreensis AR1[0m
+[31m3.30%	1.99%	88.33%	.	3.98%	93.40%	316	0	1582439	1690752	1	Nitrosopumilus piranensis[0m
+[31m3.94%	1.17%	88.81%	.	2.07%	93.01%	235	0	1027373	3420094	58	Nitrosopumilus sp. AR[0m
+[36m0.74%	0.65%	83.64%	.	20.05%	77.16%	91	10	212035	1165356	1	Acanthamoeba polyphaga mimivirus[0m
+[36m0.65%	0.58%	83.29%	.	20.32%	77.01%	81	0	1128151	1158041	1	Mimivirus terra2[0m
+[31m0.72%	0.53%	83.53%	.	9.60%	86.97%	79	2	1776294	1382258	26	Nitrosopumilus sp. Nsub[0m
+[31m0.61%	0.46%	83.02%	.	10.50%	86.05%	68	3	1898749	1354781	1	Candidatus Nitrosomarinus catalina[0m
+[31m0.92%	0.60%	84.21%	.	3.96%	93.92%	93	0	859350	1559419	171	Candidatus Nitrosopumilus salaria BD31[0m
+[31m1.07%	0.61%	84.75%	.	2.45%	95.67%	98	0	1580092	1797295	1	Nitrosopumilus adriaticus[0m
+[31m1.02%	0.61%	84.52%	.	2.59%	95.69%	97	0	1229909	1690874	1	Candidatus Nitrosopumilus sediminis[0m
+[31m0.89%	0.52%	84.18%	.	2.44%	95.80%	83	0	718286	1753617	14	Candidatus Nitrosopumilus sp. NM25[0m
+[31m0.43%	0.28%	81.91%	.	3.07%	95.23%	43	0	1001994	1583372	1	Nitrosarchaeum koreense MY1[0m
+[31m0.42%	0.23%	81.72%	.	2.07%	96.32%	38	0	859192	1806141	343	Candidatus Nitrosarchaeum limnium BG20[0m
+[34;1m0.13%	0.11%	78.62%	.	15.99%	80.73%	16	2	1410606	1230686	4	Candidatus Nitrosopelagicus brevis[0m
+[31m0.15%	0.06%	78.73%	.	1.34%	96.72%	11	10	2226	2491630	51	Methanococcoides methylutens[0m
+[34;1m0.07%	0.03%	76.50%	.	66.49%	71.13%	4	0	1465461	450826	21	Thaumarchaeota archaeon SCGC AC-337_F14[0m
+[35;1m0.20%	0.05%	79.65%	.	0.83%	96.74%	11	11	866536	4000817	1	Belliella baltica DSM 15883[0m
