@@ -200,13 +200,16 @@ function createdashboard(jsonData, paragraphElement, navElement) {
 
   // Data prep for plots  ////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////
-  const keys = Object.keys(jsonData[0]);
-
-  // Create column attributes; filter based on numeric vs string
+  // Create the column definitions for the Tabulator table
   const columns = Object.keys(jsonData[0]).map((key) => {
+    // check if columns are numeric or not
     const isNumericColumn = jsonData.every(
       (row) => !isNaN(parseFloat(row[key]))
-    ); // check if all values in the column are numeric
+    );
+
+    // define filter behavior for column header
+    // if the column is numeric, use the custom minMaxFilterEditor and minMaxFilterFunction
+    // otherwise, use the default input filter
     const headerFilterOptions = isNumericColumn
       ? {
           headerFilter: minMaxFilterEditor,
@@ -215,21 +218,44 @@ function createdashboard(jsonData, paragraphElement, navElement) {
       : {
           headerFilter: "input",
         };
-
-    return {
-      title: key,
-      field: key,
-      sorter: isNumericColumn ? "number" : "string",
-      ...headerFilterOptions,
-      headerFilterLiveFilter: false,
+    // build column definition object for Tabulator
+    let columnDef = {
+      title: key,   // column title
+      field: key,   // field name in the data
+      sorter: isNumericColumn ? "number" : "string", // sort method (numeric or string)
+      ...headerFilterOptions,   // include filter options defined above
+      headerFilterLiveFilter: false, // disable filtering while typing
     };
-  });
 
-  //common keys and values
-  const commonKeys = Object.keys(jsonData[0]);
-  const values = Array.from({ length: commonKeys.length }, () => []);
-  commonKeys.forEach((key, j) => {
-    values[j] = jsonData.map((obj) => obj[key]);
+    // Add hyperlinks to known ID types
+    if (key === "bioproject") {
+      columnDef.formatter = function (cell) {
+        const val = cell.getValue();
+        return val
+          ? `<a href="https://www.ncbi.nlm.nih.gov/bioproject/${val}" target="_blank" rel="noopener noreferrer">${val}</a>`
+          : "";
+      };
+    }
+
+    if (key === "biosample") {
+      columnDef.formatter = function (cell) {
+        const val = cell.getValue();
+        return val
+          ? `<a href="https://www.ncbi.nlm.nih.gov/biosample/${val}" target="_blank" rel="noopener noreferrer">${val}</a>`
+          : "";
+      };
+    }
+
+    if (key === "acc") {
+      columnDef.formatter = function (cell) {
+        const val = cell.getValue();
+        return val
+          ? `<a href="https://www.ncbi.nlm.nih.gov/sra/${val}" target="_blank" rel="noopener noreferrer">${val}</a>`
+          : "";
+      };
+    }
+
+    return columnDef;
   });
 
   // Create Table  ////////////////////////////////////////////////
