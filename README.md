@@ -14,7 +14,8 @@ branchwater had a couple of names over time:
 - [MAGsearch](https://github.com/ctb/magsearch)
 - [rocksdb-eval](https://github.com/luizirber/2022-06-26-rocksdb-eval)
 - [mastiff](https://github.com/sourmash-bio/mastiff)
-We finally brought it all together under the same umbrella.
+
+We finally brought it all together under the same umbrella named 'branchwater'!
 
 Here are a few blog posts:
 * [MinHashing all the things: searching for MAGs in the SRA](https://blog.luizirber.org/2020/07/22/mag-search/)
@@ -25,14 +26,14 @@ Here are a few blog posts:
 ## Code repository links and details.
 
 branchwater is based on [sourmash](https://github.com/dib-lab/sourmash/issues),
-and the search index data structure live there since
+and the search index data structure lives there since
 [version `0.12`](https://crates.io/crates/sourmash/0.12.0) of the Rust crate.
 
 branchwater is currently (Jan 2024) mostly contained in this repo,
 with the tools developed to work with the new index:
 
 - [branchwater-api](https://branchwater-api.jgi.doe.gov/search),
-  a search server indexing ~946,000 SRA metagenomes.
+  a search server indexing ~1.1m SRA metagenomes.
 - [branchwater-web](https://branchwater.jgi.doe.gov),
   a webapp that takes a genome of interest and rapidly searches for publicly-available
   metagenomes within NCBI's [sequence read archive](https://www.ncbi.nlm.nih.gov/sra)
@@ -45,9 +46,13 @@ with the tools developed to work with the new index:
 - `branchwater-query`,
   a command-line interface to submit queries to a search server.
 
-There are also additional resources:
+There are also additional resources external to this repository:
 
 * The code for monitoring the SRA and building sourmash sketches from genomes and metagenomes is in [wort](https://github.com/sourmash-bio/wort).
+* Client-side sketching via WebAssembly is implemented in the
+  [MGnify-sourmash-component](https://github.com/EBI-Metagenomics/mgnify-sourmash-component)
+  repository, which is then copied into the
+  `app/static/mgnify-component/` directory in this repository.
 * [sourmash_plugin_branchwater](https://github.com/sourmash-bio/sourmash_plugin_branchwater) is a sourmash plugin exposing more features from branchwater in sourmash.
 
 ## Need help? Have questions? Want to make a suggestion?
@@ -62,10 +67,10 @@ sourmash collaborators.
 
 branchwater is [AGPL licensed](./LICENSE-AGPL).
 
-The webapp was developed by the USDA Agricultural Research Service, Genomics and
-Bioinformatics Research Unit group in Gainesville, FL,
-Primarily authored by Suzanne Fleishman and led by Adam Rivers.
-Check out their other work at https://tinyecology.com.
-As a work of the United States Government,
-the original code is available under the CC0 1.0 Universal Public Domain Dedication (CC0 1.0).
-
+The webapp was developed by the USDA Agricultural Research Service,
+Genomics and Bioinformatics Research Unit group in Gainesville, FL,
+and was primarily authored by Suzanne Fleishman in a project led by
+Adam Rivers.  Check out their other work at https://tinyecology.com.
+As a work of the United States Government, the original code is
+available under the CC0 1.0 Universal Public Domain Dedication (CC0
+1.0) at https://github.com/USDA-ARS-GBRU/branchwater-web/.

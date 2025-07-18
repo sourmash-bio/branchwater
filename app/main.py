@@ -13,7 +13,7 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-from functions import getacc, getmetadata, getduckdb, SearchError
+from functions import getacc, getmetadata, getduckdb, SearchError, markdownify
 
 
 def http_pool():
@@ -45,6 +45,12 @@ def create_app():
             metadata = getmetadata(current_app.config, http_pool())
             current_app.config.metadata = metadata
 
+        # add markdownify filter to jinja2 (imported from functions.py)
+        app.jinja_env.filters['markdownify'] = markdownify
+
+        metadata = getmetadata(app.config, http_pool())
+        app.config.metadata = metadata
+
     return app
 
 app = create_app()  # create flask/app instance
@@ -62,6 +68,7 @@ def teardown_duckdb_client(exception):
 
     if client is not None:
         client.close()
+
 
 
 KSIZE = app.config.get('ksize', 21)
@@ -127,6 +134,10 @@ def advanced():
 @app.route('/about', methods=['GET', "POST"])
 def metadata():
     return render_template('about.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
+
+@app.route('/faq', methods=['GET', "POST"])
+def faq():
+    return render_template("faq.md")
 
 @app.route('/contact', methods=['GET', "POST"])
 def contact():
