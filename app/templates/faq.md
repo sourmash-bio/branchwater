@@ -97,8 +97,6 @@ will sketch the contents of `query.fa` into a single signature, query branchwate
 
 ## How do I cite branchwater?
 
-@CTB fix
-
 For now, please cite [the sourmash paper in the Journal of Open Source Software](https://joss.theoj.org/papers/10.21105/joss.06830#):
 
 >Irber et al., (2024). sourmash v4: A multitool to quickly search, compare, and analyze genomic and metagenomic data sets. Journal of Open Source Software, 9(98), 6830, https://doi.org/10.21105/joss.06830
