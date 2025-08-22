@@ -45,10 +45,25 @@
     <div style="margin: 50px">
       <mgnify-sourmash-component id="sourmash" ksize="21" scaled="1000" />
     </div>
+    <p class="text-muted" style="margin-top: -40px; margin-left: 50px">
+      Supported files: FASTA/FASTQ; optional compression: gz.
+    </p>
+    <!-- Add threshold text box -->
+    <form id="form" style="margin: 50px">
+      <label for="threshold">Minimum Containment:</label>
+      <input
+        type="number"
+        id="threshold"
+        name="threshold"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.1"
+        style="width: 80px; margin-left: 10px"
+      />
+      <p class="form-text text-muted">Enter a value between 0.00 and 1. Defaults to 0.1 if left blank.</p>
+      <br /><br />
 
-    <!-- Create form -->
-    <div id="form-container"></div>
-    <form id="form" style="margin: 40px">
       <button type="submit" id="myButton" class="btn btn-light" disabled>
         <strong>Submit</strong>
       </button>
@@ -70,6 +85,15 @@
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         document.querySelector("#myButton").disabled = true;
+
+        // parse and validate the threshold value
+        let thresholdValue = parseFloat(form.elements.threshold.value);
+        if (isNaN(thresholdValue)) thresholdValue = 0.1;
+        if (thresholdValue < 0 || thresholdValue > 1) {
+          alert("Please enter a valid threshold between 0 and 1.");
+          document.querySelector("#myButton").disabled = false; // re-enable the button
+          return;
+        }
         // Create a new <nav> element
         const navElement = document.createElement("nav");
         navElement.classList.add(
@@ -94,6 +118,7 @@
         dashboard.appendChild(navElement);
         const formdata = {
           signatures: signature,
+          threshold: thresholdValue,
         };
         const startTime = performance.now();
         var data = {};
