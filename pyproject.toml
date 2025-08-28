@@ -20,7 +20,7 @@ duckdb = { features = ["duckdb"], solve-group = "default" }
 demo = { depends-on = ["index", "metadata"] }
 
 [tool.pixi.feature.build.dependencies]
-rust = "~=1.84.0"
+rust = "~=1.89.0"
 compilers = ">=1.7.0,<1.8"
 clangdev = ">=16.0.6,<17.1"
 libclang = ">=16.0.6,<17.1"

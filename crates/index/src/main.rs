@@ -195,14 +195,12 @@ fn gather<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let (counter, query_colors, hash_to_color) = db.prepare_gather_counters(&query);
+    let counter = db.prepare_gather_counters(&query, None);
     // TODO: truncate on threshold?
     info!("Counter built");
 
     let matches = db.gather(
         counter,
-        query_colors,
-        hash_to_color,
         threshold,
         &query,
         Some(selection),
@@ -246,7 +244,7 @@ fn search<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.counter_for_query(&query);
+    let counter = db.counter_for_query(&query, None);
     info!("Counter built");
 
     let matches = db.matches_from_counter(counter, threshold);
@@ -308,7 +306,6 @@ fn index<P: AsRef<Path>>(
     RevIndex::create(
         output.as_ref(),
         collection.select(&selection)?.try_into()?,
-        colors,
     )?;
 
     Ok(())
@@ -451,14 +448,18 @@ fn manifest<P: AsRef<Path>>(
                                     .into(),
                             );
                         };
-                        /* TODO: implement selection on record (not manifest)
-                         let manifest = if let Some(selection) = selection {
-                             manifest.select(&selection)?
+
+                         if let Some(ref selection) = selection {
+                            if let Ok(r) = r.select(selection) {
+                                // we have a valid record, send it to output
+                                s.send(r)?;
+                            }
                          } else {
-                             manifest
+                            // no selection needed, just send the record to output
+                            s.send(r)?;
                          };
-                        */
-                        s.send(r)
+
+                        Ok::<(), color_eyre::eyre::Error>(())
                     })
             })?;
 
