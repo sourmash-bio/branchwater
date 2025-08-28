@@ -436,14 +436,18 @@ fn manifest<P: AsRef<Path>>(
                                     .into(),
                             );
                         };
-                        /* TODO: implement selection on record (not manifest)
-                         let manifest = if let Some(selection) = selection {
-                             manifest.select(&selection)?
+
+                         if let Some(ref selection) = selection {
+                            if let Ok(r) = r.select(selection) {
+                                // we have a valid record, send it to output
+                                s.send(r)?;
+                            }
                          } else {
-                             manifest
+                            // no selection needed, just send the record to output
+                            s.send(r)?;
                          };
-                        */
-                        s.send(r)
+
+                        Ok::<(), color_eyre::eyre::Error>(())
                     })
             })?;
 
