@@ -203,7 +203,12 @@ impl AppState {
             let containment = size as f64 / query_size;
             format!(
                 "{},{}",
-                path.split('/').next_back().unwrap().split('.').next().unwrap(),
+                path.split('/')
+                    .next_back()
+                    .unwrap()
+                    .split('.')
+                    .next()
+                    .unwrap(),
                 containment
             )
         }));
