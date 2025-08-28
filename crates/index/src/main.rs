@@ -437,15 +437,15 @@ fn manifest<P: AsRef<Path>>(
                             );
                         };
 
-                         if let Some(ref selection) = selection {
+                        if let Some(ref selection) = selection {
                             if let Ok(r) = r.select(selection) {
                                 // we have a valid record, send it to output
                                 s.send(r)?;
                             }
-                         } else {
+                        } else {
                             // no selection needed, just send the record to output
                             s.send(r)?;
-                         };
+                        };
 
                         Ok::<(), color_eyre::eyre::Error>(())
                     })
