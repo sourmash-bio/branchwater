@@ -1,12 +1,14 @@
 use camino::Utf8Path as Path;
 use camino::Utf8PathBuf as PathBuf;
 use clap::{Parser, Subcommand};
-use tracing::info;
+use color_eyre::eyre::Result;
+use rayon::prelude::*;
+use tracing::{error, info};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use sourmash::collection::Collection;
 use sourmash::index::revindex::{prepare_query, RevIndex, RevIndexOps};
-use sourmash::manifest::Manifest;
+use sourmash::manifest::{Manifest, Record};
 use sourmash::prelude::*;
 use sourmash::signature::{Signature, SigsTrait};
 use sourmash::storage::{FSStorage, InnerStorage, ZipStorage};
@@ -193,18 +195,11 @@ fn gather<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let (counter, query_colors, hash_to_color) = db.prepare_gather_counters(&query);
+    let counter = db.prepare_gather_counters(&query, None);
     // TODO: truncate on threshold?
     info!("Counter built");
 
-    let matches = db.gather(
-        counter,
-        query_colors,
-        hash_to_color,
-        threshold,
-        &query,
-        Some(selection),
-    )?;
+    let matches = db.gather(counter, threshold, &query, Some(selection))?;
 
     info!("matches: {}", matches.len());
     for match_ in matches {
@@ -244,7 +239,7 @@ fn search<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.counter_for_query(&query);
+    let counter = db.counter_for_query(&query, None);
     info!("Counter built");
 
     let matches = db.matches_from_counter(counter, threshold);
@@ -293,7 +288,7 @@ fn index<P: AsRef<Path>>(
             Collection::from_zipfile(location)?
         }
     } else {
-        let manifest = manifest.ok_or_else(|| "Need a manifest")?;
+        let manifest = manifest.ok_or("Need a manifest")?;
         assert!(location.as_ref().exists());
         assert!(location.as_ref().is_dir());
         let storage = FSStorage::builder()
@@ -303,11 +298,7 @@ fn index<P: AsRef<Path>>(
         Collection::new(manifest, InnerStorage::new(storage))
     };
 
-    RevIndex::create(
-        output.as_ref(),
-        collection.select(&selection)?.try_into()?,
-        colors,
-    )?;
+    RevIndex::create(output.as_ref(), collection.select(&selection)?.try_into()?)?;
 
     Ok(())
 }
@@ -361,7 +352,7 @@ fn update<P: AsRef<Path>>(
             Collection::from_zipfile(location)?
         }
     } else {
-        let manifest = manifest.ok_or_else(|| "Need a manifest")?;
+        let manifest = manifest.ok_or("Need a manifest")?;
         assert!(location.as_ref().exists());
         assert!(location.as_ref().is_dir());
         let storage = FSStorage::builder()
@@ -399,7 +390,7 @@ fn manifest<P: AsRef<Path>>(
     output: Option<P>,
     selection: Option<Selection>,
     basepath: Option<P>,
-) -> Result<(), Box<dyn std::error::Error>> {
+) -> Result<()> {
     use std::fs::File;
     use std::io::{BufRead, BufReader, BufWriter, Write};
 
@@ -412,40 +403,72 @@ fn manifest<P: AsRef<Path>>(
         })
         .collect();
 
-    let manifest: Manifest = paths.as_slice().into();
+    let (send, recv) = std::sync::mpsc::sync_channel(rayon::current_num_threads());
 
-    let manifest = if let Some(selection) = selection {
-        manifest.select(&selection)?
-    } else {
-        manifest
-    };
-
-    let manifest = if let Some(basepath) = basepath {
-        let path: &str = basepath.as_ref().as_str();
-        manifest
-            .iter()
-            .map(|r| {
-                let mut record = r.clone();
-                record.set_internal_location(
-                    r.internal_location()
-                        .strip_prefix(path)
-                        .expect("Error stripping")
-                        .into(),
-                );
-                record
-            })
-            .collect::<Vec<_>>()
-            .into()
-    } else {
-        manifest
-    };
-
+    // Spawn a thread that is dedicated to printing to a buffered output
     let out: Box<dyn Write + Send> = match output {
         Some(path) => Box::new(BufWriter::new(File::create(path.as_ref()).unwrap())),
         None => Box::new(std::io::stdout()),
     };
+    let thrd = std::thread::spawn(move || {
+        let mut wtr = BufWriter::new(out);
+        wtr.write_all(b"# SOURMASH-MANIFEST-VERSION: 1.0\n")
+            .unwrap();
 
-    manifest.to_writer(out)?;
+        let mut wtr = csv::Writer::from_writer(wtr);
+
+        for record in recv.into_iter() {
+            wtr.serialize(record).unwrap();
+            wtr.flush().unwrap();
+        }
+    });
+    let basepath: Option<PathBuf> = basepath.map(|p| p.as_ref().into());
+
+    let send: Result<()> = paths.into_par_iter().try_for_each_with(send, |s, ref p| {
+        let sig = match Signature::from_path(p) {
+            Ok(s) => s,
+            Err(_) => {
+                error!("Error processing {:?}", p);
+                return Ok(());
+            }
+        };
+        sig.into_iter().try_for_each(|v| {
+            Record::from_sig(&v, p.as_str())
+                .into_iter()
+                .try_for_each(|mut r| {
+                    if let Some(ref basepath) = basepath {
+                        r.set_internal_location(
+                            r.internal_location()
+                                .strip_prefix(basepath.as_str())
+                                .expect("Error stripping")
+                                .into(),
+                        );
+                    };
+
+                    if let Some(ref selection) = selection {
+                        if let Ok(r) = r.select(selection) {
+                            // we have a valid record, send it to output
+                            s.send(r)?;
+                        }
+                    } else {
+                        // no selection needed, just send the record to output
+                        s.send(r)?;
+                    };
+
+                    Ok::<(), color_eyre::eyre::Error>(())
+                })
+        })?;
+
+        Ok(())
+    });
+
+    if let Err(e) = send {
+        error!("Unable to send internal data: {:?}", e);
+    }
+
+    if let Err(e) = thrd.join() {
+        error!("Unable to join internal thread: {:?}", e);
+    }
 
     Ok(())
 }
