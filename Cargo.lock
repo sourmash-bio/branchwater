@@ -288,7 +288,7 @@ checksum = "8f68f53c83ab957f72c32642f3868eec03eb974d1fb82e453128456482613d36"
 
 [[package]]
 name = "branchwater-client"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "clap",
  "color-eyre",
@@ -308,7 +308,7 @@ dependencies = [
 
 [[package]]
 name = "branchwater-index"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "camino",
  "clap",
@@ -321,7 +321,7 @@ dependencies = [
 
 [[package]]
 name = "branchwater-server"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "axum",
  "camino",
