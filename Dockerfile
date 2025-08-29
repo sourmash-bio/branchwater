@@ -1,4 +1,4 @@
-FROM ghcr.io/prefix-dev/pixi:0.39.5-noble AS install
+FROM ghcr.io/prefix-dev/pixi:0.53.0-noble AS install
 
 WORKDIR /app
 

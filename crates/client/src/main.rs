@@ -172,7 +172,7 @@ async fn main() -> Result<()> {
     let res = if full {
         info!("Sending request to {}", metadata_server);
 
-        let sig_data: HashMap<&str, String> = [("signatures", json!([sig]).to_string())].into();
+        let sig_data: HashMap<&str, String> = [("signatures", json!(sig).to_string())].into();
         client.post(metadata_server).json(&sig_data).send().await?
     } else {
         info!("Sending request to {}", server);
