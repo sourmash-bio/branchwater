@@ -26,7 +26,7 @@
           overlays = [ (import rust-overlay) ];
         };
 
-        inherit (pkgs) lib;
+        inherit (pkgs) lib stdenv;
 
         rustOxalica = pkgs.rust-bin.stable.latest.default.override {
           #targets = [ "wasm32-wasi" ];
@@ -39,11 +39,8 @@
         # our specific toolchain there.
         craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
 
-        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
-
         commonArgs = {
           src = ./.;
-          stdenv = stdenv;
           preConfigure = lib.optionalString stdenv.isDarwin ''
             export MACOSX_DEPLOYMENT_TARGET=10.14
           '';
@@ -51,8 +48,6 @@
           buildInputs = with pkgs; [
             llvmPackages_16.libclang
             llvmPackages_16.libcxxClang
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
           ];
 
           # Extra inputs can be added here
@@ -155,7 +150,7 @@
             branchwaterNextest;
         };
 
-        devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
+        devShells.default = pkgs.mkShell.override { } (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [
@@ -190,8 +185,6 @@
               sourmash
               tox
             ]))
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
           ];
           shellHook = ''
             export MACOSX_DEPLOYMENT_TARGET=10.14
