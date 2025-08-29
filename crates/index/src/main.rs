@@ -425,35 +425,39 @@ fn manifest<P: AsRef<Path>>(
     let basepath: Option<PathBuf> = basepath.map(|p| p.as_ref().into());
 
     let send: Result<()> = paths.into_par_iter().try_for_each_with(send, |s, ref p| {
-        Signature::from_path(p)?
-            //.unwrap_or_else(|_| panic!("Error processing {:?}", p))
-            .into_iter()
-            .try_for_each(|v| {
-                Record::from_sig(&v, p.as_str())
-                    .into_iter()
-                    .try_for_each(|mut r| {
-                        if let Some(ref basepath) = basepath {
-                            r.set_internal_location(
-                                r.internal_location()
-                                    .strip_prefix(basepath.as_str())
-                                    .expect("Error stripping")
-                                    .into(),
-                            );
-                        };
+        let sig = match Signature::from_path(p) {
+            Ok(s) => s,
+            Err(_) => {
+                error!("Error processing {:?}", p);
+                return Ok(());
+            }
+        };
+        sig.into_iter().try_for_each(|v| {
+            Record::from_sig(&v, p.as_str())
+                .into_iter()
+                .try_for_each(|mut r| {
+                    if let Some(ref basepath) = basepath {
+                        r.set_internal_location(
+                            r.internal_location()
+                                .strip_prefix(basepath.as_str())
+                                .expect("Error stripping")
+                                .into(),
+                        );
+                    };
 
-                        if let Some(ref selection) = selection {
-                            if let Ok(r) = r.select(selection) {
-                                // we have a valid record, send it to output
-                                s.send(r)?;
-                            }
-                        } else {
-                            // no selection needed, just send the record to output
+                    if let Some(ref selection) = selection {
+                        if let Ok(r) = r.select(selection) {
+                            // we have a valid record, send it to output
                             s.send(r)?;
-                        };
+                        }
+                    } else {
+                        // no selection needed, just send the record to output
+                        s.send(r)?;
+                    };
 
-                        Ok::<(), color_eyre::eyre::Error>(())
-                    })
-            })?;
+                    Ok::<(), color_eyre::eyre::Error>(())
+                })
+        })?;
 
         Ok(())
     });
