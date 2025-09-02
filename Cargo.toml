@@ -8,18 +8,18 @@ version = "0.4.0"
 name = "branchwater"
 
 [workspace.dependencies]
-camino = "1.1.6"
-clap = { version = "4.5.27", features = [ "derive" ] }
-color-eyre = "0.6.2"
+camino = "1.1.12"
+clap = { version = "4.5.46", features = [ "derive" ] }
+color-eyre = "0.6.5"
 csv = "1.3.0"
-needletail = "0.6.0"
+needletail = "0.6.3"
 niffler = { version = "2.7.0", default-features = false, features = [ "gz" ]}
 numsep = "0.1.12"
-reqwest = { version = "0.12.9", default-features = false, features = [ "json", "rustls-tls" ] }
+reqwest = { version = "0.12.15", default-features = false, features = [ "json", "rustls-tls" ] }
 reqwest-retry = "0.7.0"
-reqwest-middleware = { version = "0.4.0", features = [ "json" ] }
-serde = { version = "1.0.217", features = ["derive"] }
-serde_json = "1.0.138"
+reqwest-middleware = { version = "0.4.2", features = [ "json" ] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.143"
 size = "0.4.0"
 sourmash = { version = "0.18.0" }
 tracing = "0.1"
