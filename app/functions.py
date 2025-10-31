@@ -42,7 +42,10 @@ def getacc(signatures, config, http, threshold=0.1):
     r = http.request('POST',
                      f"{base_url}/search",
                      body=buf.getvalue(),
-                     headers={'Content-Type': 'application/json'})
+                     headers={'Content-Type': 'application/json'},
+                     timeout=300,
+                     retries=3,
+                     )
     if r.status != 200:
         raise SearchError(r.data.decode('utf-8'), r.status)
 
