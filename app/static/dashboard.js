@@ -201,7 +201,12 @@ function createdashboard(jsonData, paragraphElement, navElement) {
   // Data prep for plots  ////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////
   // Create the column definitions for the Tabulator table
-  const columns = Object.keys(jsonData[0]).map((key) => {
+  const commonKeys = Object.keys(jsonData[0]);
+  const values = Array.from({ length: commonKeys.length }, () => []);
+
+  const columns = commonKeys.map((key, j) => {
+    values[j] = jsonData.map((obj) => obj[key]);
+
     // check if columns are numeric or not
     const isNumericColumn = jsonData.every(
       (row) => !isNaN(parseFloat(row[key]))
