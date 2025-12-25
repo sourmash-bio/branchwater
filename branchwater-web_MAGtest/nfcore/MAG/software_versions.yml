@@ -1,0 +1,51 @@
+BOWTIE2_ASSEMBLY_ALIGN:
+  bowtie2: 2.4.2
+  pigz: 2.3.4
+  samtools: '1.11'
+BOWTIE2_PHIX_REMOVAL_ALIGN:
+  bowtie2: 2.4.5
+BUSCO:
+  R: 4.1.3
+  busco: 5.4.3
+  python: 3.9.13
+CUSTOM_DUMPSOFTWAREVERSIONS:
+  python: 3.10.6
+  yaml: '6.0'
+FASTP:
+  fastp: 0.23.2
+FASTQC_RAW:
+  fastqc: 0.11.9
+FASTQC_TRIMMED:
+  fastqc: 0.11.9
+GTDBTK_CLASSIFY:
+  gtdbtk: 1.5.0
+GUNZIP_BINS:
+  gunzip: '1.10'
+MAG_DEPTHS:
+  pandas: 1.1.5
+  python: 3.6.7
+MAG_DEPTHS_SUMMARY:
+  pandas: 1.4.3
+  python: 3.10.6
+MEGAHIT:
+  megahit: 1.2.9
+METABAT2_JGISUMMARIZEBAMCONTIGDEPTHS:
+  metabat2: '2.15'
+METABAT2_METABAT2:
+  metabat2: '2.15'
+PRODIGAL:
+  pigz: '2.6'
+  prodigal: 2.6.3
+QUAST:
+  metaquast: 5.0.2
+  python: 3.7.6
+QUAST_BINS:
+  metaquast: 5.0.2
+  python: 3.7.6
+SPLIT_FASTA:
+  biopython: 1.7.4
+  pandas: 1.1.5
+  python: 3.6.7
+Workflow:
+  Nextflow: 23.04.0
+  nf-core/mag: 2.3.2

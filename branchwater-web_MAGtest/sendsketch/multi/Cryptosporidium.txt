@@ -1,0 +1,509 @@
+
+Query: MEGAHIT-MetaBAT2-ERR3333611.16.fa.gz	DB: RefSeq	SketchLen: 11236	Seqs: 310 	Bases: 606284	gSize: 593233	GC: 0.304	File: MEGAHIT-MetaBAT2-ERR3333611.16.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m69.28%	4.57%	98.68%	.	5.31%	19.36%	1274	613	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m34.63%	2.45%	96.24%	.	3.41%	51.77%	667	20	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m[4m8.95%	0.79%	91.46%	.	2.85%	67.86%	200	156	56192	6635259	866	Photobacterium iliopiscarium[0m
+[35;1m4.73%	0.37%	89.41%	.	1.74%	77.73%	97	77	2748	7509424	1270	Carnobacterium divergens[0m
+[34;1m1.05%	0.14%	84.75%	.	5.22%	59.84%	30	8	1378299	4481434	65	Photobacterium piscicola[0m
+[34;1m3.70%	0.15%	88.67%	.	0.58%	85.95%	50	34	659	14303K	2564	Photobacterium phosphoreum[0m
+[34;1m1.21%	0.13%	84.98%	.	3.63%	66.47%	31	6	2023717	5458693	122	Photobacterium carnosum[0m
+[35m2.69%	0.14%	87.70%	.	0.69%	86.68%	42	39	559292	11477K	17	Saccharomyces cerevisiae S288C[0m
+[34;1m0.89%	0.12%	84.22%	.	5.57%	58.63%	26	1	2022103	4332959	73	Photobacterium sp. NCIMB 13483[0m
+[34;1m0.62%	0.08%	83.11%	.	5.49%	59.03%	18	8	1935446	4349029	118	Photobacterium toruni[0m
+[35;1m0.47%	0.08%	82.31%	.	8.07%	51.41%	16	0	1234679	3522895	1	Carnobacterium maltaromaticum LMA28[0m
+[34;1m0.31%	0.05%	81.10%	.	6.91%	54.58%	10	0	1269941	3853274	52	Aliivibrio logei ATCC 35077[0m
+[34;1m0.26%	0.04%	80.35%	.	6.11%	57.08%	8	0	316275	4118127	8	Aliivibrio salmonicida LFI1238[0m
+[34;1m[4m0.86%	0.06%	83.90%	.	0.84%	87.39%	16	0	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[32m0.13%	0.03%	78.33%	.	11.88%	44.10%	5	5	1918333	2749593	22	Listeria sp. ILCC797[0m
+[34;1m0.14%	0.02%	78.65%	.	5.59%	58.88%	4	1	2006084	4305510	55	Photobacterium malacitanum[0m
+[34;1m0.14%	0.02%	78.17%	.	5.20%	60.40%	4	0	2006083	4429556	68	Photobacterium andalusiense[0m
+[34;1m0.36%	0.02%	81.46%	.	0.63%	89.04%	6	0	512643	10178K	728	Photobacterium aquimaris[0m
+[34;1m0.11%	0.01%	74.29%	.	4.41%	63.45%	3	1	121723	4816179	18	Photobacterium sp. SKA34[0m
+[34;1m0.11%	0.01%	73.63%	.	4.62%	62.45%	3	0	1074311	4741141	3	Vibrio alfacsensis[0m
+
+Query: MEGAHIT-MetaBAT2-ERR3333611.4.fa.gz	DB: RefSeq	SketchLen: 25552	Seqs: 2597 	Bases: 7057916	gSize: 6959768	GC: 0.377	File: MEGAHIT-MetaBAT2-ERR3333611.4.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[35m88.40%	53.48%	99.55%	.	55.64%	8.04%	16231	15838	559292	11477K	17	Saccharomyces cerevisiae S288C[0m
+[35;1m6.31%	5.85%	90.42%	.	29.14%	68.58%	1534	961	2748	7509424	1270	Carnobacterium divergens[0m
+[34;1m0.69%	0.46%	83.42%	.	43.39%	71.02%	117	1	688	4634352	76	Aliivibrio logei[0m
+[34;1m0.64%	0.38%	83.24%	.	48.60%	71.09%	98	0	316275	4118127	8	Aliivibrio salmonicida LFI1238[0m
+[34;1m0.36%	0.34%	81.51%	.	30.25%	71.13%	88	65	56192	6635259	866	Photobacterium iliopiscarium[0m
+[34;1m[4m0.45%	0.35%	82.15%	.	13.86%	82.25%	98	43	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[35m0.77%	0.47%	83.71%	.	2.72%	95.52%	141	1	1080349	11426K	25	Saccharomyces eubayanus[0m
+[34;1m0.25%	0.21%	80.40%	.	17.27%	79.31%	57	2	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[36m14.68%	0.05%	93.26%	.	0.06%	82.94%	74	0	9994	2156M	14543	Marmota marmota marmota[0m
+[35;1m0.18%	0.16%	79.54%	.	19.33%	77.72%	43	4	2751	8021247	1004	Carnobacterium maltaromaticum[0m
+[34;1m0.38%	0.19%	81.70%	.	1.89%	96.09%	61	37	659	14303K	2564	Photobacterium phosphoreum[0m
+[34;1m0.09%	0.06%	77.39%	.	44.14%	71.42%	15	1	1378299	4481434	65	Photobacterium piscicola[0m
+[34;1m0.09%	0.05%	77.19%	.	45.43%	71.42%	14	0	2022103	4332959	73	Photobacterium sp. NCIMB 13483[0m
+[35m0.07%	0.06%	76.75%	.	12.03%	84.17%	16	0	4950	9159995	12	Torulaspora delbrueckii[0m
+[35;1m0.06%	0.04%	76.40%	.	50.36%	71.44%	9	0	1449338	3927784	5	Carnobacterium gallinarum DSM 4847[0m
+[34;1m0.05%	0.03%	75.80%	.	44.78%	71.44%	8	1	2006083	4429556	68	Photobacterium andalusiense[0m
+[35m0.06%	0.05%	75.86%	.	9.84%	86.45%	13	1	4956	9579045	10	Zygosaccharomyces rouxii[0m
+[35m0.11%	0.07%	77.97%	.	3.47%	94.46%	20	0	1064592	11071K	10	Naumovozyma castellii CBS 4309[0m
+[35m0.04%	0.04%	74.50%	.	16.22%	80.19%	10	1	45286	8491184	11	Eremothecium sinecaudum[0m
+[35m0.08%	0.05%	76.31%	.	5.32%	91.88%	15	0	1003335	10592K	9	Kluyveromyces marxianus DMKU3-1042[0m
+
+Query: MEGAHIT-MetaBAT2-ERR3333611.9.fa.gz	DB: RefSeq	SketchLen: 22325	Seqs: 2710 	Bases: 4940007	gSize: 4633994	GC: 0.398	File: MEGAHIT-MetaBAT2-ERR3333611.9.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32m93.73%	0.32%	99.77%	.	0.34%	2.55%	478	146	8030	1335M	241602	Salmo salar[0m
+[32m61.78%	0.22%	98.28%	.	0.23%	34.17%	320	8	8032	1313M	1481	Salmo trutta[0m
+[32m28.62%	0.11%	95.56%	.	0.14%	62.97%	160	10	8022	1214M	139829	Oncorhynchus mykiss[0m
+[32m29.26%	0.11%	95.64%	.	0.13%	63.89%	158	4	8023	1259M	38056	Oncorhynchus nerka[0m
+[32m31.87%	0.10%	95.95%	.	0.11%	64.58%	153	2	8036	1404M	16741	Salvelinus alpinus[0m
+[32m29.31%	0.09%	95.65%	.	0.10%	66.89%	131	0	74940	1513M	15980	Oncorhynchus tshawytscha[0m
+[32m28.34%	0.08%	95.53%	.	0.09%	67.74%	123	0	8019	1569M	22843	Oncorhynchus kisutch[0m
+[35m0.18%	0.07%	79.42%	.	38.48%	4.57%	22	21	559292	11477K	17	Saccharomyces cerevisiae S288C[0m
+[34;1m0.08%	0.04%	77.18%	.	49.73%	3.95%	12	5	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[31;1m2.13%	0.01%	86.59%	.	0.24%	60.57%	18	6	8010	738396K	836	Esox lucius[0m
+[34;1m0.05%	0.03%	76.03%	.	53.03%	3.84%	8	1	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m[4m0.02%	0.02%	72.65%	.	99.41%	2.65%	4	4	565443	4538846	1082	Verminephrobacter aporrectodeae subsp. tuberculatae At4[0m
+[36;1m0.03%	0.01%	74.12%	.	33.00%	5.16%	3	3	636	13355K	705	Edwardsiella tarda[0m
+[31m0.41%	0.00%	77.75%	.	0.35%	54.63%	4	0	1841481	602239K	99597	Seriola lalandi dorsalis[0m
+[36m0.44%	0.00%	81.83%	.	0.30%	57.75%	4	0	7998	657885K	10004	Ictalurus punctatus[0m
+[31m0.24%	0.00%	76.07%	.	0.66%	42.83%	3	1	109280	400111K	37377	Hippocampus comes[0m
+[34;1m0.33%	0.00%	80.97%	.	0.28%	58.76%	3	1	283035	676061K	1313	Sander lucioperca[0m
+[31m0.31%	0.00%	76.89%	.	0.33%	55.65%	3	0	41447	618642K	34656	Seriola dumerili[0m
+[32;1m0.35%	0.00%	77.17%	.	0.24%	61.68%	3	0	586833	718073K	111	Myripristis murdjan[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217734.23.fa.gz	DB: RefSeq	SketchLen: 16230	Seqs: 867 	Bases: 1833174	gSize: 1806297	GC: 0.311	File: MEGAHIT-MetaBAT2-SRR12217734.23.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m63.95%	12.84%	98.39%	.	16.59%	17.37%	3583	1830	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m30.87%	6.65%	95.85%	.	11.01%	48.87%	1811	81	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[33m1.79%	1.34%	86.41%	.	45.51%	39.02%	240	2	1396515	2434730	93	Gallibacterium anatis 10672-6[0m
+[32;1m0.73%	0.68%	83.59%	.	60.62%	35.08%	113	0	557433	1940592	1	Limosilactobacillus reuteri JCM 1112[0m
+[33m0.86%	0.62%	84.12%	.	43.28%	40.53%	113	2	155517	2492309	82	Gallibacterium genomosp. 2[0m
+[32;1m0.58%	0.52%	82.91%	.	58.34%	35.86%	88	28	2042037	1994367	245	Lactobacillus sp. UMNPBX10[0m
+[35;1m1.63%	0.55%	86.03%	.	13.05%	61.33%	129	0	2093881	5346932	155	Escherichia sp. MOD1-EC6021[0m
+[35m2.67%	0.40%	87.66%	.	3.14%	79.07%	124	124	5478	11994K	16	[Candida] glabrata[0m
+[32;1m0.71%	0.34%	83.48%	.	23.67%	51.30%	71	1	500632	3719900	99	Tyzzerella nexilis DSM 1787[0m
+[33m0.68%	0.34%	83.41%	.	25.07%	50.17%	70	0	155515	3596911	187	Gallibacterium genomosp. 1[0m
+[35;1m0.94%	0.32%	84.28%	.	12.82%	62.03%	74	0	2093865	5344908	185	Escherichia sp. MOD1-EC5287[0m
+[32;1m0.54%	0.28%	82.68%	.	25.81%	49.82%	56	1	1870993	3515870	7	Coprococcus phoceensis[0m
+[35;1m0.65%	0.28%	83.25%	.	18.89%	55.41%	60	0	2293232	4249447	107	Ruminococcus sp. OM05-7[0m
+[35;1m0.60%	0.27%	82.98%	.	20.37%	54.04%	57	0	2293183	4063359	87	Ruminococcus sp. AM12-48[0m
+[35;1m0.59%	0.26%	82.97%	.	20.37%	54.09%	56	0	2293224	4057107	155	Ruminococcus sp. AM50-15BH[0m
+[35;1m0.57%	0.26%	82.88%	.	21.30%	53.26%	55	0	2293217	3963628	177	Ruminococcus sp. AM44-9AT[0m
+[35;1m0.55%	0.25%	82.71%	.	20.88%	53.65%	53	4	2293198	4006423	152	Ruminococcus sp. AM29-12LB[0m
+[35;1m0.56%	0.25%	82.82%	.	21.16%	53.35%	54	0	2293189	3981809	70	Ruminococcus sp. AM23-1LB[0m
+[35;1m[4m0.72%	0.26%	83.54%	.	14.24%	60.44%	59	0	1281179	4985718	6	Escherichia coli UMEA 3065-1[0m
+[32;1m0.46%	0.24%	82.12%	.	26.15%	49.58%	48	1	1805476	3489332	14	Blautia sp. Marseille-P2398[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217734.34.fa.gz	DB: RefSeq	SketchLen: 29823	Seqs: 2138 	Bases: 10954975	gSize: 10800388	GC: 0.381	File: MEGAHIT-MetaBAT2-SRR12217734.34.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[35m78.94%	71.12%	99.15%	.	87.73%	2.64%	22010	21805	5478	11994K	16	[Candida] glabrata[0m
+[34;1m36.21%	0.51%	96.44%	.	100.00%	75.97%	151	149	1229753	147706	1	Escherichia phage phAPEC8[0m
+[32;1m0.85%	0.40%	84.04%	.	9.20%	80.71%	156	103	1598	22744K	19848	Limosilactobacillus reuteri[0m
+[34;1m0.44%	0.37%	82.10%	.	28.92%	76.12%	109	48	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[35;1m0.67%	0.33%	83.31%	.	48.35%	76.15%	98	0	2093881	5346932	155	Escherichia sp. MOD1-EC6021[0m
+[35;1m0.66%	0.33%	83.29%	.	48.51%	76.16%	97	0	2093865	5344908	185	Escherichia sp. MOD1-EC5287[0m
+[35;1m0.51%	0.23%	82.48%	.	52.42%	76.25%	69	0	2093897	4888861	98	Escherichia sp. MOD1-EC6300[0m
+[35;1m0.39%	0.17%	81.67%	.	53.07%	76.31%	52	0	1444150	4828395	87	Escherichia coli 2-156-04_S3_C2[0m
+[35;1m0.37%	0.17%	81.58%	.	51.42%	76.31%	51	0	2093864	4969895	150	Escherichia sp. MOD1-EC5189[0m
+[34;1m0.26%	0.20%	80.53%	.	30.66%	76.28%	60	0	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[35;1m0.33%	0.17%	81.21%	.	46.67%	76.31%	50	0	2093859	5478299	164	Escherichia sp. MOD1-EC2449[0m
+[35;1m0.32%	0.16%	81.16%	.	46.60%	76.32%	49	0	2093862	5497189	153	Escherichia sp. MOD1-EC4560[0m
+[35;1m0.31%	0.15%	81.00%	.	47.82%	76.33%	46	0	2093860	5324763	233	Escherichia sp. MOD1-EC4516[0m
+[35;1m0.32%	0.15%	81.05%	.	49.61%	76.33%	45	0	754332	5176634	453	Escherichia sp. TW10509[0m
+[35;1m0.32%	0.15%	81.04%	.	50.80%	76.33%	44	0	2093880	5056489	100	Escherichia sp. MOD1-EC5990[0m
+[35;1m0.31%	0.15%	80.94%	.	49.13%	76.33%	44	0	2093858	5183543	188	Escherichia sp. MOD1-EC1915[0m
+[35;1m0.30%	0.15%	80.96%	.	48.87%	76.33%	44	0	910237	5246032	517	Escherichia sp. TW15838[0m
+[32;1m0.33%	0.11%	81.29%	.	73.71%	76.37%	32	15	1280691	3465863	189	Blautia wexlerae AGR2146[0m
+[32;1m[4m0.48%	0.09%	82.33%	.	100.00%	76.39%	26	8	2042037	1994367	245	Lactobacillus sp. UMNPBX10[0m
+[35;1m0.27%	0.12%	80.70%	.	52.09%	76.36%	37	0	2093861	4907232	53	Escherichia sp. MOD1-EC4550[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217734.39.fa.gz	DB: RefSeq	SketchLen: 8292	Seqs: 33 	Bases: 235998	gSize: 232024	GC: 0.300	File: MEGAHIT-MetaBAT2-SRR12217734.39.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32;1m17.59%	0.84%	93.88%	.	4.42%	7.50%	190	51	437897	4782196	397	Megamonas funiformis[0m
+[32;1m9.41%	0.99%	91.73%	.	9.24%	12.27%	171	14	1855330	2177606	68	Megamonas sp. Calf98-2[0m
+[32;1m10.68%	0.62%	92.18%	.	5.01%	13.53%	131	12	491921	3953942	189	Megamonas rupellensis[0m
+[32;1m5.29%	0.23%	89.88%	.	3.43%	19.98%	53	3	158847	5281421	58	Megamonas hypermegale[0m
+[36m2.25%	0.25%	87.13%	.	8.86%	18.98%	42	15	626940	2099622	96	Phascolarctobacterium succinatutens[0m
+[34;1m2.16%	0.05%	86.82%	.	1.94%	22.30%	15	3	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m1.65%	0.04%	85.82%	.	2.06%	22.87%	12	1	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m0.57%	0.01%	82.87%	.	1.92%	23.75%	4	0	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[31;1m0.17%	0.02%	75.12%	.	7.72%	21.88%	3	0	742743	2315356	14	Dialister succinatiphilus YIT 11850[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217748.36.fa.gz	DB: RefSeq	SketchLen: 15461	Seqs: 524 	Bases: 1582809	gSize: 1550302	GC: 0.307	File: MEGAHIT-MetaBAT2-SRR12217748.36.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[33;1m65.52%	24.47%	98.48%	.	31.05%	16.86%	5249	5096	215200	4115621	70	Peptostreptococcus russellii[0m
+[33;1m[4m15.08%	6.63%	93.35%	.	17.28%	60.73%	1345	105	1280692	3505764	42	Clostridium cadaveris AGR2141[0m
+[31;1m0.40%	0.20%	81.78%	.	16.04%	68.62%	39	4	877414	2984916	211	Clostridiales bacterium NK3B98[0m
+[33;1m0.18%	0.14%	79.43%	.	35.12%	53.34%	23	1	596329	2054252	73	Peptostreptococcus anaerobius 653-L[0m
+[33;1m0.12%	0.09%	78.39%	.	35.86%	52.89%	16	5	2045015	2032019	29	Peptostreptococcus sp. Marseille-P4308[0m
+[33;1m0.11%	0.08%	77.94%	.	37.64%	51.91%	14	3	596315	1977619	74	Peptostreptococcus stomatis DSM 17678[0m
+[33;1m0.08%	0.07%	77.14%	.	37.43%	52.19%	11	1	1219626	1974971	121	Peptostreptococcus sp. MV1[0m
+[33;1m0.10%	0.06%	77.79%	.	23.30%	61.42%	11	5	1121321	2554072	76	Asaccharospora irregularis DSM 2635[0m
+[34;1m0.36%	0.06%	81.37%	.	3.06%	81.98%	17	10	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[33;1m0.08%	0.06%	77.17%	.	29.48%	56.81%	10	0	72304	2269904	37	Peptostreptococcus sp. D1[0m
+[31m0.25%	0.05%	80.38%	.	3.79%	82.36%	14	6	1547	7099000	802	Erysipelatoclostridium ramosum[0m
+[31;1m0.15%	0.06%	78.85%	.	10.27%	76.32%	13	0	1232446	3548369	103	Clostridiales bacterium VE202-18[0m
+[36m0.15%	0.06%	78.86%	.	10.16%	76.46%	13	0	1697788	3568801	67	Clostridia bacterium UC5.1-2H6[0m
+[31m0.13%	0.05%	78.32%	.	8.77%	78.65%	11	7	1323	3748715	70	Faecalicoccus pleomorphus[0m
+[31;1m0.09%	0.05%	77.62%	.	14.61%	70.35%	9	6	415015	3106899	69	Proteiniborus ethanoligenes[0m
+[33;1m0.05%	0.04%	75.19%	.	43.32%	49.11%	7	1	1121328	1815460	35	[Clostridium] paradoxum JW-YL-7 = DSM 7308[0m
+[32;1m0.14%	0.04%	78.71%	.	5.67%	82.27%	10	10	437897	4782196	397	Megamonas funiformis[0m
+[31;1m0.15%	0.06%	78.76%	.	7.62%	80.53%	12	0	665941	3926285	31	Coprobacillus sp. 3_3_56FAA[0m
+[31;1m[4m0.04%	0.03%	75.11%	.	38.05%	51.84%	5	5	248316	1960510	57	Veillonella caviae[0m
+[33;1m0.07%	0.04%	76.71%	.	17.01%	67.57%	7	0	445973	2916791	37	Intestinibacter bartlettii DSM 16795[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217748.43.fa.gz	DB: RefSeq	SketchLen: 22115	Seqs: 1988 	Bases: 4620149	gSize: 4509158	GC: 0.295	File: MEGAHIT-MetaBAT2-SRR12217748.43.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m54.40%	27.62%	97.81%	.	36.28%	28.54%	7708	4181	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m24.58%	13.29%	95.04%	.	23.17%	57.13%	3620	143	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[31;1m8.80%	7.65%	91.54%	.	52.56%	54.33%	1691	76	665941	3926285	31	Coprobacillus sp. 3_3_56FAA[0m
+[31;1m[4m8.88%	6.97%	91.56%	.	57.31%	55.00%	1542	19	1232446	3548369	103	Clostridiales bacterium VE202-18[0m
+[31m9.07%	6.46%	91.63%	.	62.43%	55.51%	1429	3	445974	3231278	12	Erysipelatoclostridium ramosum DSM 1402[0m
+[36m8.35%	6.57%	91.36%	.	56.68%	55.40%	1453	4	1697788	3568801	67	Clostridia bacterium UC5.1-2H6[0m
+[33;1m2.03%	1.85%	86.73%	.	43.71%	60.12%	409	403	215200	4115621	70	Peptostreptococcus russellii[0m
+[32;1m2.75%	1.40%	87.74%	.	77.37%	60.57%	310	26	1122217	2308064	70	Megamonas rupellensis DSM 19944[0m
+[32;1m1.68%	1.58%	86.20%	.	35.91%	61.89%	357	59	437897	4782196	397	Megamonas funiformis[0m
+[35m3.16%	1.20%	88.16%	.	7.44%	80.36%	370	367	5478	11994K	16	[Candida] glabrata[0m
+[32;1m1.37%	0.88%	85.56%	.	60.45%	61.09%	195	128	1078090	2923769	6	Coprococcus sp. HPP0074[0m
+[33;1m1.14%	0.98%	84.95%	.	45.28%	60.99%	217	19	1529	3879877	144	Clostridium cadaveris[0m
+[34;1m1.35%	0.55%	85.50%	.	95.19%	61.42%	121	11	420247	1831333	1	Methanobrevibacter smithii ATCC 35061[0m
+[36;1m0.73%	0.57%	83.60%	.	49.64%	61.41%	125	74	871327	3514269	38	Parabacteroides chinchillae[0m
+[34;1m1.28%	0.48%	85.33%	.	100.00%	61.49%	107	0	1860156	1708768	112	Methanobrevibacter sp. A54[0m
+[33m0.84%	0.43%	84.06%	.	74.59%	61.54%	96	41	1396512	2332072	67	Gallibacterium anatis str. Avicor[0m
+[32;1m0.63%	0.42%	83.12%	.	57.79%	61.56%	92	49	658656	3026461	15	Lachnospiraceae bacterium 6_1_37FAA[0m
+[32;1m[4m0.85%	0.41%	84.10%	.	79.87%	61.56%	91	10	1855330	2177606	68	Megamonas sp. Calf98-2[0m
+[32;1m0.65%	0.55%	83.27%	.	29.15%	65.81%	129	4	158847	5281421	58	Megamonas hypermegale[0m
+[32;1m[4m0.81%	0.47%	83.90%	.	12.67%	78.24%	125	112	44008	7735359	532	Enterococcus cecorum[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12217748.53.fa.gz	DB: RefSeq	SketchLen: 24071	Seqs: 2247 	Bases: 5891587	gSize: 5806817	GC: 0.377	File: MEGAHIT-MetaBAT2-SRR12217748.53.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[35m66.40%	31.93%	98.53%	.	42.23%	12.20%	9882	9797	5478	11994K	16	[Candida] glabrata[0m
+[32;1m1.47%	1.38%	85.74%	.	44.08%	53.06%	340	1	457389	6193660	18	Bacteroides sp. 3_1_13[0m
+[32;1m1.43%	1.36%	85.68%	.	45.09%	52.69%	334	7	2292951	6091932	97	Bacteroides sp. AM37-9[0m
+[32;1m1.38%	1.33%	85.52%	.	46.05%	52.38%	324	3	2292938	6002655	91	Bacteroides sp. AM16-13[0m
+[32;1m1.33%	1.25%	85.45%	.	43.95%	53.19%	307	33	585544	6193599	94	Bacteroides sp. D22[0m
+[32;1m1.33%	1.29%	85.45%	.	46.51%	52.23%	314	1	997892	5957359	13	Bacteroides xylanisolvens CL03T12C04[0m
+[32;1m1.30%	1.19%	85.33%	.	42.62%	53.79%	296	8	457387	6305503	73	Bacteroides sp. 1_1_30[0m
+[32;1m1.29%	1.19%	85.35%	.	42.49%	53.84%	295	10	2292955	6319628	162	Bacteroides sp. AM54-2NS[0m
+[32;1m1.09%	1.06%	84.82%	.	46.53%	52.41%	257	1	469588	5908840	36	Bacteroides sp. 2_1_22[0m
+[32;1m1.08%	1.05%	84.80%	.	46.34%	52.50%	255	0	556258	5947702	22	Bacteroides sp. D1[0m
+[31;1m1.27%	0.43%	85.33%	.	100.00%	52.31%	103	97	248316	1960510	57	Veillonella caviae[0m
+[32;1m0.82%	0.71%	83.98%	.	37.31%	56.54%	179	0	702443	6763976	156	Bacteroides ovatus SD CMC 3f[0m
+[32;1m0.84%	0.70%	84.06%	.	35.00%	57.72%	179	7	2302926	7015390	298	Bacteroides sp. AM56-10ce[0m
+[32;1m0.79%	0.66%	83.87%	.	34.93%	57.77%	168	1	469590	6998291	64	Bacteroides sp. 2_2_4[0m
+[32;1m0.72%	0.59%	83.55%	.	58.08%	52.14%	143	0	997890	4800033	14	Bacteroides uniformis CL03T12C37[0m
+[32;1m0.70%	0.63%	83.47%	.	40.28%	55.23%	156	9	457390	6464565	20	Bacteroides sp. 3_1_23[0m
+[33;1m1.32%	0.45%	85.45%	.	100.00%	52.28%	109	0	1433289	2006545	14	Streptococcus thermophilus M17PTZA496[0m
+[32;1m0.67%	0.56%	83.32%	.	56.60%	52.17%	136	0	2292921	4917191	45	Bacteroides sp. AF20-13LB[0m
+[32;1m0.76%	0.61%	83.72%	.	33.08%	58.73%	157	0	2302925	7238300	124	Bacteroides sp. AF32-8BH[0m
+[34;1m0.80%	0.52%	83.84%	.	21.93%	66.10%	144	68	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12959777.1.fa.gz	DB: RefSeq	SketchLen: 24877	Seqs: 1879 	Bases: 6508382	gSize: 6403960	GC: 0.308	File: MEGAHIT-MetaBAT2-SRR12959777.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m57.46%	41.22%	98.03%	.	65.43%	8.78%	11502	3995	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m45.59%	34.91%	97.21%	.	61.48%	19.72%	9512	2053	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m1.17%	0.85%	84.75%	.	25.54%	64.88%	236	19	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[34;1m0.04%	0.03%	70.58%	.	24.10%	66.21%	8	1	441375	8958768	84	Cryptosporidium muris RN66[0m
+[35m0.02%	0.01%	68.81%	.	13.48%	66.60%	3	0	647221	15801K	833	Plasmodium gaboni[0m
+[36m0.21%	0.00%	75.66%	.	0.38%	67.44%	3	0	66656	534930K	678	Durio zibethinus[0m
+
+Query: MEGAHIT-MetaBAT2-SRR12959777.2.fa.gz	DB: RefSeq	SketchLen: 29113	Seqs: 5755 	Bases: 10600026	gSize: 10109918	GC: 0.385	File: MEGAHIT-MetaBAT2-SRR12959777.2.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32;1m98.76%	0.47%	99.95%	.	0.48%	0.14%	716	433	10090	2102M	8190	Mus musculus[0m
+[32;1m31.61%	0.16%	95.85%	.	0.17%	65.34%	238	6	10089	2030M	3183	Mus caroli[0m
+[31m0.48%	0.13%	82.38%	.	100.00%	2.87%	39	20	83555	2782136	2034	Chlamydia abortus[0m
+[32;1m14.38%	0.07%	93.09%	.	0.09%	81.18%	110	2	10093	2004M	2606	Mus pahari[0m
+[34;1m0.10%	0.09%	77.93%	.	100.00%	2.91%	27	8	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[31m0.36%	0.07%	81.46%	.	100.00%	2.94%	19	3	813	1871051	525	Chlamydia trachomatis[0m
+[34;1m0.09%	0.08%	77.51%	.	100.00%	2.93%	22	3	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[32;1m7.67%	0.04%	90.95%	.	0.05%	89.77%	57	0	35658	2060M	30	Mastomys coucha[0m
+[32;1m5.84%	0.03%	89.73%	.	0.03%	93.14%	40	0	10116	2236M	10230	Rattus norvegicus[0m
+[32;1m5.46%	0.03%	89.95%	.	0.03%	93.17%	40	0	491861	2087M	23656	Grammomys surdaster[0m
+[32;1m[4m0.02%	0.01%	68.90%	.	100.00%	2.99%	4	4	304207	6080952	760	Schleiferilactobacillus harbinensis[0m
+[36m1.60%	0.01%	86.00%	.	0.06%	88.22%	13	0	10036	1891M	21484	Mesocricetus auratus[0m
+[32;1m2.26%	0.01%	87.07%	.	0.03%	94.69%	17	0	10047	2029M	68793	Meriones unguiculatus[0m
+[36m2.66%	0.01%	87.54%	.	0.02%	96.22%	19	0	230844	2149M	30922	Peromyscus maniculatus bairdii[0m
+[36m2.64%	0.01%	87.58%	.	0.02%	96.25%	19	0	10041	2118M	1763	Peromyscus leucopus[0m
+[36m1.50%	0.01%	85.76%	.	0.05%	90.10%	12	0	79684	1921M	6480	Microtus ochrogaster[0m
+[36m1.97%	0.01%	86.64%	.	0.01%	96.91%	14	0	10029	2157M	110984	Cricetulus griseus[0m
+[32m0.10%	0.00%	73.24%	.	2.21%	24.75%	3	1	7137	351184K	21800	Galleria mellonella[0m
+[36;1m0.44%	0.00%	82.08%	.	0.12%	80.57%	4	0	10020	1676M	65193	Dipodomys ordii[0m
+[33m0.78%	0.00%	83.39%	.	0.01%	98.28%	5	0	1026970	2418M	154976	Nannospalax galili[0m
+
+Query: MEGAHIT-MetaBAT2-SRR17231405.1.fa.gz	DB: RefSeq	SketchLen: 26561	Seqs: 1533 	Bases: 7875110	gSize: 7735558	GC: 0.307	File: MEGAHIT-MetaBAT2-SRR17231405.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m98.97%	85.95%	99.96%	.	86.50%	0.39%	23985	12072	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m48.58%	45.10%	97.43%	.	47.70%	48.61%	12289	517	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m1.27%	1.12%	85.13%	.	2.06%	97.66%	310	2	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[33;1m0.20%	0.08%	79.75%	.	18.94%	92.51%	21	0	411484	3069810	34	Clostridium sp. SS2/1[0m
+[32;1m0.19%	0.08%	79.66%	.	19.21%	92.51%	20	0	2292902	3022755	56	Lachnospiraceae bacterium AM10-38[0m
+[32;1m0.19%	0.07%	79.38%	.	19.51%	92.52%	19	0	658089	2971922	48	Lachnospiraceae bacterium 5_1_63FAA[0m
+[35;1m0.11%	0.08%	78.12%	.	11.16%	92.51%	20	0	1280961	5215056	14	Escherichia coli HVH 6 (3-8296502)[0m
+[32;1m0.16%	0.06%	78.77%	.	20.60%	92.53%	15	0	2292904	2810929	54	Lachnospiraceae bacterium AM23-7LB[0m
+[32;1m0.15%	0.06%	78.92%	.	19.58%	92.53%	15	0	2292903	2955787	111	Lachnospiraceae bacterium AM21-21[0m
+[32;1m0.14%	0.05%	78.46%	.	19.32%	92.53%	14	0	2292906	2984963	64	Lachnospiraceae bacterium AM26-1LB[0m
+[32;1m0.13%	0.05%	78.13%	.	19.46%	92.54%	13	0	2292905	2991091	57	Lachnospiraceae bacterium AM25-27[0m
+[32;1m0.13%	0.05%	78.10%	.	19.24%	92.54%	13	0	2292907	3022190	70	Lachnospiraceae bacterium TF10-8AT[0m
+[32;1m0.12%	0.05%	78.00%	.	19.61%	92.54%	12	0	2292908	2963647	53	Lachnospiraceae bacterium OM02-26[0m
+[32;1m0.15%	0.12%	78.59%	.	0.63%	99.23%	34	1	649756	9553041	480	Anaerostipes hadrus[0m
+[35;1m0.06%	0.04%	76.09%	.	11.64%	92.55%	11	0	2082620	4979977	123	Escherichia sp. R5[0m
+[35;1m0.06%	0.04%	76.09%	.	11.63%	92.55%	11	0	2082634	4989510	125	Escherichia sp. R20[0m
+[35;1m0.06%	0.04%	76.07%	.	11.55%	92.55%	11	0	2082624	5023099	123	Escherichia sp. R10[0m
+[35;1m0.06%	0.04%	76.07%	.	11.54%	92.55%	11	0	2082627	5025469	127	Escherichia sp. R13[0m
+[35;1m0.06%	0.04%	76.05%	.	11.49%	92.55%	11	0	2161825	5046669	214	Escherichia sp. R8[0m
+[35;1m0.07%	0.03%	76.33%	.	14.64%	92.55%	9	0	1401259	3921739	761	Shigella dysenteriae WRSd5[0m
+
+Query: MEGAHIT-MetaBAT2-SRR17238487.1.fa.gz	DB: RefSeq	SketchLen: 26556	Seqs: 1531 	Bases: 7870364	gSize: 7733061	GC: 0.307	File: MEGAHIT-MetaBAT2-SRR17238487.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m99.01%	85.95%	99.96%	.	86.50%	0.35%	23985	12072	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m48.60%	45.10%	97.44%	.	47.70%	48.59%	12289	517	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m1.27%	1.12%	85.13%	.	2.06%	97.66%	310	2	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[35;1m0.11%	0.08%	78.12%	.	11.19%	92.49%	20	0	1280961	5215056	14	Escherichia coli HVH 6 (3-8296502)[0m
+[33;1m0.15%	0.06%	78.82%	.	18.94%	92.51%	16	0	411484	3069810	34	Clostridium sp. SS2/1[0m
+[32;1m0.14%	0.06%	78.72%	.	19.20%	92.51%	15	0	2292902	3022755	56	Lachnospiraceae bacterium AM10-38[0m
+[32;1m0.11%	0.04%	77.98%	.	19.59%	92.53%	11	0	2292903	2955787	111	Lachnospiraceae bacterium AM21-21[0m
+[32;1m0.11%	0.04%	77.81%	.	19.48%	92.53%	11	0	658089	2971922	48	Lachnospiraceae bacterium 5_1_63FAA[0m
+[35;1m0.06%	0.04%	76.09%	.	11.67%	92.53%	11	0	2082620	4979977	123	Escherichia sp. R5[0m
+[35;1m0.06%	0.04%	76.09%	.	11.65%	92.53%	11	0	2082634	4989510	125	Escherichia sp. R20[0m
+[35;1m0.06%	0.04%	76.07%	.	11.57%	92.53%	11	0	2082624	5023099	123	Escherichia sp. R10[0m
+[35;1m0.06%	0.04%	76.07%	.	11.57%	92.53%	11	0	2082627	5025469	127	Escherichia sp. R13[0m
+[35;1m0.06%	0.04%	76.05%	.	11.52%	92.53%	11	0	2161825	5046669	214	Escherichia sp. R8[0m
+[32;1m0.09%	0.03%	75.90%	.	19.47%	92.53%	9	0	2292905	2991091	57	Lachnospiraceae bacterium AM25-27[0m
+[32;1m0.09%	0.03%	75.87%	.	19.24%	92.53%	9	0	2292907	3022190	70	Lachnospiraceae bacterium TF10-8AT[0m
+[35;1m0.07%	0.03%	76.33%	.	14.68%	92.53%	9	0	1401259	3921739	761	Shigella dysenteriae WRSd5[0m
+[32;1m0.11%	0.09%	77.71%	.	0.60%	99.26%	25	0	649756	9553041	480	Anaerostipes hadrus[0m
+[32;1m0.08%	0.03%	75.71%	.	19.31%	92.54%	8	0	2292906	2984963	64	Lachnospiraceae bacterium AM26-1LB[0m
+[32;1m0.07%	0.03%	75.69%	.	20.57%	92.54%	7	0	2292904	2810929	54	Lachnospiraceae bacterium AM23-7LB[0m
+[32;1m0.07%	0.03%	75.55%	.	19.60%	92.54%	7	0	2292908	2963647	53	Lachnospiraceae bacterium OM02-26[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691112.27.fa.gz	DB: RefSeq	SketchLen: 14777	Seqs: 221 	Bases: 1399957	gSize: 1340460	GC: 0.253	File: MEGAHIT-MetaBAT2-SRR18691112.27.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m0.12%	0.02%	78.32%	.	14.56%	2.54%	5	5	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[33m0.02%	0.02%	73.71%	.	100.00%	1.35%	3	0	1276227	1098042	1	Spiroplasma chrysopicola DF-1[0m
+[31m0.02%	0.02%	73.82%	.	76.86%	1.55%	3	0	1313290	1721824	1	Erysipelothrix rhusiopathiae SY1027[0m
+[31m0.02%	0.02%	68.76%	.	93.75%	1.40%	3	0	679192	1411751	16	Bulleidia extructa W1219[0m
+[31m0.03%	0.02%	69.51%	.	62.75%	1.69%	3	0	2486714	2105868	13	Absicoccus porci[0m
+[31;1m0.03%	0.02%	69.88%	.	51.89%	1.82%	3	0	2292345	2540066	75	Coprobacillus sp. AM42-12AC[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691112.34.fa.gz	DB: RefSeq	SketchLen: 12360	Seqs: 202 	Bases: 802247	gSize: 788960	GC: 0.409	File: MEGAHIT-MetaBAT2-SRR18691112.34.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[36;1m0.57%	0.09%	82.87%	.	15.06%	1.95%	20	13	1750560	4976759	23	Parabacteroides massiliensis[0m
+[32;1m0.34%	0.07%	81.37%	.	20.68%	1.95%	15	3	762984	3704659	40	Bacteroides clarus YIT 12056[0m
+[36;1m0.36%	0.06%	81.51%	.	17.41%	2.09%	14	0	999421	4348924	11	Parabacteroides merdae CL09T00C40[0m
+[32;1m0.26%	0.04%	79.52%	.	15.05%	2.25%	9	9	1235786	4965889	17	Phocaeicola vulgatus dnLKV7[0m
+[32;1m0.28%	0.04%	80.75%	.	15.40%	2.27%	10	0	469589	4861043	24	Bacteroides sp. 2_1_33B[0m
+[36;1m0.17%	0.03%	79.08%	.	14.69%	2.37%	6	4	658662	5088407	46	Parabacteroides sp. D26[0m
+[34;1m0.25%	0.02%	79.39%	.	8.22%	2.55%	6	4	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[33m0.13%	0.03%	74.04%	.	23.73%	2.00%	6	1	2516961	3205086	31	Muribaculum sp. NM65_B17[0m
+[32;1m0.30%	0.02%	80.94%	.	6.32%	2.48%	6	0	449673	11562K	117	Bacteroides stercoris ATCC 43183[0m
+[32;1m0.15%	0.02%	78.45%	.	14.59%	2.41%	5	0	310298	5115050	256	Phocaeicola coprocola[0m
+[32;1m0.32%	0.01%	76.83%	.	4.53%	2.53%	5	1	47678	16043K	3566	Bacteroides caccae[0m
+[33m0.16%	0.02%	74.71%	.	13.03%	2.45%	5	0	2498093	5672870	401	Muribaculaceae bacterium[0m
+[36;1m0.11%	0.02%	74.42%	.	15.01%	2.40%	4	2	328813	4969860	103	Alistipes onderdonkii[0m
+[34;1m0.16%	0.01%	78.58%	.	8.85%	2.55%	4	2	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[31m0.11%	0.02%	73.68%	.	15.32%	2.44%	4	0	1816677	4879456	10	Butyricimonas sp. Marseille-P2440[0m
+[31m0.11%	0.02%	73.68%	.	15.32%	2.44%	4	0	544644	4879456	10	Butyricimonas synergistica[0m
+[32;1m0.20%	0.01%	79.74%	.	6.49%	2.63%	4	0	674529	11266K	2151	Bacteroides faecis[0m
+[33m0.06%	0.02%	76.35%	.	24.80%	1.99%	3	2	2486470	3090513	17	Muribaculaceae bacterium Isolate-102 (HZI)[0m
+[33m0.06%	0.02%	76.31%	.	25.15%	1.96%	3	1	2486463	3053050	78	Muribaculaceae bacterium Isolate-043 (Harlan)[0m
+[33m0.07%	0.01%	76.55%	.	22.13%	2.14%	3	0	2486466	3452693	188	Muribaculaceae bacterium Isolate-039 (Harlan)[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691112.38.fa.gz	DB: RefSeq	SketchLen: 19338	Seqs: 872 	Bases: 3100056	gSize: 3060885	GC: 0.294	File: MEGAHIT-MetaBAT2-SRR18691112.38.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m1.18%	0.40%	85.02%	.	33.42%	1.75%	112	55	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m0.62%	0.23%	82.97%	.	35.70%	2.26%	62	6	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[32;1m0.09%	0.06%	77.54%	.	67.47%	2.26%	14	10	1235800	4410560	25	Lachnospiraceae bacterium 10-1[0m
+[37m0.05%	0.03%	75.09%	.	62.35%	2.35%	7	5	2320113	4780248	155	bacterium 1xD42-87[0m
+[34;1m0.07%	0.03%	76.83%	.	33.58%	2.83%	7	3	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[35;1m0.04%	0.02%	75.20%	.	51.26%	2.55%	5	3	1235802	5821184	34	Eubacterium plexicaudatum ASF492[0m
+[32;1m0.04%	0.02%	74.96%	.	47.09%	2.64%	5	3	397291	6330412	40	Lachnospiraceae bacterium A4[0m
+[35;1m0.03%	0.02%	74.50%	.	76.36%	2.22%	5	0	2293185	3899524	106	Ruminococcus sp. AM18-15[0m
+[35;1m0.03%	0.02%	74.53%	.	75.11%	2.24%	5	0	2293217	3963628	177	Ruminococcus sp. AM44-9AT[0m
+[35;1m0.03%	0.02%	74.42%	.	74.86%	2.24%	5	0	2302958	3976345	129	Ruminococcus sp. OM02-16LB[0m
+[35;1m0.03%	0.02%	74.59%	.	72.68%	2.26%	5	0	2293186	4098587	119	Ruminococcus sp. AM18-44[0m
+[35;1m0.03%	0.02%	74.64%	.	70.39%	2.28%	5	0	2293167	4232456	98	Ruminococcus sp. AF25-28AC[0m
+[35;1m0.02%	0.02%	73.92%	.	75.14%	2.24%	4	0	2293225	3963800	131	Ruminococcus sp. AM54-14NS[0m
+[35;1m0.02%	0.02%	73.93%	.	74.75%	2.25%	4	0	2293189	3981809	70	Ruminococcus sp. AM23-1LB[0m
+[35;1m0.03%	0.02%	74.05%	.	70.12%	2.29%	4	0	2293158	4249084	135	Ruminococcus sp. AF19-29[0m
+[35;1m0.03%	0.02%	74.13%	.	67.20%	2.33%	4	0	2293208	4426302	86	Ruminococcus sp. AM36-17[0m
+[35;1m0.03%	0.02%	74.09%	.	68.36%	2.30%	4	0	2293147	4358236	296	Ruminococcus sp. AF14-5[0m
+[33;1m0.02%	0.02%	72.61%	.	90.31%	2.08%	3	2	2292008	3313172	36	Clostridium sp. AM16-23[0m
+[31;1m0.02%	0.02%	72.70%	.	94.49%	2.04%	3	1	1347392	3170345	164	Anaerosalibacter massiliensis[0m
+[33;1m0.02%	0.01%	72.99%	.	80.25%	2.18%	3	1	84031	3716581	39	Clostridium sartagoforme[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691112.41.fa.gz	DB: RefSeq	SketchLen: 11059	Seqs: 278 	Bases: 576901	gSize: 560146	GC: 0.362	File: MEGAHIT-MetaBAT2-SRR18691112.41.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m0.40%	0.04%	77.59%	.	9.19%	1.10%	9	9	2137880	6077669	233	Candidatus Gastranaerophilales bacterium[0m
+[36;1m0.17%	0.03%	79.25%	.	18.30%	1.06%	6	3	2292190	3082204	31	Alistipes sp. AF17-16[0m
+[34;1m0.17%	0.01%	74.79%	.	6.37%	1.44%	3	2	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[31m0.10%	0.01%	77.82%	.	13.25%	1.17%	3	1	709991	4312977	1	Odoribacter splanchnicus DSM 20712[0m
+[36;1m0.26%	0.01%	80.48%	.	3.20%	1.39%	3	0	2049048	17856K	103	Rikenellaceae bacterium[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691151.14.fa.gz	DB: RefSeq	SketchLen: 19793	Seqs: 1522 	Bases: 3326902	gSize: 3272798	GC: 0.314	File: MEGAHIT-MetaBAT2-SRR18691151.14.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m66.21%	24.03%	98.51%	.	35.26%	2.84%	6706	3021	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m38.00%	14.73%	96.56%	.	27.23%	29.73%	4013	363	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m0.85%	0.31%	83.95%	.	11.80%	67.90%	87	2	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[35;1m0.10%	0.09%	77.57%	.	75.51%	36.30%	17	0	2293153	2755012	54	Ruminococcus sp. AF17-24[0m
+[35;1m0.10%	0.09%	77.54%	.	74.67%	36.30%	17	0	2293152	2784821	50	Ruminococcus sp. AF17-1AC[0m
+[35;1m0.10%	0.09%	77.53%	.	74.64%	36.30%	17	0	2293155	2786292	57	Ruminococcus sp. AF17-6LB[0m
+[35;1m0.10%	0.09%	77.49%	.	73.47%	36.30%	17	0	2293154	2832544	55	Ruminococcus sp. AF17-6[0m
+[32m0.09%	0.07%	77.29%	.	79.29%	36.31%	14	0	2292884	2624936	61	Firmicutes bacterium AF12-30[0m
+[33;1m0.09%	0.07%	77.30%	.	90.24%	36.32%	13	0	2293022	2297175	28	Clostridium sp. AM09-51[0m
+[35;1m0.08%	0.07%	77.03%	.	72.12%	36.31%	14	0	2293233	2890826	42	Ruminococcus sp. OM07-17[0m
+[31;1m0.08%	0.07%	76.77%	.	70.71%	36.31%	14	0	2293077	2947258	71	Coprobacillus sp. AM26-5AC[0m
+[32;1m0.08%	0.07%	76.90%	.	68.95%	36.31%	14	0	2292902	3022755	56	Lachnospiraceae bacterium AM10-38[0m
+[35;1m0.07%	0.07%	76.80%	.	66.52%	36.31%	14	0	2293216	3124527	95	Ruminococcus sp. AM43-6[0m
+[35;1m[4m0.08%	0.07%	77.04%	.	82.09%	36.32%	13	0	2292352	2532213	21	Eubacterium sp. OM08-24[0m
+[32m0.07%	0.07%	76.76%	.	65.57%	36.31%	14	0	2292896	3177336	174	Firmicutes bacterium AM55-24TS[0m
+[35;1m0.08%	0.07%	76.49%	.	76.23%	36.32%	13	0	2293106	2731163	42	Eubacterium sp. AF19-12LB[0m
+[31;1m0.08%	0.07%	76.73%	.	73.43%	36.32%	13	0	2293064	2848350	59	Coprobacillus sp. AF17-17AC[0m
+[33;1m0.07%	0.07%	76.69%	.	72.55%	36.32%	13	0	2293015	2873848	78	Clostridium sp. AF36-4[0m
+[35;1m0.07%	0.07%	76.46%	.	66.80%	36.32%	13	0	2293238	3118607	49	Ruminococcus sp. TF08-4[0m
+[32;1m0.07%	0.06%	76.53%	.	68.47%	36.32%	12	0	2293143	3042077	41	Roseburia sp. OM04-15AA[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691151.2.fa.gz	DB: RefSeq	SketchLen: 25494	Seqs: 3231 	Bases: 7530956	gSize: 6875434	GC: 0.415	File: MEGAHIT-MetaBAT2-SRR18691151.2.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m0.15%	0.11%	78.90%	.	76.74%	0.40%	32	9	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m0.12%	0.10%	78.21%	.	82.35%	0.42%	26	3	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[33m4.57%	0.01%	89.43%	.	0.26%	2.88%	19	7	1026970	2418M	154976	Nannospalax galili[0m
+[32;1m1.81%	0.01%	86.49%	.	0.31%	5.24%	9	1	10047	2029M	68793	Meriones unguiculatus[0m
+[32;1m1.88%	0.01%	86.54%	.	0.30%	5.01%	9	0	10090	2102M	8190	Mus musculus[0m
+[32;1m1.82%	0.01%	86.44%	.	0.31%	5.25%	9	0	10089	2030M	3183	Mus caroli[0m
+[32;1m1.44%	0.00%	85.62%	.	0.30%	5.75%	7	1	35658	2060M	30	Mastomys coucha[0m
+[36m1.48%	0.00%	85.75%	.	0.29%	5.49%	7	0	10041	2118M	1763	Peromyscus leucopus[0m
+[32;1m1.39%	0.00%	85.51%	.	0.31%	5.77%	7	0	10093	2004M	2606	Mus pahari[0m
+[36m1.30%	0.00%	85.38%	.	0.29%	5.83%	6	0	10029	2157M	110984	Cricetulus griseus[0m
+[36m1.29%	0.00%	85.11%	.	0.29%	5.82%	6	0	230844	2149M	30922	Peromyscus maniculatus bairdii[0m
+[36m1.15%	0.00%	84.48%	.	0.32%	5.77%	6	0	79684	1921M	6480	Microtus ochrogaster[0m
+[36m0.95%	0.00%	84.45%	.	0.33%	5.87%	5	0	10036	1891M	21484	Mesocricetus auratus[0m
+[35;1m0.04%	0.01%	75.08%	.	22.97%	0.81%	4	1	9523	29749K	44	Plecturocebus moloch[0m
+[32;1m0.83%	0.00%	80.45%	.	0.30%	6.22%	4	1	491861	2087M	23656	Grammomys surdaster[0m
+[32;1m0.88%	0.00%	84.02%	.	0.28%	6.39%	4	0	10116	2236M	10230	Rattus norvegicus[0m
+[33;1m0.84%	0.00%	83.87%	.	0.29%	6.09%	4	0	51337	2109M	10898	Jaculus jaculus[0m
+[34;1m0.01%	0.01%	72.35%	.	77.78%	0.53%	3	0	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[32;1m0.03%	0.01%	74.52%	.	22.22%	0.82%	3	0	9534	30656K	46	Chlorocebus aethiops[0m
+[34;1m0.61%	0.00%	79.43%	.	0.30%	6.53%	3	0	885580	2050M	74731	Fukomys damarensis[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691155.7.fa.gz	DB: RefSeq	SketchLen: 18992	Seqs: 1320 	Bases: 2945059	gSize: 2889899	GC: 0.310	File: MEGAHIT-MetaBAT2-SRR18691155.7.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m85.02%	27.72%	99.42%	.	31.77%	2.54%	7735	3532	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m47.89%	16.66%	97.38%	.	21.61%	37.86%	4538	379	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m1.20%	0.40%	84.83%	.	4.62%	86.03%	110	0	857276	8791775	39	Cryptosporidium ubiquitum[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691155.8.fa.gz	DB: RefSeq	SketchLen: 33170	Seqs: 8106 	Bases: 15952997	gSize: 14785156	GC: 0.412	File: MEGAHIT-MetaBAT2-SRR18691155.8.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m0.58%	0.35%	82.92%	.	100.00%	0.49%	116	54	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m0.35%	0.20%	81.39%	.	100.00%	0.64%	65	3	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[33m3.73%	0.02%	88.72%	.	0.58%	4.37%	35	15	1026970	2418M	154976	Nannospalax galili[0m
+[32;1m1.67%	0.01%	85.12%	.	0.70%	6.34%	19	1	10093	2004M	2606	Mus pahari[0m
+[32;1m1.52%	0.01%	84.95%	.	0.69%	6.45%	17	0	10089	2030M	3183	Mus caroli[0m
+[36m1.28%	0.01%	83.78%	.	0.72%	6.75%	15	3	79684	1921M	6480	Microtus ochrogaster[0m
+[36m1.35%	0.01%	85.03%	.	0.73%	6.57%	16	0	10036	1891M	21484	Mesocricetus auratus[0m
+[32;1m1.36%	0.01%	81.82%	.	0.68%	6.55%	15	1	35658	2060M	30	Mastomys coucha[0m
+[32;1m1.40%	0.01%	84.04%	.	0.66%	6.52%	15	0	10090	2102M	8190	Mus musculus[0m
+[36m1.22%	0.01%	83.79%	.	0.65%	6.65%	13	1	10041	2118M	1763	Peromyscus leucopus[0m
+[36m1.14%	0.01%	84.40%	.	0.64%	6.82%	12	1	10029	2157M	110984	Cricetulus griseus[0m
+[32;1m1.07%	0.01%	84.22%	.	0.69%	6.89%	12	1	10047	2029M	68793	Meriones unguiculatus[0m
+[32;1m1.11%	0.01%	84.31%	.	0.66%	6.82%	12	0	491861	2087M	23656	Grammomys surdaster[0m
+[32;1m1.09%	0.01%	83.62%	.	0.62%	6.92%	11	1	10116	2236M	10230	Rattus norvegicus[0m
+[36m1.04%	0.01%	83.50%	.	0.64%	6.91%	11	0	230844	2149M	30922	Peromyscus maniculatus bairdii[0m
+[33;1m0.93%	0.01%	83.27%	.	0.65%	7.00%	10	1	51337	2109M	10898	Jaculus jaculus[0m
+[33m0.51%	0.00%	82.47%	.	0.72%	7.45%	6	1	379532	1903M	22539	Propithecus coquereli[0m
+[36m0.47%	0.00%	81.86%	.	0.65%	7.46%	5	1	43179	2107M	12528	Ictidomys tridecemlineatus[0m
+[36m0.48%	0.00%	82.37%	.	0.63%	7.51%	5	0	93162	2185M	32916	Marmota flaviventris[0m
+[33;1m0.47%	0.00%	82.28%	.	0.65%	7.47%	5	0	30608	2111M	7756	Microcebus murinus[0m
+
+Query: MEGAHIT-MetaBAT2-SRR18691161.7.fa.gz	DB: RefSeq	SketchLen: 26688	Seqs: 1718 	Bases: 8010821	gSize: 7859552	GC: 0.312	File: MEGAHIT-MetaBAT2-SRR18691161.7.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m80.56%	71.12%	99.22%	.	84.67%	4.10%	19848	9174	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m45.18%	42.63%	97.17%	.	58.60%	37.89%	11615	1060	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[33m68.08%	0.78%	98.58%	.	100.00%	79.31%	209	0	1177209	97822	1	Glycine gracilis[0m
+[33m67.10%	0.78%	98.53%	.	100.00%	79.31%	208	0	3832	98168	1	Cyamopsis tetragonoloba[0m
+[33m42.54%	0.50%	96.94%	.	100.00%	79.59%	134	0	713886	96517	1	Glycine syndetika[0m
+[33m43.46%	0.50%	97.01%	.	100.00%	79.59%	133	0	44015	97106	1	Glycine tomentella[0m
+[33m41.77%	0.49%	96.87%	.	100.00%	79.60%	132	0	82538	96569	1	Glycine dolichocarpa[0m
+[33m42.39%	0.49%	96.92%	.	100.00%	79.60%	131	0	45690	97072	1	Glycine falcata[0m
+[33m41.59%	0.49%	96.85%	.	100.00%	79.60%	131	0	48924	96644	1	Glycine canescens[0m
+[33m40.97%	0.48%	96.80%	.	100.00%	79.62%	127	0	96944	98457	1	Glycine stenophita[0m
+[33m39.00%	0.44%	96.62%	.	100.00%	79.65%	117	0	45689	97006	1	Glycine cyrtoloba[0m
+[34;1m1.19%	1.07%	84.92%	.	15.11%	83.13%	296	4	857276	8791775	39	Cryptosporidium ubiquitum[0m
+[33m26.73%	0.32%	95.31%	.	100.00%	79.77%	85	0	429560	97292	1	Cullen corylifolium[0m
+[33m25.55%	0.31%	95.12%	.	100.00%	79.78%	82	0	109171	98632	1	Pachyrhizus erosus[0m
+[33m15.77%	0.19%	93.51%	.	100.00%	79.90%	50	0	185702	90290	1	Apios americana[0m
+[33m13.83%	0.18%	93.09%	.	100.00%	79.91%	48	0	132452	98859	1	Mucuna macrocarpa[0m
+[33;1m0.71%	0.37%	83.54%	.	39.00%	79.72%	99	0	197614	4083723	494	Streptococcus pasteurianus[0m
+[33;1m1.05%	0.27%	84.73%	.	79.85%	79.83%	71	0	864569	2008745	10	Streptococcus equinus ATCC 700338[0m
+[33;1m0.51%	0.30%	82.50%	.	33.71%	79.79%	81	0	59310	4729620	341	Streptococcus macedonicus[0m
+[33m11.33%	0.13%	92.36%	.	100.00%	79.96%	34	0	688281	93602	1	Lespedeza davurica[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5190219.4.fa.gz	DB: RefSeq	SketchLen: 17473	Seqs: 847 	Bases: 2298094	gSize: 2225384	GC: 0.291	File: MEGAHIT-MetaBAT2-SRR5190219.4.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m34.70%	29.46%	96.23%	.	80.56%	5.09%	5400	1005	469616	2611424	9	Fusobacterium mortiferum ATCC 9817[0m
+[34;1m5.01%	4.51%	89.70%	.	75.95%	31.60%	788	99	858	1997257	5	Fusobacterium necrogenes[0m
+[34;1m0.73%	0.46%	83.32%	.	37.68%	39.98%	94	4	457404	3565878	8	Fusobacterium ulcerans 12-1B[0m
+[34;1m0.50%	0.44%	82.37%	.	72.71%	35.67%	77	19	68766	1960504	7	Fusobacterium sp.[0m
+[34;1m0.69%	0.45%	83.03%	.	38.94%	39.89%	90	2	1739251	3453137	221	Fusobacterium sp. HMSC073F01[0m
+[34;1m0.66%	0.45%	82.85%	.	41.19%	39.74%	89	3	469618	3250933	13	Fusobacterium varium ATCC 27725[0m
+[34;1m0.24%	0.22%	79.94%	.	69.32%	35.89%	39	10	1408439	2053950	25	Fusobacterium perfoetens ATCC 29250[0m
+[34;1m[4m0.39%	0.10%	81.70%	.	14.55%	41.97%	27	18	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m[4m0.14%	0.14%	78.35%	.	63.74%	36.10%	24	0	525283	2231877	68	Fusobacterium nucleatum subsp. nucleatum ATCC 23726[0m
+[34;1m0.18%	0.13%	78.52%	.	44.33%	40.02%	25	0	1319815	3002800	174	Cetobacterium somerae ATCC BAA-474[0m
+[34;1m0.16%	0.12%	78.99%	.	85.28%	35.99%	21	0	469615	1676347	7	Fusobacterium gonidiaformans ATCC 25563[0m
+[34;1m0.14%	0.11%	76.98%	.	82.07%	36.00%	19	6	1852365	1733645	12	Fusobacterium massiliense[0m
+[34;1m0.13%	0.13%	78.41%	.	63.02%	36.32%	23	0	1307441	2248678	164	Fusobacterium hwasookii ChDC F145[0m
+[32;1m0.24%	0.10%	80.17%	.	24.79%	41.19%	24	1	1073388	5301333	9	Bacteroides fragilis HMW 616[0m
+[34;1m0.14%	0.11%	78.44%	.	80.91%	36.00%	20	0	134605	1767172	77	Fusobacterium equinum[0m
+[34;1m0.13%	0.12%	78.30%	.	57.97%	37.66%	22	0	1739543	2390210	119	Fusobacterium sp. HMSC064B11[0m
+[34;1m0.14%	0.12%	77.67%	.	49.62%	39.68%	22	1	1340502	2694560	197	Cetobacterium sp. ZWU0022[0m
+[34;1m0.14%	0.12%	78.08%	.	49.66%	39.67%	22	0	1339239	2693546	121	Cetobacterium sp. ZOR0034[0m
+[34;1m0.12%	0.11%	78.00%	.	65.41%	36.00%	20	0	285729	2174902	76	Fusobacterium canifelinum[0m
+[34;1m0.25%	0.09%	80.15%	.	20.62%	41.35%	22	0	860	6371046	40	Fusobacterium periodonticum[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5190255.3.fa.gz	DB: RefSeq	SketchLen: 11873	Seqs: 413 	Bases: 719415	gSize: 693066	GC: 0.357	File: MEGAHIT-MetaBAT2-SRR5190255.3.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m3.07%	0.24%	88.10%	.	7.45%	3.26%	66	37	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[31m88.24%	0.03%	99.57%	.	0.03%	9.80%	45	0	9913	2102M	2391	Bos taurus[0m
+[31m88.24%	0.03%	99.54%	.	0.03%	9.80%	45	0	30522	2089M	1280	Bos indicus x Bos taurus[0m
+[34;1m1.37%	0.11%	85.46%	.	7.94%	4.71%	31	1	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[31m61.90%	0.03%	98.30%	.	0.03%	30.16%	39	5	9915	1748M	63	Bos indicus[0m
+[31m70.59%	0.02%	98.75%	.	0.02%	27.45%	36	0	72004	2070M	41192	Bos mutus[0m
+[31m66.67%	0.02%	98.57%	.	0.02%	31.37%	34	0	43346	2061M	128430	Bison bison bison[0m
+[31m50.98%	0.02%	97.61%	.	0.02%	47.06%	26	0	89462	2082M	534	Bubalus bubalis[0m
+[31m30.00%	0.01%	95.74%	.	0.01%	68.00%	15	0	9925	2149M	29937	Capra hircus[0m
+[31m28.57%	0.01%	95.52%	.	0.01%	69.39%	14	0	9940	2164M	2668	Ovis aries[0m
+[35;1m0.12%	0.02%	78.37%	.	13.87%	4.21%	4	1	1917019	4735127	352	Bacillus sp. VT-16-64[0m
+[36;1m19.23%	0.01%	94.19%	.	0.01%	78.85%	10	0	9880	2023M	17025	Odocoileus virginianus texanus[0m
+[34;1m0.06%	0.02%	76.36%	.	26.24%	2.86%	3	2	178214	2518821	158	Facklamia hominis[0m
+[32;1m0.13%	0.01%	78.36%	.	8.59%	5.64%	3	1	462227	7575784	215	Babesia sp. Xinjiang[0m
+[32;1m0.17%	0.01%	79.04%	.	5.26%	6.92%	3	1	189622	12134K	91	Babesia ovata[0m
+[36;1m0.12%	0.01%	78.03%	.	9.18%	5.44%	3	0	1287055	7104487	272	Brachyspira hampsonii[0m
+[32m7.69%	0.00%	90.88%	.	0.00%	90.38%	4	0	118797	2008M	30713	Lipotes vexillifer[0m
+[33;1m7.55%	0.00%	90.80%	.	0.00%	90.57%	4	0	9731	1984M	6637	Globicephala melas[0m
+[32;1m5.77%	0.00%	90.11%	.	0.00%	92.31%	3	0	40151	1995M	6973	Monodon monoceros[0m
+[32;1m5.77%	0.00%	90.11%	.	0.00%	92.31%	3	0	9749	1993M	5905	Delphinapterus leucas[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5190255.5.fa.gz	DB: RefSeq	SketchLen: 10975	Seqs: 290 	Bases: 562439	gSize: 548183	GC: 0.300	File: MEGAHIT-MetaBAT2-SRR5190255.5.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m97.28%	5.65%	99.90%	.	5.80%	0.06%	1576	830	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[34;1m45.43%	2.83%	97.18%	.	3.15%	49.50%	771	33	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m1.10%	0.06%	84.69%	.	0.26%	95.68%	18	0	857276	8791775	39	Cryptosporidium ubiquitum[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5831603.37.fa.gz	DB: RefSeq	SketchLen: 11836	Seqs: 365 	Bases: 703903	gSize: 692588	GC: 0.331	File: MEGAHIT-MetaBAT2-SRR5831603.37.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[34;1m64.80%	5.32%	98.45%	.	6.61%	19.50%	1449	714	353151	8332874	1422	Cryptosporidium hominis TU502[0m
+[34;1m35.09%	2.67%	96.29%	.	3.86%	49.15%	744	13	353152	8914661	8	Cryptosporidium parvum Iowa II[0m
+[32;1m5.53%	1.55%	90.01%	.	16.95%	39.67%	281	17	742816	2500582	13	Megamonas funiformis YIT 11815[0m
+[32;1m4.43%	1.44%	89.29%	.	20.27%	37.49%	248	20	1855330	2177606	68	Megamonas sp. Calf98-2[0m
+[32;1m4.24%	1.29%	89.15%	.	18.51%	39.19%	227	4	1122217	2308064	70	Megamonas rupellensis DSM 19944[0m
+[32;1m[4m2.24%	0.76%	87.10%	.	20.73%	38.62%	129	7	1325130	2092072	49	Helicobacter fennelliae MRY12-0050[0m
+[32;1m[4m4.36%	0.57%	89.24%	.	4.94%	62.15%	133	1	158847	5281421	58	Megamonas hypermegale[0m
+[32;1m[4m0.72%	0.23%	83.58%	.	18.86%	41.36%	40	2	537971	2195898	294	Helicobacter cinaedi CCUG 18818 = ATCC BAA-847[0m
+[32;1m[4m0.67%	0.15%	83.22%	.	11.65%	49.23%	30	0	2302972	3066343	62	Lachnospiraceae bacterium AM25-39[0m
+[32;1m0.67%	0.15%	83.23%	.	11.64%	49.25%	30	0	2302973	3068383	63	Lachnospiraceae bacterium AM25-40[0m
+[32;1m0.67%	0.15%	83.23%	.	11.62%	49.27%	30	0	2302970	3070082	58	Lachnospiraceae bacterium AM25-11LB[0m
+[32;1m0.67%	0.15%	83.23%	.	11.58%	49.35%	30	0	2302971	3074333	62	Lachnospiraceae bacterium AM25-22[0m
+[35;1m0.65%	0.14%	83.23%	.	10.72%	50.64%	28	0	2293175	3229999	45	Ruminococcus sp. AF32-2AC[0m
+[32;1m0.77%	0.14%	83.79%	.	7.80%	56.07%	29	3	89014	3922841	287	Blautia luti[0m
+[35;1m0.50%	0.11%	82.45%	.	11.23%	50.05%	22	2	2293205	3122843	69	Ruminococcus sp. AM33-14[0m
+[32;1m0.31%	0.11%	80.99%	.	22.39%	38.62%	19	1	425400	1933280	49	Helicobacter japonicus[0m
+[32;1m[4m0.28%	0.10%	80.80%	.	21.95%	39.03%	17	0	575604	1958970	10	Lactobacillus gasseri SV-16A-US[0m
+[35;1m0.42%	0.10%	81.90%	.	12.15%	48.59%	19	0	2293105	2980796	46	Eubacterium sp. AF17-7[0m
+[35;1m[4m0.41%	0.09%	81.74%	.	11.04%	50.34%	18	0	2293200	3158103	49	Ruminococcus sp. AM29-1LB[0m
+[35;1m0.41%	0.09%	81.74%	.	11.04%	50.35%	18	0	2293197	3159346	52	Ruminococcus sp. AM29-10LB[0m
