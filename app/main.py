@@ -42,6 +42,8 @@ def create_app():
 
             current_app.config.update(config_data)
 
+            app.config.from_prefixed_env("BRANCHWATER")
+
             metadata = getmetadata(current_app.config, http_pool())
             current_app.config.metadata = metadata
 
