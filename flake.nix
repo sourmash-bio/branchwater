@@ -33,23 +33,14 @@
           extensions = ["llvm-tools-preview"];
         };
 
-        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
-
         # NB: we don't need to overlay our custom toolchain for the *entire*
         # pkgs (which would require rebuidling anything else which uses rust).
         # Instead, we just want to update the scope that crane will use by appending
         # our specific toolchain there.
-        craneLib = ((crane.mkLib pkgs).overrideToolchain rustOxalica).overrideScope (final: prev: {
-    # Set this to the chosen stdenv, e.g. `p.clangStdenv`
-    stdenvSelector = p: stdenv;
-  });
+        craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
 
         commonArgs = {
           src = ./.;
-          #stdenv = stdenv;
-          preConfigure = lib.optionalString stdenv.isDarwin ''
-            export MACOSX_DEPLOYMENT_TARGET=10.14
-          '';
 
           buildInputs = with pkgs; [
             clang_20
@@ -150,7 +141,7 @@
             branchwaterNextest;
         };
 
-        devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
+        devShells.default = pkgs.mkShell (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [
@@ -185,12 +176,7 @@
               sourmash
               tox
             ]))
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
           ];
-          shellHook = ''
-            export MACOSX_DEPLOYMENT_TARGET=10.14
-          '';
         });
       });
 }
