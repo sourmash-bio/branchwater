@@ -193,12 +193,7 @@ fn gather<P: AsRef<Path>>(
     // TODO: truncate on threshold?
     info!("Counter built");
 
-    let matches = db.gather(
-        counter,
-        threshold,
-        &query,
-        Some(selection),
-    )?;
+    let matches = db.gather(counter, threshold, &query, Some(selection))?;
 
     info!("matches: {}", matches.len());
     for match_ in matches {
@@ -296,10 +291,7 @@ fn index<P: AsRef<Path>>(
         Collection::new(manifest, InnerStorage::new(storage))
     };
 
-    RevIndex::create(
-        output.as_ref(),
-        collection.select(&selection)?.try_into()?,
-    )?;
+    RevIndex::create(output.as_ref(), collection.select(&selection)?.try_into()?)?;
 
     Ok(())
 }
