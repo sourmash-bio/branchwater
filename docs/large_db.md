@@ -59,7 +59,7 @@ bw_k21
 
 ## Edit `docker-compose.yml`
 
-In the `volumes` section for the `index` service,
+In the `volumes` section for the `index` and `app` service,
 replace `bw_db` with `bw_k21`:
 ```diff
      volumes:
@@ -68,14 +68,14 @@ replace `bw_db` with `bw_k21`:
 ```
 
 And in the `index` service, add the following lines to pass new parameters to the command that initializes the service:
-```diff
-+    command: >
-+      /app/bin/branchwater-server
-+        --port 80
-+        -k 21
-+        --scaled 100000
-+        --location /dev/null
-+        /data/index
+```yaml
+    command: >
+      /app/bin/branchwater-server
+        --port 80
+        -k 21
+        --scaled 100000
+        --location /dev/null
+        /data/index
 ```
 
 :::{note}
@@ -127,17 +127,6 @@ so we can extract it from the index and manifest by running
 pixi run cargo run --release -p branchwater-index metadata bw_k21/index --acc-only -o bw_k21/sraids
 ```
 
-### Edit `pyproject.toml`
-
-There is one mention to `bw_db` in `pyproject.toml` that we need to change to
-`bw_k21`, it is in the `[tool.pixi.feature.metadata.tasks]` section,
-for the `metadata_bq` task:
-
-```diff
--metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_db/sraids", "-k", "../bw_db/bqKey.json", "-o", "../bw_db/metadata.parquet"], cwd = "metadata" }
-+metadata_bq = { cmd = ["python3", "prepare_bq.py", "-a", "../bw_k21/sraids", "-k", "../bw_k21/bqKey.json", "-o", "../bw_k21/metadata.parquet"], cwd = "metadata" }
-```
-
 ### BigQuery credentials
 
 If you did the demo deployment you can copy and reuse it:
@@ -152,7 +141,7 @@ The final file we need is `metadata.parquet`,
 and we have all the pieces in place to generate it.
 Run
 ```bash
-pixi run metadata_bq
+pixi run metadata_bq bw_k21
 ```
 to create it.
 
@@ -164,7 +153,7 @@ to create it.
 
 We can load `metadata.parquet` into duckdb by running
 ```bash
-pixi run load_duckdb
+pixi run load_duckdb bw_k21
 ```
 
 This will be printed after the command finishes:
