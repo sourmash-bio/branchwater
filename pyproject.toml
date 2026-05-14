@@ -8,13 +8,14 @@ channels = ["conda-forge", "bioconda"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [tool.pixi.environments]
-default = { features = ["build", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs"], solve-group = "default" }
-build = { features = ["build"], solve-group = "default" }
+default = { features = ["build", "rocksdb", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs"], solve-group = "default" }
+build = { features = ["build", "rocksdb"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 web = { features = ["web", "duckdb"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
 duckdb = { features = ["duckdb"], solve-group = "default" }
+rocksdb = { features = ["rocksdb"], solve-group = "default" }
 
 [tool.pixi.tasks]
 demo = { depends-on = ["index", "metadata"] }
@@ -26,6 +27,8 @@ clangdev = ">=19.1.7,<23"
 libclang = ">=19.1.7,<23"
 cargo-llvm-cov = ">=0.8.7,<0.9"
 cargo-nextest = ">=0.9.133,<0.10"
+
+[tool.pixi.feature.rocksdb.dependencies]
 rocksdb = "~=10.4"
 
 [tool.pixi.feature.build.tasks]

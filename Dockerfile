@@ -13,6 +13,10 @@ RUN echo 'exec "$@"' >> /shell-hook-web
 RUN pixi shell-hook -e prepare > /shell-hook-prepare
 RUN echo 'exec "$@"' >> /shell-hook-prepare
 
+RUN pixi shell-hook -e rocksdb > /shell-hook-rocksdb
+RUN echo 'export LD_LIBRARY_PATH=${ROCKSDB_LIB_DIR}' >> /shell-hook-rocksdb
+RUN echo 'exec "$@"' >> /shell-hook-rocksdb
+
 #--------------------
 
 FROM install AS rust_build
@@ -49,9 +53,12 @@ CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--
 FROM ubuntu:24.04 AS index
 
 COPY --from=rust_build /app/target/release/branchwater-server /app/bin/branchwater-server
+COPY --from=install /app/.pixi/envs/rocksdb /app/.pixi/envs/rocksdb
+COPY --from=install /shell-hook-rocksdb /shell-hook
 
 WORKDIR /data
 
 EXPOSE 80/tcp
 
+ENTRYPOINT ["/bin/bash", "/shell-hook"]
 CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data/sigs.zip", "/data/index"]
