@@ -186,7 +186,7 @@ impl AppState {
 
         let Ok((matches, query_size)) = tokio::task::spawn_blocking(move || {
             if let Some(mh) = prepare_query(query, &selection) {
-                let counter = db.counter_for_query(&mh);
+                let counter = db.counter_for_query(&mh, None);
                 let matches = db.matches_from_counter(counter, threshold);
                 Ok((matches, mh.size() as f64))
             } else {

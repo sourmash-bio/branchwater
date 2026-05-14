@@ -1,11 +1,11 @@
-FROM ghcr.io/prefix-dev/pixi:0.53.0-noble AS install
+FROM ghcr.io/prefix-dev/pixi:0.68.1-noble AS install
 
 WORKDIR /app
 
 COPY pyproject.toml .
 COPY pixi.lock .
 
-RUN --mount=type=cache,target=/root/.cache/rattler/cache,sharing=private pixi install
+RUN --mount=type=cache,target=/root/.cache/rattler/cache pixi install
 
 RUN pixi shell-hook -e web > /shell-hook-web
 RUN echo 'exec "$@"' >> /shell-hook-web

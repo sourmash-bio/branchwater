@@ -20,12 +20,13 @@ duckdb = { features = ["duckdb"], solve-group = "default" }
 demo = { depends-on = ["index", "metadata"] }
 
 [tool.pixi.feature.build.dependencies]
-rust = "~=1.84.0"
-compilers = ">=1.7.0,<1.8"
-clangdev = ">=16.0.6,<17.1"
-libclang = ">=16.0.6,<17.1"
-cargo-llvm-cov = "~=0.6.15"
-cargo-nextest = "~=0.9.78"
+rust = ">=1.95.0,<1.96"
+compilers = ">=1.11.0,<2"
+clangdev = ">=19.1.7,<23"
+libclang = ">=19.1.7,<23"
+cargo-llvm-cov = ">=0.8.7,<0.9"
+cargo-nextest = ">=0.9.133,<0.10"
+rocksdb = "~=10.4"
 
 [tool.pixi.feature.build.tasks]
 build-server = "cargo build --release -p branchwater-server"
@@ -35,14 +36,14 @@ index = { cmd = ["snakemake"], cwd = "experiments" }
 metadata = { depends-on = ["metadata_bq", "load_duckdb"] }
 
 [tool.pixi.feature.prepare.dependencies]
-snakemake = ">=8.5.3,<8.6"
-sourmash = ">=4.9.0,<5"
+snakemake = ">=9.20.0,<10"
+sourmash = ">=4.9.4,<5"
 
 [tool.pixi.feature.duckdb.dependencies]
-duckdb = "~=1.1.3"
-duckdb-cli = "~=1.1.3"
-polars = ">=1.12.0,<2"
-pyarrow = "*"
+duckdb = ">=1.5.2,<2"
+duckdb-cli = ">=1.5.2,<2"
+polars = ">=1.40.1,<2"
+pyarrow = ">=24.0.0,<25"
 
 [tool.pixi.feature.duckdb.tasks.load_duckdb]
 cmd = "python metadata/load_duckdb.py -o {{ db_dir }}/metadata.duckdb {{ db_dir }}/metadata.parquet"
@@ -51,9 +52,9 @@ args = [
 ]
 
 [tool.pixi.feature.metadata.dependencies]
-polars = ">=1.12.0,<2"
-pyarrow = "*"
-google-cloud-bigquery = ">=3.28.0,<4"
+polars = ">=1.40.1,<2"
+pyarrow = ">=24.0.0,<25"
+google-cloud-bigquery = ">=3.41.0,<4"
 
 [tool.pixi.feature.metadata.tasks.metadata_sra]
 cmd = ["python3", "prepare_sra.py", "-a", "../{{ db_dir }}/sraids", "-o", "../{{ db_dir }}/metadata.parquet"]
@@ -73,35 +74,39 @@ args = [
 deploy = "docker compose"
 
 [tool.pixi.feature.docs.dependencies]
-pandoc = "*"
+pandoc = ">=3.9.0.2,<4"
 
 [tool.pixi.feature.docs.pypi-dependencies]
-furo = ">=2023.09.10"
-myst-parser = "*"
-sphinx-copybutton = "*"
-sphinx-design = "*"
-sphinx-inline-tabs = "*"
-sphinx-tabs = "*"
-sphinxcontrib-mermaid = "*"
+furo = ">=2025.12.19, <2026"
+myst-parser = ">=5.1.0, <6"
+sphinx-copybutton = ">=0.5.2, <0.6"
+sphinx-design = ">=0.7.0, <0.8"
+sphinx-inline-tabs = ">=2025.12.21.14, <2026"
+sphinx-tabs = ">=3.5.0, <4"
+sphinxcontrib-mermaid = ">=2.0.2, <3"
 
 [tool.pixi.feature.docs.tasks]
 docs = "sphinx-build -d docs/doctree docs docs/out --color -bhtml"
 
 [tool.pixi.feature.dev.dependencies]
-pyright = "*"
+pyright = ">=1.1.409,<2"
 
 [tool.pixi.feature.web.dependencies]
-flask = "~=2.3.2"
-polars = ">=1.12.0,<2"
-urllib3 = "~=2.0.4"
-pyyaml = "~=6.0"
-gunicorn = "~=23.0"
-Markdown = "~=3.6"
+flask = ">=3.1.3,<4"
+polars = ">=1.40.1,<2"
+urllib3 = ">=2.7.0,<3"
+pyyaml = ">=6.0.3,<7"
+gunicorn = ">=26.0.0,<27"
+Markdown = ">=3.10.2,<4"
 
 [tool.pixi.feature.web.pypi-dependencies]
-sentry-sdk = { version = "*", extras = ["flask"] }
+sentry-sdk = { version = ">=2.60.0, <3", extras = ["flask"] }
 
 [tool.pixi.system-requirements]
 linux = "3.10"
 libc = "2.17"
 macos = "12.0"
+
+[tool.pixi.activation.env]
+ROCKSDB_INCLUDE_DIR = "$CONDA_PREFIX/include"
+ROCKSDB_LIB_DIR = "${CONDA_PREFIX}/lib"
