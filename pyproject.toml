@@ -4,11 +4,11 @@ version = "0.5.0"
 requires-python = ">=3.12.2,<3.13"
 
 [tool.pixi.workspace]
-channels = ["conda-forge", "bioconda"]
+channels = ["conda-forge", "bioconda", "https://prefix.dev/github-releases"]
 platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
 
 [tool.pixi.environments]
-default = { features = ["build", "rocksdb", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs"], solve-group = "default" }
+default = { features = ["build", "rocksdb", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs", "mgnify-component"], solve-group = "default" }
 build = { features = ["build", "rocksdb"], solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
@@ -16,6 +16,7 @@ web = { features = ["web", "duckdb"], solve-group = "default" }
 metadata = { features = ["metadata"], solve-group = "default" }
 duckdb = { features = ["duckdb"], solve-group = "default" }
 rocksdb = { features = ["rocksdb"], solve-group = "default" }
+mgnify-component = { features = ["mgnify-component"], solve-group = "default" }
 
 [tool.pixi.tasks]
 demo = { depends-on = ["index", "metadata"] }
@@ -87,6 +88,21 @@ sphinx-design = ">=0.7.0, <0.8"
 sphinx-inline-tabs = ">=2025.12.21.14, <2026"
 sphinx-tabs = ">=3.5.0, <4"
 sphinxcontrib-mermaid = ">=2.0.2, <3"
+
+[tool.pixi.feature.mgnify-component.dependencies]
+rust-std-wasm32-unknown-unknown = "*"
+nodejs = "~=20.0"
+wasm-pack = "~=0.14.0"
+
+[tool.pixi.feature.mgnify-component.tasks]
+download_source = "git clone https://github.com/EBI-Metagenomics/mgnify-sourmash-component && cd mgnify-sourmash-component && git submodule update --remote --init"
+build_sourmash_wasm = "cd mgnify-sourmash-component/sourmash/src/core && wasm-pack build --target web --release"
+build_component = "cd mgnify-sourmash-component && npm ci && npm run build"
+update_component = "rm -rf app/static/mgnify-component && mv mgnify-sourmash-component/dist app/static/mgnify-component"
+remove_source = "rm -rf mgnify-sourmash-component"
+
+[tool.pixi.feature.mgnify-component.tasks.update_mgnify_component]
+depends-on = ["download_source", "build_sourmash_wasm", "build_component", "update_component", "remove_source"]
 
 [tool.pixi.feature.docs.tasks]
 docs = "sphinx-build -d docs/doctree docs docs/out --color -bhtml"

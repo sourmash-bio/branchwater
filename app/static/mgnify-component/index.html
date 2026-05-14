@@ -1,17 +1,143 @@
-<!doctype html><html><head><meta charset="utf-8"/><title>MGnify Sourmash Component - EBI</title><script defer="defer" src="mgnify-sourmash-component.js"></script></head><body><h1><code>mgnify-sourmash-component</code></h1><hr/><mgnify-sourmash-component id="sourmash" show_directory_checkbox show_signatures/><script>document
-        .getElementById('sourmash')
-        .addEventListener('sketched', (evt) =>
-          console.log(
-            `The signature for ${evt.detail.filename} has been created`,
-            JSON.parse(evt.detail.signature)
-          )
+<!doctype html><html><head><meta charset="utf-8"/><title>MGnify Sourmash Component - EBI</title><style>#search-button {
+          margin: 0 20px;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+      }
+
+      #search-button:disabled {
+          background-color: #cccccc;
+          cursor: not-allowed;
+      }
+
+      #search-button:hover:not(:disabled) {
+          background-color: #0056b3;
+      }
+
+      #loading {
+          display: none;
+          margin: 10px 0;
+          color: #007bff;
+      }
+
+      #results {
+          margin-top: 20px;
+      }
+
+      #error {
+          display: none;
+          color: red;
+          margin: 10px 0;
+      }</style><script defer="defer" src="mgnify-sourmash-component.js"></script></head><body><h1><code>mgnify-sourmash-component</code></h1><button id="search-button" disabled="disabled">Search MGnify</button><div id="loading">Loading...</div><div id="error"></div><div id="results"></div><hr/><mgnify-sourmash-component id="sourmash" show_directory_checkbox show_signatures/><script>// Store the signature(s)
+  let currentSignature = null;
+  let allSignatures = null;
+
+  // Get DOM elements
+  const searchButton = document.getElementById("search-button");
+  const loadingDiv = document.getElementById("loading");
+  const resultsDiv = document.getElementById("results");
+  const errorDiv = document.getElementById("error");
+
+  // Listen for sketched event (single file)
+  document
+    .getElementById("sourmash")
+    .addEventListener("sketched", (evt) => {
+      console.log(
+        `The signature for ${evt.detail.filename} has been created`,
+        JSON.parse(evt.detail.signature)
+      );
+      // Store the signature
+      currentSignature = evt.detail.signature;
+      // Enable the search button
+      searchButton.disabled = false;
+    });
+
+  // Listen for sketchedall event (all files completed)
+  document
+    .getElementById("sourmash")
+    .addEventListener("sketchedall", (evt) => {
+      console.log(
+        `Processing of all these files have finished: ${Object.keys(
+          evt.detail.signatures
+        )}`
+      );
+      // Store all signatures
+      allSignatures = evt.detail.signatures;
+      // Enable the search button
+      searchButton.disabled = false;
+    });
+
+  // Handle search button click
+  searchButton.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (!currentSignature && !allSignatures) {
+      alert("No signature available yet. Please upload and sketch a file first.");
+      return;
+    }
+
+    // Show loading state
+    loadingDiv.style.display = "block";
+    errorDiv.style.display = "none";
+    resultsDiv.innerHTML = "";
+    searchButton.disabled = true;
+
+    // Use the current signature or the first one from allSignatures
+    const signatureToSend = currentSignature || Object.values(allSignatures)[0];
+
+    // Send POST request
+    fetch("http://branchwater-dev.mgnify.org/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        signatures: signatureToSend
+      })
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Hide loading
+        loadingDiv.style.display = "none";
+        searchButton.disabled = false;
+
+        // Ensure data is an array
+        const resultsArray = Array.isArray(data) ? data : [];
+
+        // Filter available geo data
+        const availableGeoData = resultsArray.filter(
+          (item) => item.geo_loc_name_country_calc
         );
-      document
-        .getElementById('sourmash')
-        .addEventListener('sketchedall', (evt) =>
-          console.log(
-            `Processing of all these files have finished: ${Object.keys(
-              evt.detail.signatures
-            )}`
-          )
-        );</script></body></html>
+
+        // Display results
+        resultsDiv.innerHTML = `
+              <h2>Search Results</h2>
+              <p>Total results: ${resultsArray.length}</p>
+              <p>Results with geo data: ${availableGeoData.length}</p>
+              <pre>${JSON.stringify(resultsArray, null, 2)}</pre>
+            `;
+
+        console.log("Search results:", resultsArray);
+        console.log("Available geo data:", availableGeoData);
+      })
+      .catch((error) => {
+        // Hide loading
+        loadingDiv.style.display = "none";
+        searchButton.disabled = false;
+
+        // Show error
+        errorDiv.style.display = "block";
+        errorDiv.textContent = `Error fetching search results: ${error.message}`;
+
+        console.error("Error fetching search results:", error);
+      });
+  });</script></body></html>
