@@ -40,10 +40,6 @@ enum Commands {
         /// The path for output
         #[clap(short, long)]
         output: PathBuf,
-
-        /// Index using colors
-        #[clap(long = "colors")]
-        colors: bool,
     },
     Update {
         /// Location of the input data.
@@ -193,14 +189,12 @@ fn gather<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let (counter, query_colors, hash_to_color) = db.prepare_gather_counters(&query);
+    let counter = db.prepare_gather_counters(&query, None);
     // TODO: truncate on threshold?
     info!("Counter built");
 
     let matches = db.gather(
         counter,
-        query_colors,
-        hash_to_color,
         threshold,
         &query,
         Some(selection),
@@ -244,7 +238,7 @@ fn search<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.counter_for_query(&query);
+    let counter = db.counter_for_query(&query, None);
     info!("Counter built");
 
     let matches = db.matches_from_counter(counter, threshold);
@@ -276,7 +270,6 @@ fn index<P: AsRef<Path>>(
     manifest: Option<P>,
     selection: Selection,
     output: P,
-    colors: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let manifest = if let Some(m) = manifest {
         let rdr = std::fs::OpenOptions::new().read(true).open(m.as_ref())?;
@@ -306,7 +299,6 @@ fn index<P: AsRef<Path>>(
     RevIndex::create(
         output.as_ref(),
         collection.select(&selection)?.try_into()?,
-        colors,
     )?;
 
     Ok(())
@@ -533,14 +525,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             manifest,
             ksize,
             scaled,
-            colors,
         } => {
             let selection = Selection::builder()
                 .ksize(ksize.into())
                 .scaled(scaled as u32)
                 .build();
 
-            index(location, manifest, selection, output, colors)?
+            index(location, manifest, selection, output)?
         }
         Update {
             output,
