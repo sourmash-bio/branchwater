@@ -33,36 +33,31 @@
           extensions = ["llvm-tools-preview"];
         };
 
+        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
+
         # NB: we don't need to overlay our custom toolchain for the *entire*
         # pkgs (which would require rebuidling anything else which uses rust).
         # Instead, we just want to update the scope that crane will use by appending
         # our specific toolchain there.
-        craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
-
-        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
+        craneLib = ((crane.mkLib pkgs).overrideToolchain rustOxalica).overrideScope (final: prev: {
+    # Set this to the chosen stdenv, e.g. `p.clangStdenv`
+    stdenvSelector = p: stdenv;
+  });
 
         commonArgs = {
           src = ./.;
-          stdenv = stdenv;
+          #stdenv = stdenv;
           preConfigure = lib.optionalString stdenv.isDarwin ''
             export MACOSX_DEPLOYMENT_TARGET=10.14
           '';
 
           buildInputs = with pkgs; [
-            llvmPackages_16.libclang
-            llvmPackages_16.libcxxClang
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
-          ];
-
-          # Extra inputs can be added here
-          nativeBuildInputs = with pkgs; [
-            clang_16
+            clang_20
 
             rustOxalica
           ];
 
-          LIBCLANG_PATH = "${pkgs.llvmPackages_16.libclang.lib}/lib";
+          LIBCLANG_PATH = "${pkgs.llvmPackages_20.libclang.lib}/lib";
         };
 
         # Build *just* the cargo dependencies, so we can reuse
@@ -179,7 +174,7 @@
 
             podman-compose
 
-            (python311.withPackages (ps: with ps; [
+            (python313.withPackages (ps: with ps; [
               furo
               myst-parser
               sphinx

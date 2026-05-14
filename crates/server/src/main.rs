@@ -136,7 +136,7 @@ fn main() -> Result<()> {
         .layer(
             ServiceBuilder::new()
                 .layer(NewSentryLayer::new_from_top())
-                .layer(SentryHttpLayer::with_transaction())
+                .layer(SentryHttpLayer::new().enable_transaction())
                 // Handle errors from middleware
                 .layer(HandleErrorLayer::new(handle_error))
                 .load_shed()
@@ -203,7 +203,12 @@ impl AppState {
             let containment = size as f64 / query_size;
             format!(
                 "{},{}",
-                path.split('/').last().unwrap().split('.').next().unwrap(),
+                path.split('/')
+                    .next_back()
+                    .unwrap()
+                    .split('.')
+                    .next()
+                    .unwrap(),
                 containment
             )
         }));
