@@ -39,30 +39,16 @@
         # our specific toolchain there.
         craneLib = (crane.mkLib pkgs).overrideToolchain rustOxalica;
 
-        stdenv = if pkgs.stdenv.isDarwin then pkgs.overrideSDK pkgs.stdenv "11.0" else pkgs.stdenv;
-
         commonArgs = {
           src = ./.;
-          stdenv = stdenv;
-          preConfigure = lib.optionalString stdenv.isDarwin ''
-            export MACOSX_DEPLOYMENT_TARGET=10.14
-          '';
 
           buildInputs = with pkgs; [
-            llvmPackages_16.libclang
-            llvmPackages_16.libcxxClang
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
-          ];
-
-          # Extra inputs can be added here
-          nativeBuildInputs = with pkgs; [
-            clang_16
+            clang_20
 
             rustOxalica
           ];
 
-          LIBCLANG_PATH = "${pkgs.llvmPackages_16.libclang.lib}/lib";
+          LIBCLANG_PATH = "${pkgs.llvmPackages_20.libclang.lib}/lib";
         };
 
         # Build *just* the cargo dependencies, so we can reuse
@@ -155,7 +141,7 @@
             branchwaterNextest;
         };
 
-        devShells.default = pkgs.mkShell.override { stdenv = stdenv; } (commonArgs // {
+        devShells.default = pkgs.mkShell (commonArgs // {
           inputsFrom = builtins.attrValues self.checks;
 
           buildInputs = with pkgs; [
@@ -179,7 +165,7 @@
 
             podman-compose
 
-            (python311.withPackages (ps: with ps; [
+            (python313.withPackages (ps: with ps; [
               furo
               myst-parser
               sphinx
@@ -190,12 +176,7 @@
               sourmash
               tox
             ]))
-          ] ++ lib.optionals stdenv.isDarwin [
-            darwin.apple_sdk.frameworks.Security
           ];
-          shellHook = ''
-            export MACOSX_DEPLOYMENT_TARGET=10.14
-          '';
         });
       });
 }
