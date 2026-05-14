@@ -10,9 +10,6 @@ RUN --mount=type=cache,target=/root/.cache/rattler/cache pixi install
 RUN pixi shell-hook -e web > /shell-hook-web
 RUN echo 'exec "$@"' >> /shell-hook-web
 
-RUN pixi shell-hook -e prepare > /shell-hook-prepare
-RUN echo 'exec "$@"' >> /shell-hook-prepare
-
 RUN pixi shell-hook -e rocksdb > /shell-hook-rocksdb
 RUN echo 'export LD_LIBRARY_PATH=${ROCKSDB_LIB_DIR}' >> /shell-hook-rocksdb
 RUN echo 'exec "$@"' >> /shell-hook-rocksdb
@@ -43,7 +40,7 @@ COPY app/ /app/web/
 
 WORKDIR /app/web
 
-#USER user 
+USER user
 
 ENTRYPOINT ["/bin/bash", "/shell-hook"]
 CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--access-logfile", "-", "main:app"]
