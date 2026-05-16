@@ -1,6 +1,6 @@
 services:
   index:
-    image: ghcr.io/sourmash-bio/branchwater:index-0.5.0
+    image: ghcr.io/sourmash-bio/branchwater:index-0.6.0
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
       - prod.index.env
 
   app:
-    image: ghcr.io/sourmash-bio/branchwater:web-0.5.0
+    image: ghcr.io/sourmash-bio/branchwater:web-0.6.0
     build:
       context: .
       dockerfile: Dockerfile
