@@ -95,6 +95,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/rust-std-x86_64-unknown-linux-gnu-1.95.0-h2c6d0dc_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.17-h0157908_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
+      - conda: https://prefix.dev/github-releases/linux-64/cargo-dist-0.31.0-hb0f4dca_0.conda
       linux-aarch64:
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/_openmp_mutex-4.5-20_gnu.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/binutils-2.45.1-default_hf1166c9_102.conda
@@ -179,6 +180,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/rust-std-aarch64-unknown-linux-gnu-1.95.0-hbe8e118_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-aarch64-2.17-h68829e0_18.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
+      - conda: https://prefix.dev/github-releases/linux-aarch64/cargo-dist-0.31.0-he8cfe8b_0.conda
       osx-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.4.22-hbd8a1cb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/compiler-rt_osx-64-19.1.7-h138dee1_1.conda
@@ -257,6 +259,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/tk-8.6.13-h7142dee_3.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-1.3.2-hbb4bfdb_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h3eecb57_6.conda
+      - conda: https://prefix.dev/github-releases/osx-64/cargo-dist-0.31.0-h0dc7051_0.conda
       osx-arm64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.4.22-hbd8a1cb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/compiler-rt_osx-arm64-19.1.7-he32a8d3_1.conda
@@ -335,6 +338,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/tk-8.6.13-h010d191_3.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zlib-1.3.2-h8088a28_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zstd-1.5.7-hbf9d68e_6.conda
+      - conda: https://prefix.dev/github-releases/osx-arm64/cargo-dist-0.31.0-h60d57d3_0.conda
   default:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
@@ -749,6 +753,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/xyzservices-2026.3.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/yte-1.9.4-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.23.1-pyhcf101f3_0.conda
+      - conda: https://prefix.dev/github-releases/linux-64/cargo-dist-0.31.0-hb0f4dca_0.conda
       - pypi: https://files.pythonhosted.org/packages/02/2b/e64e7de34663cff1df029ba4f05a86124315bd9eba3d3b78e64904bea7e0/sphinx_inline_tabs-2025.12.21.14-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/04/54/6f679c435d28e0a568d8e8a7c0a93a09010818634c3c3907fc98d8983770/roman_numerals-4.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/09/dc/f3dfb7488b770f3f67e6545085bf2abea5172e88f57b8ad25ef860ca704c/myst_parser-5.1.0-py3-none-any.whl
@@ -1179,6 +1184,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/xyzservices-2026.3.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/yte-1.9.4-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.23.1-pyhcf101f3_0.conda
+      - conda: https://prefix.dev/github-releases/linux-aarch64/cargo-dist-0.31.0-he8cfe8b_0.conda
       - pypi: https://files.pythonhosted.org/packages/02/2b/e64e7de34663cff1df029ba4f05a86124315bd9eba3d3b78e64904bea7e0/sphinx_inline_tabs-2025.12.21.14-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/04/54/6f679c435d28e0a568d8e8a7c0a93a09010818634c3c3907fc98d8983770/roman_numerals-4.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/09/dc/f3dfb7488b770f3f67e6545085bf2abea5172e88f57b8ad25ef860ca704c/myst_parser-5.1.0-py3-none-any.whl
@@ -1600,6 +1606,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-1.3.2-hbb4bfdb_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-ng-2.3.3-h8bce59a_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h3eecb57_6.conda
+      - conda: https://prefix.dev/github-releases/osx-64/cargo-dist-0.31.0-h0dc7051_0.conda
       - pypi: https://files.pythonhosted.org/packages/02/2b/e64e7de34663cff1df029ba4f05a86124315bd9eba3d3b78e64904bea7e0/sphinx_inline_tabs-2025.12.21.14-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/04/54/6f679c435d28e0a568d8e8a7c0a93a09010818634c3c3907fc98d8983770/roman_numerals-4.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/09/dc/f3dfb7488b770f3f67e6545085bf2abea5172e88f57b8ad25ef860ca704c/myst_parser-5.1.0-py3-none-any.whl
@@ -2021,6 +2028,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zlib-1.3.2-h8088a28_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zlib-ng-2.3.3-hed4e4f5_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zstd-1.5.7-hbf9d68e_6.conda
+      - conda: https://prefix.dev/github-releases/osx-arm64/cargo-dist-0.31.0-h60d57d3_0.conda
       - pypi: https://files.pythonhosted.org/packages/02/2b/e64e7de34663cff1df029ba4f05a86124315bd9eba3d3b78e64904bea7e0/sphinx_inline_tabs-2025.12.21.14-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/04/54/6f679c435d28e0a568d8e8a7c0a93a09010818634c3c3907fc98d8983770/roman_numerals-4.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/09/dc/f3dfb7488b770f3f67e6545085bf2abea5172e88f57b8ad25ef860ca704c/myst_parser-5.1.0-py3-none-any.whl
@@ -3933,6 +3941,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/ubiquerg-0.9.3-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.7.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/yte-1.9.4-pyhd8ed1ab_0.conda
+      - conda: https://prefix.dev/github-releases/linux-64/cargo-dist-0.31.0-hb0f4dca_0.conda
       linux-aarch64:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-9.20.0-hdfd78af_0.conda
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-common-1.23.0-pyh84498cf_0.conda
@@ -4153,6 +4162,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/ubiquerg-0.9.3-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/urllib3-2.7.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/yte-1.9.4-pyhd8ed1ab_0.conda
+      - conda: https://prefix.dev/github-releases/linux-aarch64/cargo-dist-0.31.0-he8cfe8b_0.conda
       osx-64:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-9.20.0-hdfd78af_0.conda
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-common-1.23.0-pyh84498cf_0.conda
@@ -4367,6 +4377,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-1.3.2-hbb4bfdb_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-ng-2.3.3-h8bce59a_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h3eecb57_6.conda
+      - conda: https://prefix.dev/github-releases/osx-64/cargo-dist-0.31.0-h0dc7051_0.conda
       osx-arm64:
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-9.20.0-hdfd78af_0.conda
       - conda: https://conda.anaconda.org/bioconda/noarch/snakemake-interface-common-1.23.0-pyh84498cf_0.conda
@@ -4581,6 +4592,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zlib-1.3.2-h8088a28_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zlib-ng-2.3.3-hed4e4f5_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/zstd-1.5.7-hbf9d68e_6.conda
+      - conda: https://prefix.dev/github-releases/osx-arm64/cargo-dist-0.31.0-h60d57d3_0.conda
   rocksdb:
     channels:
     - url: https://conda.anaconda.org/conda-forge/
@@ -21121,6 +21133,34 @@ packages:
   purls: []
   size: 433413
   timestamp: 1764777166076
+- conda: https://prefix.dev/github-releases/linux-64/cargo-dist-0.31.0-hb0f4dca_0.conda
+  sha256: ef116a1a84c553c790da196d332a58d58676ed54334f75c941e2c7afa8fc7384
+  md5: dde2548a9e464de67d4d36b7b8bcbf7a
+  license: Apache-2.0
+  run_exports: {}
+  size: 7891985
+  timestamp: 1773685229622
+- conda: https://prefix.dev/github-releases/linux-aarch64/cargo-dist-0.31.0-he8cfe8b_0.conda
+  sha256: 6876aa77c6db46a73b20405ac485a0031d643815d9236d1d6eb8e67aaa5708cd
+  md5: 48a05e64262c763fb6a280cbabbd6eb5
+  license: Apache-2.0
+  run_exports: {}
+  size: 6509858
+  timestamp: 1773685781703
+- conda: https://prefix.dev/github-releases/osx-64/cargo-dist-0.31.0-h0dc7051_0.conda
+  sha256: ce4cb2c1c5f1e63d1ee26c82492dd6b77f4bd31e64a701a7c9fe23ef4e06cb53
+  md5: 052befcc1cb542364cf3a4fa2fbd5315
+  license: Apache-2.0
+  run_exports: {}
+  size: 7299991
+  timestamp: 1773686327244
+- conda: https://prefix.dev/github-releases/osx-arm64/cargo-dist-0.31.0-h60d57d3_0.conda
+  sha256: 5d57d20fc407115acd7fda63c87f80749d6ecbdc8f79ea1ec61162c3346f71c4
+  md5: 26f3411ac8b80ca5b564161a3e3da9b0
+  license: Apache-2.0
+  run_exports: {}
+  size: 7024935
+  timestamp: 1773686875820
 - pypi: https://files.pythonhosted.org/packages/02/2b/e64e7de34663cff1df029ba4f05a86124315bd9eba3d3b78e64904bea7e0/sphinx_inline_tabs-2025.12.21.14-py3-none-any.whl
   name: sphinx-inline-tabs
   version: 2025.12.21.14

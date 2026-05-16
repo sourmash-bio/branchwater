@@ -28,6 +28,7 @@ clangdev = ">=19.1.7,<23"
 libclang = ">=19.1.7,<23"
 cargo-llvm-cov = ">=0.8.7,<0.9"
 cargo-nextest = ">=0.9.133,<0.10"
+cargo-dist = "==0.31.0"
 
 [tool.pixi.feature.rocksdb.dependencies]
 rocksdb = "~=10.4"
