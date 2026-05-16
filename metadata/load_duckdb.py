@@ -44,7 +44,7 @@ def main(
 ):
     orig_metadata = pl.scan_parquet(parquet_metadata)
     orig_metadata = orig_metadata.with_columns(
-        pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True)
+        pl.col("lat_lon").map_batches(harmonize_lat_lon, is_elementwise=True, return_dtype=pl.List(pl.Float64))
     )
 
     if force:

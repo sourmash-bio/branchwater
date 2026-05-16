@@ -59,7 +59,7 @@ struct Cli {
     server: String,
 
     /// Metadata server to query. Default: https://branchwater.sourmash.bio
-    #[clap(short, long, default_value = "https://branchwater.jgi.doe.gov")]
+    #[clap(short, long, default_value = "https://branchwater.sourmash.bio")]
     metadata_server: String,
 
     /// Input file is already a signature

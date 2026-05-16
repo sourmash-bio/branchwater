@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Branchwater Metagenome Query</title>
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/flatly/bootstrap.min.css"
+      integrity="sha256-+omx7xYvI+/C0kfnQmjAIW8dDbTweWpbYHWzveX4ii4="
+      crossorigin="anonymous"
+      rel="preload"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+
+    <style>
+      .image-container img {
+        max-height: 50px; /* Adjust the maximum height as per your requirements */
+      }
+    </style>
+
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <style>
+      h5 {
+       text-align: center;
+      }
+    </style> -->
+    {% block head %}
+    {% endblock %}
+
+  </head>
+  <body>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="navbar-brand">
+        <h2 style="margin: 10px">Branchwater Metagenome Query</h2>
+        <p style="margin: 10px">
+          Real-time search for a genome within metagenomes in the SRA.
+        </p>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/advanced">Advanced</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/examples">Examples</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/faq">FAQ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    </header>
+
+    <article>
+    {% block content %}
+    {% endblock %}
+
+    <!-- Script for tooltips -->
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+
+    </article>
+
+<footer>
+  <br />
+  <hr />
+  <div class="container">
+    <p>
+      Powered by
+      <a href="https://sourmash.readthedocs.io/en/latest/">sourmash</a>.
+    </p>
+
+    <p>
+     This site is free access to all users, including commercial users.
+    </p>
+
+    <p>A collaborative effort between JGI, UC-Davis, and the USDA ARS.</p>
+  </div>
+  <div class="image-container">
+    <a href="https://jgi.doe.gov/">
+      <img
+        src="static/logos/jgi.png"
+        alt="jgi-logo"
+        style="margin-left: 80px"
+      />
+    </a>
+    <a href="http://ivory.idyll.org/lab/">
+      <img
+        src="static/logos/ucd.gif"
+        alt="UC-Davis-logo"
+        style="margin-left: 80px"
+      />
+    </a>
+    <a
+      href="https://www.ars.usda.gov/southeast-area/stoneville-ms/genomics-and-bioinformatics-research/"
+    >
+      <img
+        src="static/logos/usda.png"
+        alt="USDA-logo"
+        style="margin-left: 80px"
+      />
+    </a>
+  </div>
+  <br />
+</footer>
+  </body>
+</html>

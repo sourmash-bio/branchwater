@@ -1,31 +1,12 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- Tabulator CSS file options: https://cdnjs.com/libraries/tabulator-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
-      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+{% block head %}
+  {% include 'data_analysis.html' %}
 
-    <script
-      defer="defer"
-      src="static/mgnify-component/mgnify-sourmash-component.js"
-    ></script>
+  <script defer="defer" src="static/ex_sig.js"></script>
+{% endblock %}
 
-    <!-- Custom scripts and functions -->
-    <script src="static/dashboard.js"></script>
-    <script src="static/ex_sig.js"></script>
-
-    <!-- Tabulator and plotly libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  </head>
-  <body>
+{% block content %}
     <br />
     <br />
 
@@ -131,32 +112,10 @@
     <div id="dashboard" style="margin: 30px"></div>
 
     <script>
+      {% include "dashboard.js" %}
       //Once data submitted, add notification and send data to flask app
       form.addEventListener("submit", (event) => {
         event.preventDefault();
-        document.querySelector("#myButton").disabled = true;
-        // Create a new <nav> element
-        const navElement = document.createElement("nav");
-        navElement.classList.add(
-          "navbar",
-          "navbar-expand-lg",
-          "navbar-light",
-          "bg-light"
-        );
-        navElement.style.textAlign = "center"; // Add the text-align style
-
-        // Create a new <p> element and add it to the <nav> element
-        const paragraphElement = document.createElement("h3");
-        paragraphElement.contentEditable = true; // Make the text editable
-        paragraphElement.textContent =
-          "Do not navigate from page. The query may take up to 5 minutes!"; // Set the initial text content
-        navElement.appendChild(paragraphElement);
-        // Add an event listener to the <p> element to handle text changes
-        paragraphElement.addEventListener("input", (event) => {
-          console.log(`New text: ${event.target.textContent}`);
-        });
-        // Add the <nav> element to the DOM
-        dashboard.appendChild(navElement);
 
         //select signatures from 'ex_sig.js' based on form
         const selectedOption = form.querySelector(
@@ -177,53 +136,7 @@
           formdata = Pelagi_sig;
         }
 
-        const MAX_NB_RETRY = 5;
-        const RETRY_DELAY_MS = 200;
-
-        async function fetchRetry(input, init) {
-            let retryLeft = MAX_NB_RETRY;
-            while (retryLeft > 0){
-                try {
-                    return await fetch(input, init);
-                }
-                catch (err) {
-                    // TODO: callback to update UI with retry count?
-                    await sleep(RETRY_DELAY_MS)
-                }
-                finally {
-                    retryLeft -= 1;
-                }
-            }
-            throw new Error(`Too many retries`);
-        }
-
-        function sleep(delay){
-            return new Promise((resolve) => setTimeout(resolve, delay));
-        }
-
-        //Do fetch request to proper route and create dashboard
-        fetchRetry("/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formdata),
-        })
-          .then((response) =>  {
-            // TODO: update UI to say we have the results
-            console.log("got the data!")
-            return response.json()
-          })
-          .then((jsonData) => {
-            // TODO: update UI to say we are generating graphs
-            console.log("preparing the graphs!")
-            createdashboard(jsonData, paragraphElement, navElement)
-          })
-          .catch((error) => {
-            // TODO: update UI to say request failed =(
-            console.log("oops, request failed =(")
-            console.error("Error sending data to Flask server:", error);
-          });
+        prepare_dashboard("/", formdata)
       });
     </script>
 
@@ -259,16 +172,4 @@
         </p>
       </div>
     </div>
-    <!-- Script for tooltips -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      var tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-      );
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-      });
-    </script>
-  </body>
-</html>
-{% include 'footer.html' %}
+{% endblock %}

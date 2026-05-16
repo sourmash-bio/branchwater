@@ -445,7 +445,7 @@ function createdashboard(jsonData, paragraphElement, navElement) {
       country_map = {
         name: "geo_loc_name_country_calc",
         type: "choropleth",
-        locationmode: "country names",
+        locationmode: "ISO-3",
         locations: countryData.map(function (d) {
           return d.country;
         }),
@@ -621,7 +621,7 @@ function createdashboard(jsonData, paragraphElement, navElement) {
         Filt_country_map = {
           name: "geo_loc_name_country_calc",
           type: "choropleth",
-          locationmode: "country names",
+          locationmode: "ISO-3",
           locations: countryData.map(function (d) {
             return d.country;
           }),
