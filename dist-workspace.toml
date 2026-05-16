@@ -17,3 +17,7 @@ install-path = "CARGO_HOME"
 install-updater = true
 # A prefix git tags must include for dist to care about them
 tag-namespace = "v"
+
+[dist.github-custom-runners]
+aarch64-apple-darwin = "macos-14"
+x86_64-apple-darwin = "macos-15-intel"
