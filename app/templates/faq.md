@@ -1,12 +1,6 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
 
-<link
-  href="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/css/tabulator.min.css"
-  rel="stylesheet"
-/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
-
+{% block content %}
 <div class="container mt-3">
 
       {% filter markdownify %}
@@ -103,7 +97,7 @@ For now, please cite [the sourmash paper in the Journal of Open Source Software]
 
   {% endfilter %}
   </div>
-
-    {% include 'footer.html' %}
   </div>
 </div>
+
+{% endblock %}

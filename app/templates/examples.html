@@ -1,31 +1,12 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- Tabulator CSS file options: https://cdnjs.com/libraries/tabulator-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/css/tabulator_bootstrap5.min.css"
-      integrity="sha512-E3brrBS070QzILPd7448M+21NlCrA3fht9RmFvS9GIKo443nGQRF3tVOuK7YcY1gzPQsaks2cP/Ivp/yhoJCNA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+{% block head %}
+  {% include 'data_analysis.html' %}
 
-    <script
-      defer="defer"
-      src="static/mgnify-component/mgnify-sourmash-component.js"
-    ></script>
+  <script defer="defer" src="static/ex_sig.js"></script>
+{% endblock %}
 
-    <!-- Custom scripts and functions -->
-    <script src="static/dashboard.js"></script>
-    <script src="static/ex_sig.js"></script>
-
-    <!-- Tabulator and plotly libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.4/js/tabulator.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  </head>
-  <body>
+{% block content %}
     <br />
     <br />
 
@@ -259,16 +240,4 @@
         </p>
       </div>
     </div>
-    <!-- Script for tooltips -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      var tooltipTriggerList = [].slice.call(
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-      );
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-      });
-    </script>
-  </body>
-</html>
-{% include 'footer.html' %}
+{% endblock %}
