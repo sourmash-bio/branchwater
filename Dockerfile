@@ -49,6 +49,9 @@ CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--
 
 FROM ubuntu:24.04 AS index
 
+# Need this to avoid SSL errors. Can this be done only with pixi?
+#RUN apt-get update && apt-get -y install ca-certificates
+
 COPY --from=rust_build /app/target/release/branchwater-server /app/bin/branchwater-server
 COPY --from=install /app/.pixi/envs/rocksdb /app/.pixi/envs/rocksdb
 COPY --from=install /shell-hook-rocksdb /shell-hook
