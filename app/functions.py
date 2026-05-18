@@ -32,7 +32,7 @@ def getmetadata(config, http):
 def getacc(signatures, config, http, threshold=0.1):
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
-    json_bytes = f"[{sig_str}]".encode('utf-8')
+    json_bytes = f'{{"threshold":{threshold},"signature":{sig_str}}}'.encode('utf-8')
     buf = io.BytesIO()
     with gzip.open(buf, 'w') as fout:
         fout.write(json_bytes)
