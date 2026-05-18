@@ -1,6 +1,6 @@
 [project]
 name = "branchwater"
-version = "0.6.1"
+version = "0.6.2"
 requires-python = ">=3.12.2,<3.13"
 
 [tool.pixi.workspace]
