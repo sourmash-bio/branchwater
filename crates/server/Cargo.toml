@@ -12,6 +12,7 @@ camino.workspace = true
 clap.workspace = true
 csv.workspace = true
 color-eyre.workspace = true
+niffler.workspace = true
 sourmash = { workspace = true, features = ["branchwater"] }
 serde.workspace = true
 serde_json.workspace = true

@@ -348,6 +348,7 @@ dependencies = [
  "clap",
  "color-eyre",
  "csv",
+ "niffler",
  "sentry",
  "serde",
  "serde_json",
@@ -2715,6 +2716,7 @@ version = "0.48.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2abea154597936d5df2d39fbe8aac16d584de6b3572c70c39558764d9d2efe15"
 dependencies = [
+ "axum",
  "http",
  "pin-project",
  "sentry-core",

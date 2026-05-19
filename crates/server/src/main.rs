@@ -22,7 +22,7 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use camino::Utf8PathBuf as PathBuf;
 use clap::Parser;
 use color_eyre::eyre::Result;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sourmash::index::revindex::{prepare_query, RevIndex, RevIndexOps};
 use sourmash::manifest::Manifest;
 use sourmash::prelude::*;
@@ -178,10 +178,23 @@ struct Stats {
     n_datasets: u32,
 }
 
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum SearchQuery {
+    JustSig(Vec<Signature>),
+    WithThreshold {
+        threshold: f64,
+        signature: Signature,
+    },
+}
+
 impl AppState {
-    async fn search(&self, query: Signature) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+    async fn search(
+        &self,
+        query: Signature,
+        threshold: usize,
+    ) -> Result<Vec<String>, Box<dyn std::error::Error>> {
         let db = self.db.clone();
-        let threshold = self.threshold;
         let selection = self.selection.clone();
 
         let Ok((matches, query_size)) = tokio::task::spawn_blocking(move || {
@@ -215,10 +228,25 @@ impl AppState {
         Ok(csv)
     }
 
-    fn parse_sig(&self, raw_data: &[u8]) -> Result<Signature, BoxError> {
-        Ok(Signature::from_reader(raw_data)?
-            .swap_remove(0)
-            .select(&self.selection)?)
+    fn parse_sig(&self, raw_data: &[u8]) -> Result<(Signature, usize), BoxError> {
+        let (rdr, _format) = niffler::get_reader(Box::new(raw_data))?;
+
+        match serde_json::from_reader(rdr)? {
+            SearchQuery::JustSig(mut signatures) => Ok((
+                signatures.swap_remove(0).select(&self.selection)?,
+                self.threshold,
+            )),
+            SearchQuery::WithThreshold {
+                threshold,
+                signature,
+            } => {
+                let sig = signature.select(&self.selection)?;
+
+                let threshold = threshold * sig.size() as f64;
+
+                Ok((sig, threshold as usize))
+            }
+        }
     }
 
     fn manifest(&self) -> &Manifest {
@@ -241,8 +269,8 @@ async fn search(
     bytes: Bytes,
     //) -> Result<Json<serde_json::Value>, StatusCode> {
 ) -> impl IntoResponse {
-    let sig = match state.parse_sig(&bytes) {
-        Ok(sig) => sig,
+    let (sig, threshold) = match state.parse_sig(&bytes) {
+        Ok((sig, threshold)) => (sig, threshold),
         Err(e) => {
             return {
                 (
@@ -254,7 +282,7 @@ async fn search(
         }
     };
 
-    match state.search(sig).await {
+    match state.search(sig, threshold).await {
         Ok(matches) => (
             StatusCode::OK,
             [(header::CONTENT_TYPE, "text/plain; charset=utf-8")],

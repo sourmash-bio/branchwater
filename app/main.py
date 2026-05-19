@@ -153,6 +153,9 @@ def examples():
     # note, fetch call sends to '/' route to return 'simple search' results
     return render_template('examples.html', n_datasets=f"{app.config.metadata['n_datasets']:,}")
 
+@app.route('/health', methods=['GET'])
+def health():
+    return "I'm doing science and I'm still alive", 200
 
 # in production this changes:
 #
