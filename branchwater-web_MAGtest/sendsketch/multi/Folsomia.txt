@@ -1,0 +1,117 @@
+
+Query: MEGAHIT-MetaBAT2-SRR16797981.18.fa.gz	DB: RefSeq	SketchLen: 46776	Seqs: 17144 	Bases: 40352396	gSize: 39665207	GC: 0.366	File: MEGAHIT-MetaBAT2-SRR16797981.18.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m1.68%	0.35%	86.20%	.	20.50%	1.18%	290	287	158441	194373K	162	Folsomia candida[0m
+[32m0.37%	0.01%	81.49%	.	100.00%	1.34%	7	7	169402	1600168	1	Wolbachia endosymbiont of Folsomia candida[0m
+[35m0.03%	0.01%	74.50%	.	100.00%	1.35%	6	1	172045	16695K	441	Elizabethkingia miricola[0m
+[35m0.03%	0.01%	74.65%	.	100.00%	1.35%	6	0	1117645	15427K	1720	Elizabethkingia anophelis[0m
+[35m[4m0.07%	0.01%	76.05%	.	100.00%	1.35%	5	0	259	5957876	1	Sphingobacterium thalpophilum[0m
+[35m[4m0.07%	0.01%	76.88%	.	100.00%	1.35%	4	2	2183998	4802174	51	Chryseobacterium sp. AG844[0m
+[35m[4m0.09%	0.01%	72.81%	.	100.00%	1.35%	4	1	2592657	3992535	116	Sphingobacterium cavernae[0m
+[33;1m0.11%	0.01%	73.79%	.	100.00%	1.35%	4	0	1121886	2922426	93	Flavobacterium croceum DSM 17960[0m
+[33;1m0.09%	0.01%	77.14%	.	100.00%	1.35%	4	0	1121897	3993118	21	Flavobacterium soli DSM 19725[0m
+[33;1m0.10%	0.01%	73.32%	.	100.00%	1.35%	4	0	1107311	3381257	122	Flavobacterium enshiense DK69[0m
+[35m0.09%	0.01%	72.93%	.	100.00%	1.35%	4	0	2605747	3803970	1	Pedobacter sp. CJ43[0m
+[33;1m0.09%	0.01%	72.80%	.	100.00%	1.35%	4	0	1774945	3983441	44	Flavobacterium sp. TP390[0m
+[31m0.01%	0.01%	67.65%	.	42.64%	2.02%	4	3	6239	91901K	7	Caenorhabditis elegans[0m
+[33;1m0.05%	0.01%	71.37%	.	100.00%	1.35%	3	2	1354301	4765917	248	Clostridium sp. BL8[0m
+[35m0.05%	0.01%	75.55%	.	100.00%	1.35%	3	1	373668	5152609	27	Chryseobacterium ureilyticum[0m
+[35m0.11%	0.01%	73.49%	.	100.00%	1.35%	3	0	631455	2354944	10	Chryseobacterium treverense[0m
+[33;1m0.08%	0.01%	76.96%	.	100.00%	1.35%	3	0	2488993	3365357	56	Flavobacterium macacae[0m
+[33;1m0.09%	0.01%	73.09%	.	100.00%	1.35%	3	0	1563479	2796245	53	Flavobacterium sp. TCH3-2[0m
+[33;1m0.08%	0.01%	72.70%	.	100.00%	1.35%	3	0	1341154	3094814	142	Flavobacterium cauense R2A-7[0m
+[35m0.08%	0.01%	72.78%	.	100.00%	1.35%	3	0	713588	3033541	34	Kaistella chaponensis[0m
+
+Query: MEGAHIT-MetaBAT2-SRR16797981.5.fa.gz	DB: RefSeq	SketchLen: 11616	Seqs: 15 	Bases: 661456	gSize: 657409	GC: 0.343	File: MEGAHIT-MetaBAT2-SRR16797981.5.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32m0.73%	0.30%	83.61%	70.03%	41.01%	0.71%	47	44	169402	1600168	1	Wolbachia endosymbiont of Folsomia candida[0m
+[32m0.04%	0.02%	74.90%	69.72%	60.10%	1.12%	3	0	1620420	1078798	120	Wolbachia endosymbiont of Operophtera brumata[0m
+
+Query: MEGAHIT-MetaBAT2-SRR16797981.50.fa.gz	DB: RefSeq	SketchLen: 21255	Seqs: 236 	Bases: 4049546	gSize: 4004141	GC: 0.393	File: MEGAHIT-MetaBAT2-SRR16797981.50.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32m0.17%	0.07%	79.17%	.	100.00%	1.42%	14	12	169402	1600168	1	Wolbachia endosymbiont of Folsomia candida[0m
+[35m0.12%	0.07%	77.48%	.	100.00%	1.42%	14	1	1715139	2259304	39	Weeksella sp. HMSC059D05[0m
+[35m[4m0.08%	0.06%	76.62%	.	100.00%	1.42%	13	0	1590596	2960415	327	Sphingobacterium sp. T2[0m
+[33;1m0.08%	0.06%	77.01%	.	100.00%	1.43%	12	2	2488729	2993384	87	Flavobacterium viscosus[0m
+[35m0.04%	0.04%	75.48%	.	100.00%	1.44%	9	0	683125	3829215	21	Sphingobacterium wenxiniae[0m
+[33m0.03%	0.03%	74.68%	.	97.86%	1.46%	7	4	1985174	3997705	3	Chitinophagaceae bacterium IBVUCB2[0m
+[33m0.04%	0.02%	74.49%	.	65.30%	1.62%	6	3	2171976	6060253	82	Terrimonas sp. NS-102[0m
+[33m0.04%	0.02%	74.60%	.	61.33%	1.62%	6	2	1691979	6450126	66	Chitinophagaceae bacterium PMP191F[0m
+[33m0.03%	0.02%	73.99%	.	100.00%	1.46%	5	3	1004304	3228167	30	Hydrotalea sandarakina[0m
+[33m0.03%	0.02%	74.11%	.	66.92%	1.62%	5	2	1492898	5913261	1	Flavisolibacter tropicus[0m
+[33m0.03%	0.02%	73.67%	.	85.53%	1.52%	5	1	1123356	4609084	30	Terrimonas ferruginea DSM 30193[0m
+[33m0.03%	0.02%	74.14%	.	65.52%	1.63%	5	0	1285928	6039293	45	Niabella drilacis[0m
+[33m0.07%	0.01%	76.04%	.	18.15%	1.56%	5	1	79329	21988K	140	Chitinophaga pinensis[0m
+[33m0.02%	0.02%	73.40%	.	78.27%	1.56%	4	3	661481	5055436	1	Flavisolibacter ginsenosidimutans[0m
+[33m0.02%	0.02%	69.04%	.	70.57%	1.61%	4	3	1176587	5599081	1	Niabella ginsenosidivorans[0m
+[33m0.02%	0.02%	73.48%	.	100.00%	1.46%	4	1	714549	3624061	554	Hydrotalea flava[0m
+[33m0.02%	0.02%	73.75%	.	72.57%	1.59%	4	1	1813871	5452482	1	Panacibacter ginsenosidivorans[0m
+[33m0.03%	0.01%	69.80%	.	47.10%	1.66%	4	1	354355	8455748	121	Niastella yeongjuensis[0m
+[32m0.04%	0.01%	70.54%	.	100.00%	1.47%	3	1	368602	1465855	101	Wolbachia endosymbiont of Laodelphax striatellus[0m
+[33m0.02%	0.01%	72.54%	.	100.00%	1.47%	3	2	2499629	3544240	15	Edaphocola flava[0m
+
+Query: MEGAHIT-MetaBAT2-SRR16797981.69.fa.gz	DB: RefSeq	SketchLen: 29509	Seqs: 2586 	Bases: 10679481	gSize: 10403758	GC: 0.367	File: MEGAHIT-MetaBAT2-SRR16797981.69.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[32m2.85%	0.43%	87.86%	68.42%	100.00%	2.50%	128	127	169402	1600168	1	Wolbachia endosymbiont of Folsomia candida[0m
+[35m0.32%	0.15%	81.20%	66.64%	100.00%	2.79%	44	14	2487066	4822011	30	Chryseobacterium sp. G0240[0m
+[35m0.25%	0.16%	80.30%	66.74%	100.00%	2.77%	48	4	651561	6860871	37	Chryseobacterium arthrosphaerae[0m
+[35m0.18%	0.17%	79.37%	65.24%	93.14%	2.77%	52	0	250	10860K	5	Chryseobacterium gleum[0m
+[35m0.31%	0.13%	80.92%	66.74%	40.95%	2.73%	52	4	253	24659K	729	Chryseobacterium indologenes[0m
+[35m0.16%	0.15%	79.11%	66.81%	100.00%	2.78%	45	2	680127	9633100	44	Chryseobacterium culicis[0m
+[35m0.15%	0.14%	78.77%	66.85%	91.91%	2.82%	42	3	1241982	11005K	16	Chryseobacterium nakagawai[0m
+[35m0.25%	0.12%	80.30%	.	100.00%	2.82%	35	1	1500295	5003442	8	Chryseobacterium sp. YR477[0m
+[35m0.27%	0.12%	80.61%	66.27%	100.00%	2.82%	34	0	2135644	4459813	34	Chryseobacterium sp. CBTAP 102[0m
+[35m0.26%	0.12%	80.49%	66.36%	100.00%	2.82%	34	0	1978493	4627033	64	Chryseobacterium candidae[0m
+[35m0.23%	0.12%	80.05%	65.63%	100.00%	2.82%	34	1	558021	5131738	8	Chryseobacterium aquifrigidense[0m
+[35m0.23%	0.12%	79.99%	65.22%	100.00%	2.82%	34	1	1609531	5178940	24	Chryseobacterium rhizoplanae[0m
+[35m0.22%	0.11%	79.82%	65.08%	100.00%	2.82%	33	3	2583211	5351036	36	Chryseobacterium sp. ON_d1[0m
+[35m0.23%	0.11%	80.18%	67.07%	100.00%	2.82%	33	1	1807141	4974799	17	Chryseobacterium sp. Gsoil 183[0m
+[35m0.23%	0.11%	80.12%	63.55%	100.00%	2.82%	33	0	1500292	4953720	20	Chryseobacterium sp. YR459[0m
+[35m0.23%	0.11%	80.03%	66.64%	100.00%	2.82%	33	0	1827290	5107847	68	Chryseobacterium sp. MYb7[0m
+[35m0.23%	0.11%	80.05%	66.43%	100.00%	2.83%	32	1	2035214	4958160	6	Chryseobacterium sp. 7[0m
+[35m0.23%	0.11%	80.08%	65.29%	100.00%	2.83%	32	0	713556	4823502	122	Chryseobacterium sp. CH21[0m
+[35m0.18%	0.11%	79.30%	66.76%	100.00%	2.82%	33	1	1241978	6561887	2	Chryseobacterium bernardetii[0m
+[35m0.23%	0.11%	80.05%	66.69%	100.00%	2.83%	31	2	1423959	4734213	390	Chryseobacterium contaminans[0m
+
+Query: MEGAHIT-MetaBAT2-SRR16797981.78.fa.gz	DB: RefSeq	SketchLen: 9133	Seqs: 52 	Bases: 315679	gSize: 314067	GC: 0.361	File: MEGAHIT-MetaBAT2-SRR16797981.78.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m14.02%	0.03%	93.10%	.	0.18%	7.93%	23	22	158441	194373K	162	Folsomia candida[0m
+[33;1m0.59%	0.06%	82.93%	.	9.99%	6.07%	12	9	1121899	2918273	159	Flavobacterium suncheonense GH29-5 = DSM 17707[0m
+[35m0.51%	0.05%	82.54%	.	9.43%	6.28%	10	6	2559600	3107655	32	Sphingobacterium lumbrici[0m
+[33;1m0.53%	0.06%	82.65%	.	10.43%	5.94%	11	0	1563479	2796245	53	Flavobacterium sp. TCH3-2[0m
+[33;1m0.45%	0.05%	82.19%	.	9.71%	6.27%	9	1	1323422	3007551	79	Myroides indicus[0m
+[33;1m0.44%	0.04%	81.90%	.	8.44%	6.59%	8	0	913024	3416733	76	Flavobacterium ummariense[0m
+[35m0.51%	0.04%	82.52%	.	6.71%	7.24%	8	0	649196	4311715	1	Sphingobacterium hotanense[0m
+[33;1m0.31%	0.03%	81.08%	.	9.08%	6.64%	6	2	2022802	3197282	306	Flavobacterium cyanobacteriorum[0m
+[33m0.30%	0.02%	80.97%	.	5.13%	7.83%	4	4	1104781	5656720	34	Agriterribacter humi[0m
+[35m0.28%	0.02%	80.55%	.	5.72%	7.55%	4	2	1122621	5046942	110	Olivibacter sitiensis DSM 17696[0m
+[35;1m0.27%	0.02%	76.49%	.	6.08%	7.56%	4	2	1225176	4769637	358	Cecembia lonarensis LW9[0m
+[33;1m0.20%	0.02%	79.49%	.	10.02%	6.41%	4	1	1159016	2903728	96	Flavobacterium marinum[0m
+[35m0.17%	0.02%	75.02%	.	12.63%	5.60%	4	0	2058346	2339536	64	Chryseobacterium lacus[0m
+[31m0.25%	0.02%	80.37%	.	7.02%	7.38%	4	0	1855397	4121185	94	Porphyromonadaceae bacterium KH3R12[0m
+[35m0.26%	0.02%	80.37%	.	6.26%	7.48%	4	0	237258	4654928	145	Cloacibacterium normanense[0m
+[33;1m0.13%	0.02%	78.41%	.	12.65%	5.65%	3	1	2008672	2331130	3	Avrilella dinanensis[0m
+[32m0.14%	0.02%	74.36%	.	11.26%	6.08%	3	1	1453500	2597476	35	Schleiferia thermophila str. Yellowstone[0m
+[35m0.18%	0.01%	79.34%	.	7.61%	7.26%	3	1	2605747	3803970	1	Pedobacter sp. CJ43[0m
+[35m0.21%	0.01%	79.60%	.	5.89%	7.60%	3	1	1740090	4894523	23	Pedobacter sp. Hv1[0m
+[35m[4m0.14%	0.02%	78.64%	.	11.19%	6.12%	3	0	2010998	2614897	10	Chryseobacterium sp. VAUSW3[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5098299.1.fa.gz	DB: RefSeq	SketchLen: 9440	Seqs: 179 	Bases: 354855	gSize: 345919	GC: 0.393	File: MEGAHIT-MetaBAT2-SRR5098299.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m22.60%	0.04%	94.74%	.	0.17%	0.68%	33	33	158441	194373K	162	Folsomia candida[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5098299.2.fa.gz	DB: RefSeq	SketchLen: 12060	Seqs: 265 	Bases: 744936	gSize: 730319	GC: 0.378	File: MEGAHIT-MetaBAT2-SRR5098299.2.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m29.90%	0.11%	95.70%	.	0.37%	0.64%	93	91	158441	194373K	162	Folsomia candida[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5098299.3.fa.gz	DB: RefSeq	SketchLen: 11444	Seqs: 341 	Bases: 639033	gSize: 628462	GC: 0.357	File: MEGAHIT-MetaBAT2-SRR5098299.3.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m25.65%	0.08%	95.21%	.	0.32%	1.12%	69	69	158441	194373K	162	Folsomia candida[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5098319.1.fa.gz	DB: RefSeq	SketchLen: 9165	Seqs: 121 	Bases: 322543	gSize: 314269	GC: 0.372	File: MEGAHIT-MetaBAT2-SRR5098319.1.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m30.88%	0.05%	95.79%	.	0.16%	0.74%	42	42	158441	194373K	162	Folsomia candida[0m
+
+Query: MEGAHIT-MetaBAT2-SRR5098319.2.fa.gz	DB: RefSeq	SketchLen: 11562	Seqs: 336 	Bases: 655214	gSize: 644699	GC: 0.369	File: MEGAHIT-MetaBAT2-SRR5098319.2.fa.gz
+WKID	KID	ANI	SSU	Complt	Contam	Matches	Unique	TaxID	gSize	gSeqs	taxName
+[31m16.84%	0.06%	93.73%	.	0.34%	0.00%	48	48	158441	194373K	162	Folsomia candida[0m

@@ -1,0 +1,8 @@
+﻿sample,group,short_reads_1,short_reads_2,long_reads
+ERR10162411,ERR10162411,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/ERX9699035_ERR10162411.fastq.gz,,
+SRR14141927,SRR14141927,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX10511357_SRR14141927_1.fastq.gz,,
+SRR2105903,SRR2105903,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX1099828_SRR2105903.fastq.gz,,
+SRR20285055,SRR20285055,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX16318535_SRR20285055_1.fastq.gz,,
+SRR20285028,SRR20285028,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX16318562_SRR20285028_1.fastq.gz,,
+SRR5098299,SRR5098299,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX2415084_SRR5098299.fastq.gz,,
+SRR5098319,SRR5098319,/90daydata/gbru_fy23_branchwater/multispecies/fetch/multi_fastq/fastq/SRX2415104_SRR5098319.fastq.gz,,
