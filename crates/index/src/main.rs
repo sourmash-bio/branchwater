@@ -435,6 +435,7 @@ fn manifest<P: AsRef<Path>>(
 }
 
 fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::error::Error>> {
+    use histogram::Quantile;
     use numsep::{separate, Locale};
     use size::Size;
 
@@ -466,24 +467,24 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     info!("v: {}", vsize.to_string());
 
     if !quick && kcount > 0 {
-        info!(
-            "max v: {}",
-            vcounts.percentile(100.0).unwrap().into_iter().count()
-        );
+        info!("max v: {}", {
+            let h = vcounts.quantile(1.0).unwrap().unwrap();
+            h.get(&Quantile::new(1.0).unwrap()).unwrap().end()
+        });
         //        info!("mean v: {}", vcounts.mean().unwrap());
         //        info!("stddev: {}", vcounts.stddev().unwrap());
-        info!(
-            "median v: {}",
-            vcounts.percentile(50.0).unwrap().into_iter().count()
-        );
-        info!(
-            "p25 v: {}",
-            vcounts.percentile(25.0).unwrap().into_iter().count()
-        );
-        info!(
-            "p75 v: {}",
-            vcounts.percentile(75.0).unwrap().into_iter().count()
-        );
+        info!("median v: {}", {
+            let h = vcounts.quantile(0.5).unwrap().unwrap();
+            h.get(&Quantile::new(0.5).unwrap()).unwrap().end()
+        });
+        info!("p25 v: {}", {
+            let h = vcounts.quantile(0.25).unwrap().unwrap();
+            h.get(&Quantile::new(0.25).unwrap()).unwrap().end()
+        });
+        info!("p75 v: {}", {
+            let h = vcounts.quantile(0.75).unwrap().unwrap();
+            h.get(&Quantile::new(0.75).unwrap()).unwrap().end()
+        });
     }
 
     info!("Finished check");

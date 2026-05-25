@@ -314,7 +314,7 @@ dependencies = [
  "color-eyre",
  "csv",
  "jemallocator",
- "needletail 0.7.3",
+ "needletail",
  "niffler",
  "reqwest",
  "reqwest-middleware",
@@ -332,6 +332,7 @@ version = "0.6.2"
 dependencies = [
  "camino",
  "clap",
+ "histogram",
  "numsep",
  "size",
  "sourmash",
@@ -1044,9 +1045,9 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "histogram"
-version = "0.11.5"
+version = "1.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "099d45a031296a7a40e01137b56c0c552f2a545568ef6058e47d674046def0db"
+checksum = "78dbc692bf02314a491f06bb95ae039fe842c1e1179f0036df08800fba0fb29b"
 dependencies = [
  "thiserror 2.0.18",
 ]
@@ -1747,17 +1748,6 @@ dependencies = [
 
 [[package]]
 name = "needletail"
-version = "0.6.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6aa22e1ae8bce4ecf257e2475ef2046026caea08d66b1848d073fe7bc77e4351"
-dependencies = [
- "buffer-redux",
- "bytecount",
- "memchr",
-]
-
-[[package]]
-name = "needletail"
 version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "159c0519d18efd0c256a2284f396fa556c8f73a8572db1a3f7487921c26c76fa"
@@ -2283,9 +2273,9 @@ checksum = "60a357793950651c4ed0f3f52338f53b2f809f32d83a07f72909fa13e4c6c1e3"
 
 [[package]]
 name = "rayon"
-version = "1.10.0"
+version = "1.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b418a60154510ca1a002a752ca9714984e21e4241e804d32555251faf8b78ffa"
+checksum = "fb39b166781f92d482534ef4b4b1b2568f42613b53e5b6c160e24cfbfa30926d"
 dependencies = [
  "either",
  "rayon-core",
@@ -2293,9 +2283,9 @@ dependencies = [
 
 [[package]]
 name = "rayon-core"
-version = "1.12.1"
+version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1465873a3dfdaa8ae7cb14b4383657caab0b3e8a0aa9ae8e04b044854c8dfce2"
+checksum = "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91"
 dependencies = [
  "crossbeam-deque",
  "crossbeam-utils",
@@ -2929,8 +2919,7 @@ checksum = "bceb57dc07c92cdae60f5b27b3fa92ecaaa42fe36c55e22dbfb0b44893e0b1f7"
 [[package]]
 name = "sourmash"
 version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb102e0ae0656c1a3535b24a0ea7b69a9a747520d2e42bfcc712498c0c600da8"
+source = "git+https://github.com/sourmash-bio/sourmash.git?branch=lirber%2Froaring-cookie-error#0564241877b484e9283dc8a0f476a11b9704fa14"
 dependencies = [
  "az",
  "byteorder",
@@ -2950,7 +2939,7 @@ dependencies = [
  "md5",
  "memmap2",
  "murmurhash3",
- "needletail 0.6.3",
+ "needletail",
  "niffler",
  "nohash-hasher",
  "num-iter",

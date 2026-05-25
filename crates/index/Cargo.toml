@@ -10,6 +10,7 @@ repository = "https://github.com/sourmash-bio/branchwater"
 [dependencies]
 camino.workspace = true
 clap.workspace = true
+histogram.workspace = true
 numsep.workspace = true
 size.workspace = true
 sourmash = { workspace = true, features = ["branchwater"] }
