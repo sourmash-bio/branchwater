@@ -62,17 +62,18 @@ enum Commands {
         #[clap(short, long)]
         output: PathBuf,
     },
-    /* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-        Repair {
-            /// The path for DB to repair
-            #[clap(parse(from_os_str))]
-            index: PathBuf,
+    Repair {
+        /// The path for DB to repair
+        index: PathBuf,
 
-            /// Repair using colors
-            #[clap(long = "colors")]
-            colors: bool,
-        },
-    */
+        /// Location of the input data.
+        /// Either a zip file or a path to a directory containing signatures.
+        storage_spec: Option<String>,
+
+        /// Repair using colors
+        #[clap(long = "colors")]
+        colors: bool,
+    },
     Manifest {
         /// File with list of paths to signatures
         pathlist: PathBuf,
@@ -491,13 +492,12 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     Ok(())
 }
 
-/* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-fn repair<P: AsRef<Path>>(output: P, colors: bool) {
+fn repair<P: AsRef<Path>>(output: P, storage_spec: Option<&str>, colors: bool) {
     info!("Starting repair");
-    RevIndex::repair(output.as_ref(), colors);
+
+    RevIndex::repair(output.as_ref(), storage_spec, colors);
     info!("Finished repair");
 }
-*/
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use Commands::*;
@@ -594,9 +594,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .build();
 
             gather(query_path, index, selection, threshold_bp, output)?
-        } /* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-                  Repair { index, colors } => repair(index, colors),
-          */
+        }
+        Repair {
+            index,
+            storage_spec,
+            colors,
+        } => repair(index, storage_spec.as_deref(), colors),
     };
 
     Ok(())
