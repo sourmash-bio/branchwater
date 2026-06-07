@@ -2938,8 +2938,9 @@ checksum = "bceb57dc07c92cdae60f5b27b3fa92ecaaa42fe36c55e22dbfb0b44893e0b1f7"
 
 [[package]]
 name = "sourmash"
-version = "0.22.0"
-source = "git+https://github.com/sourmash-bio/sourmash.git?branch=lirber%2Froaring-cookie-error#b6fcff42f2b3ec4fecbb1aa756dd137336738c82"
+version = "0.23.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "09561f460d339b98abc8bf5dbc11c10cdfae906ad16cae187f027310df2ecce6"
 dependencies = [
  "az",
  "byteorder",

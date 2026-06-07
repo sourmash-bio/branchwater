@@ -190,7 +190,7 @@ fn gather<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.prepare_gather_counters(&query, None);
+    let counter = db.prepare_gather_counters(&query, None)?;
     // TODO: truncate on threshold?
     info!("Counter built");
 
@@ -234,7 +234,7 @@ fn search<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.counter_for_query(&query, None);
+    let counter = db.counter_for_query(&query, None)?;
     info!("Counter built");
 
     let matches = db.matches_from_counter(counter, threshold);
@@ -492,11 +492,16 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     Ok(())
 }
 
-fn repair<P: AsRef<Path>>(output: P, storage_spec: Option<&str>, colors: bool) {
+fn repair<P: AsRef<Path>>(
+    output: P,
+    storage_spec: Option<&str>,
+    colors: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting repair");
 
-    RevIndex::repair(output.as_ref(), storage_spec, colors);
+    RevIndex::repair(output.as_ref(), storage_spec, colors)?;
     info!("Finished repair");
+    Ok(())
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -599,7 +604,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             index,
             storage_spec,
             colors,
-        } => repair(index, storage_spec.as_deref(), colors),
+        } => repair(index, storage_spec.as_deref(), colors)?,
     };
 
     Ok(())
