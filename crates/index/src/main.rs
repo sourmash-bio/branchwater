@@ -62,17 +62,18 @@ enum Commands {
         #[clap(short, long)]
         output: PathBuf,
     },
-    /* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-        Repair {
-            /// The path for DB to repair
-            #[clap(parse(from_os_str))]
-            index: PathBuf,
+    Repair {
+        /// The path for DB to repair
+        index: PathBuf,
 
-            /// Repair using colors
-            #[clap(long = "colors")]
-            colors: bool,
-        },
-    */
+        /// Location of the input data.
+        /// Either a zip file or a path to a directory containing signatures.
+        storage_spec: Option<String>,
+
+        /// Repair using colors
+        #[clap(long = "colors")]
+        colors: bool,
+    },
     Manifest {
         /// File with list of paths to signatures
         pathlist: PathBuf,
@@ -189,7 +190,7 @@ fn gather<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.prepare_gather_counters(&query, None);
+    let counter = db.prepare_gather_counters(&query, None)?;
     // TODO: truncate on threshold?
     info!("Counter built");
 
@@ -233,7 +234,7 @@ fn search<P: AsRef<Path>>(
     info!("Loaded DB");
 
     info!("Building counter");
-    let counter = db.counter_for_query(&query, None);
+    let counter = db.counter_for_query(&query, None)?;
     info!("Counter built");
 
     let matches = db.matches_from_counter(counter, threshold);
@@ -435,6 +436,7 @@ fn manifest<P: AsRef<Path>>(
 }
 
 fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::error::Error>> {
+    use histogram::Quantile;
     use numsep::{separate, Locale};
     use size::Size;
 
@@ -466,37 +468,41 @@ fn check<P: AsRef<Path>>(output: P, quick: bool) -> Result<(), Box<dyn std::erro
     info!("v: {}", vsize.to_string());
 
     if !quick && kcount > 0 {
-        info!(
-            "max v: {}",
-            vcounts.percentile(100.0).unwrap().into_iter().count()
-        );
+        info!("max v: {}", {
+            let h = vcounts.quantile(1.0).unwrap().unwrap();
+            h.get(&Quantile::new(1.0).unwrap()).unwrap().end()
+        });
         //        info!("mean v: {}", vcounts.mean().unwrap());
         //        info!("stddev: {}", vcounts.stddev().unwrap());
-        info!(
-            "median v: {}",
-            vcounts.percentile(50.0).unwrap().into_iter().count()
-        );
-        info!(
-            "p25 v: {}",
-            vcounts.percentile(25.0).unwrap().into_iter().count()
-        );
-        info!(
-            "p75 v: {}",
-            vcounts.percentile(75.0).unwrap().into_iter().count()
-        );
+        info!("median v: {}", {
+            let h = vcounts.quantile(0.5).unwrap().unwrap();
+            h.get(&Quantile::new(0.5).unwrap()).unwrap().end()
+        });
+        info!("p25 v: {}", {
+            let h = vcounts.quantile(0.25).unwrap().unwrap();
+            h.get(&Quantile::new(0.25).unwrap()).unwrap().end()
+        });
+        info!("p75 v: {}", {
+            let h = vcounts.quantile(0.75).unwrap().unwrap();
+            h.get(&Quantile::new(0.75).unwrap()).unwrap().end()
+        });
     }
 
     info!("Finished check");
     Ok(())
 }
 
-/* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-fn repair<P: AsRef<Path>>(output: P, colors: bool) {
+fn repair<P: AsRef<Path>>(
+    output: P,
+    storage_spec: Option<&str>,
+    colors: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
     info!("Starting repair");
-    RevIndex::repair(output.as_ref(), colors);
+
+    RevIndex::repair(output.as_ref(), storage_spec, colors)?;
     info!("Finished repair");
+    Ok(())
 }
-*/
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use Commands::*;
@@ -593,9 +599,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .build();
 
             gather(query_path, index, selection, threshold_bp, output)?
-        } /* TODO: need the repair_cf variant, not available in rocksdb-rust yet
-                  Repair { index, colors } => repair(index, colors),
-          */
+        }
+        Repair {
+            index,
+            storage_spec,
+            colors,
+        } => repair(index, storage_spec.as_deref(), colors)?,
     };
 
     Ok(())
