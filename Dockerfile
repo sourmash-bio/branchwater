@@ -1,4 +1,4 @@
-FROM ghcr.io/prefix-dev/pixi:0.70.1-noble AS install
+FROM ghcr.io/prefix-dev/pixi:0.72.2-noble AS install
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY . .
 # Need this to avoid SSL errors. Can this be done only with pixi?
 RUN apt-get update && apt-get -y install ca-certificates
 
-RUN pixi run build-server
+RUN pixi run -e build build-server
 
 #--------------------
 
@@ -50,7 +50,7 @@ CMD ["gunicorn", "-b", "0.0.0.0:8000", "--timeout", "120", "--workers", "4", "--
 FROM ubuntu:24.04 AS index
 
 # Need this to avoid SSL errors. Can this be done only with pixi?
-RUN apt-get update && apt-get -y install ca-certificates
+RUN apt-get update && apt-get --no-install-recommends -y install ca-certificates curl
 
 COPY --from=rust_build /app/target/release/branchwater-server /app/bin/branchwater-server
 #COPY --from=install /app/.pixi/envs/rocksdb /app/.pixi/envs/rocksdb

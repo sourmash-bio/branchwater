@@ -10,6 +10,12 @@ services:
       - ./bw_db:/data/
     env_file:
       - prod.index.env
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3059/health"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
 
   app:
     image: ghcr.io/sourmash-bio/branchwater:web-0.6.2
@@ -21,7 +27,8 @@ services:
       - "8000:8000"
     restart: always
     depends_on:
-      - index
+      index:
+        condition: service_healthy
     volumes:
       - ./bw_db:/data/
     env_file:

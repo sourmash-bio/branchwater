@@ -1,5 +1,6 @@
 import polars as pl
 import io
+import json
 import os
 import gzip
 import string
@@ -30,6 +31,10 @@ def getmetadata(config, http):
 
 
 def getacc(signatures, config, http, threshold=0.1):
+    # accept either a JSON string or a dict (e.g. from JSON-parsed POST body)
+    if isinstance(signatures, (dict, list)):
+        signatures = json.dumps(signatures, separators=(',', ':'))
+
     # remove whitespace from string and compress signatures to gzipped bytes
     sig_str = signatures.translate({ord(c): None for c in string.whitespace})
     json_bytes = f'{{"threshold":{threshold},"signature":{sig_str}}}'.encode('utf-8')
