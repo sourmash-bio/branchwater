@@ -1,4 +1,4 @@
-FROM ghcr.io/prefix-dev/pixi:0.68.1-noble AS install
+FROM ghcr.io/prefix-dev/pixi:0.70.1-noble AS install
 
 WORKDIR /app
 
@@ -10,9 +10,9 @@ RUN --mount=type=cache,target=/root/.cache/rattler/cache pixi install
 RUN pixi shell-hook -e web > /shell-hook-web
 RUN echo 'exec "$@"' >> /shell-hook-web
 
-RUN pixi shell-hook -e rocksdb > /shell-hook-rocksdb
-RUN echo 'export LD_LIBRARY_PATH=${ROCKSDB_LIB_DIR}' >> /shell-hook-rocksdb
-RUN echo 'exec "$@"' >> /shell-hook-rocksdb
+#RUN pixi shell-hook -e rocksdb > /shell-hook-rocksdb
+#RUN echo 'export LD_LIBRARY_PATH=${ROCKSDB_LIB_DIR}' >> /shell-hook-rocksdb
+#RUN echo 'exec "$@"' >> /shell-hook-rocksdb
 
 #--------------------
 
@@ -53,12 +53,12 @@ FROM ubuntu:24.04 AS index
 RUN apt-get update && apt-get -y install ca-certificates
 
 COPY --from=rust_build /app/target/release/branchwater-server /app/bin/branchwater-server
-COPY --from=install /app/.pixi/envs/rocksdb /app/.pixi/envs/rocksdb
-COPY --from=install /shell-hook-rocksdb /shell-hook
+#COPY --from=install /app/.pixi/envs/rocksdb /app/.pixi/envs/rocksdb
+#COPY --from=install /shell-hook-rocksdb /shell-hook
 
 WORKDIR /data
 
 EXPOSE 80/tcp
 
-ENTRYPOINT ["/bin/bash", "/shell-hook"]
+#ENTRYPOINT ["/bin/bash", "/shell-hook"]
 CMD ["/app/bin/branchwater-server", "--port", "80", "-k21", "--location", "/data/sigs.zip", "/data/index"]

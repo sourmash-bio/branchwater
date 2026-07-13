@@ -35,7 +35,7 @@ cargo-dist = "==0.31.0"
 rocksdb = "~=10.4"
 
 [tool.pixi.feature.build.tasks]
-build-server = "cargo build --release -p branchwater-server"
+build-server = "unset ROCKSDB_INCLUDE_DIR ROCKSDB_LIB_DIR && cargo build --release -p branchwater-server"
 
 [tool.pixi.feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
