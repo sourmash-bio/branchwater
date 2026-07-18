@@ -1,15 +1,20 @@
 [project]
 name = "branchwater"
-version = "0.6.2"
+version = "0.6.3"
 requires-python = ">=3.12.2,<3.13"
 
 [tool.pixi.workspace]
 channels = ["conda-forge", "bioconda", "https://prefix.dev/github-releases"]
-platforms = ["linux-64", "linux-aarch64", "osx-64", "osx-arm64"]
+platforms = [
+  { platform = "linux-64", linux = "3.10", glibc = "2.17" },
+  { platform = "linux-aarch64", linux = "3.10", glibc = "2.17" },
+  { platform = "osx-64", macos = "12.0" },
+  { platform = "osx-arm64", macos = "12.0" },
+]
 
 [tool.pixi.environments]
 default = { features = ["build", "rocksdb", "prepare", "deploy", "dev", "web", "metadata", "duckdb", "docs", "mgnify-component", "plotly"], solve-group = "default" }
-build = { features = ["build", "rocksdb"], solve-group = "default" }
+build = { features = ["build"], no-default-feature = true, solve-group = "default" }
 prepare = { features = ["build", "prepare"], solve-group = "default" }
 dev = { features = ["dev"], solve-group = "default" }
 web = { features = ["web", "duckdb"], solve-group = "default" }
@@ -35,7 +40,7 @@ cargo-dist = "==0.31.0"
 rocksdb = "~=10.4"
 
 [tool.pixi.feature.build.tasks]
-build-server = "unset ROCKSDB_INCLUDE_DIR ROCKSDB_LIB_DIR && cargo build --release -p branchwater-server"
+build-server = { cmd = "cargo build --release -p branchwater-server", clean-env = true }
 
 [tool.pixi.feature.prepare.tasks]
 index = { cmd = ["snakemake"], cwd = "experiments" }
@@ -131,11 +136,6 @@ Markdown = ">=3.10.2,<4"
 
 [tool.pixi.feature.web.pypi-dependencies]
 sentry-sdk = { version = ">=2.60.0, <3", extras = ["flask"] }
-
-[tool.pixi.system-requirements]
-linux = "3.10"
-libc = "2.17"
-macos = "12.0"
 
 [tool.pixi.activation.env]
 ROCKSDB_INCLUDE_DIR = "$CONDA_PREFIX/include"
