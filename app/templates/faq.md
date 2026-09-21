@@ -36,6 +36,9 @@ for increased specificity. For example, you may be interested in restricting ANI
 Restricting the minimum containment during the search step can reduce the search time for queries with very large numbers of metagenome matches. This is particularly
 likely to occur for common human-associated microbes, such as those in the gut microbiome.
 
+You can read more about containment and ANI based on containment estimates
+in [Deriving confidence intervals for mutation rates across a wide range of evolutionary distances using FracMinHash](https://genome.cshlp.org/content/early/2023/06/20/gr277651123), Rahman Hera et al., 2023.
+
 ## Where can I get information on what is in the branchwater database?
 
 The branchwater API server provides a `stats` endpoint that returns summary information (in JSON) about the current database content; you can access it at https://branchwater-api.sourmash.bio/metadata/stats.
