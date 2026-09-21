@@ -38,20 +38,25 @@ likely to occur for common human-associated microbes, such as those in the gut m
 
 ## Where can I get information on what is in the branchwater database?
 
-The branchwater API server provides a `stats` endpoint that returns summary information (in JSON) about the current database content; you can access it at https://branchwater-api.jgi.doe.gov/metadata/stats.
+The branchwater API server provides a `stats` endpoint that returns summary information (in JSON) about the current database content; you can access it at https://branchwater-api.sourmash.bio/metadata/stats.
 
 The following Python code will retrieve the JSON code using the `requests` library:
-```python!
-import requests
-url = "https://branchwater-api.jgi.doe.gov/metadata/stats"
-response = requests.get(url)
-print(response.json())
-```
 
-As of June 2025, branchwater indexes 1,161,119 SRA metagenome data sets at a k-mer size of 21 with a scaled factor of 1000. Please see the [the sourmash FAQ](https://sourmash.readthedocs.io/en/latest/faq.html) for more details on what the k-mer size and scaled factors mean!
+`import requests`<br>
+`url = "https://branchwater.sourmash.bio/metadata/stats"`<br>
+`response = requests.get(url)`<br>
+`print(response.json())`<br>
 
-The full list of accessions indexed by branchwater can be retrieved using the `accessions` endpoint at 
-https://branchwater-api.jgi.doe.gov/metadata/accessions.
+Branchwater currently indexes 1,161,119 SRA metagenome data sets
+at a k-mer size of 21 with a scaled factor of 1000. This represents the
+content of the SRA metagenome collection on November 28, 2024.
+
+The full list of accessions indexed by branchwater can be retrieved
+using the
+[`accessions` endpoint](https://branchwater.sourmash.bio/metadata/accessions)
+at `https://branchwater.sourmash.bio/metadata/accessions`.
+
+Please see the [the sourmash FAQ](https://sourmash.readthedocs.io/en/latest/faq.html) for more details on what the k-mer size and scaled factors mean!
 
 ## How can I search for multiple samples at the same time?
 
@@ -63,14 +68,12 @@ You can search multiple samples via the command line or using an HTTP request, h
 
 The following Python code uses the [requests library](https://pypi.org/project/requests/) to search branchwater with a k=21 gzip-compressed sourmash sketch, and retrieves the response.
 
-```python!
-import requests
-url = "https://branchwater-api.jgi.doe.gov/search"
-sketch_data = open('sketch.sig.gz', 'rb').read()
-
-response = requests.post(url, data=sketch_data)
-print(response.content.decode('utf-8'))
-```
+`import requests`<br>
+`url = "https://branchwater-api.sourmash.bio/search"`<br>
+`sketch_data = open('sketch.sig.gz', 'rb').read()`<br>
+<br>
+`response = requests.post(url, data=sketch_data)`<br>
+`print(response.content.decode('utf-8'))`<br>
 
 To create `sketch.sig.gz`, use `sourmash sig cat <source sketch> -o sketch.sig.gz`. Only the first sketch in each signature file will be used, so you will need to submit each sketch on a separate request.
 

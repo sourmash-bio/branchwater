@@ -103,4 +103,7 @@ def getduckdb(mastiff_df, meta_list, config, client):
     return result
 
 def markdownify(md):
-    return markdown.markdown(md)
+    print(md)
+    x = markdown.markdown(md)
+    print(x)
+    return x
