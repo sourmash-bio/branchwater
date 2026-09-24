@@ -1,6 +1,6 @@
 # Branchwater web app
 
-The code underlying https://branchwater.jgi.doe.gov/
+The code underlying https://branchwater.sourmash.bio/
 
 ## Developer install using pixi
 
