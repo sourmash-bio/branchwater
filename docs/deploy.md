@@ -186,7 +186,7 @@ bw_db
 pixi run metadata_sra
 ```
 ```{note}
-to build a smaller dataset for testing, run `pixi run metadata_sra --build-test-db`
+to build a smaller dataset for testing, run `pixi run metadata_sra -- --build-test-db`
 ```
 
 ### Load the metadata into duckdb
@@ -195,7 +195,7 @@ pixi run load_duckdb
 ```
 ```{note}
 if reloading after switching from e.g. test db to full db, need to run:
-`pixi run load_duckdb --force`
+`pixi run load_duckdb -- --force`
 ```
 
 :::

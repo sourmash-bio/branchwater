@@ -295,7 +295,10 @@ function createdashboard(jsonData, paragraphElement, navElement) {
     x: values[commonKeys.indexOf("containment")],
     type: "histogram",
     autobinx: false,
-    xbins: { size: 0.1 },
+    xbins: {
+      size: 0.1,
+      end: 1,
+    },
     name: "containment", // Add a name to identify this trace
     visible: true, // Set the visibility of this trace to true initially
     marker: {
@@ -311,7 +314,10 @@ function createdashboard(jsonData, paragraphElement, navElement) {
     x: values[commonKeys.indexOf("cANI_est")],
     type: "histogram",
     autobinx: false,
-    xbins: { size: 0.02 },
+    xbins: {
+      size: 0.02,
+      end: 1,
+    },
     name: "cANI_est", // Add a name to identify this trace
     visible: false, // Set the visibility of this trace to false initially
     marker: {
