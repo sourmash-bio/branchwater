@@ -202,7 +202,9 @@ impl AppState {
                 let counter = db
                     .counter_for_query(&mh, None)
                     .map_err(|_| "Error creating counter")?;
-                let matches = db.matches_from_counter(counter, threshold);
+                let matches = db
+                    .matches_from_counter(counter, threshold)
+                    .map_err(|_| "Error creating matches")?;
                 Ok((matches, mh.size() as f64))
             } else {
                 Err("Could not extract compatible sketch to compare")

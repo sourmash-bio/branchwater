@@ -239,7 +239,7 @@ fn search<P: AsRef<Path>>(
     let counter = db.counter_for_query(&query, None)?;
     info!("Counter built");
 
-    let matches = db.matches_from_counter(counter, threshold);
+    let matches = db.matches_from_counter(counter, threshold)?;
 
     //info!("matches: {}", matches.len());
     println!("SRA ID,containment");

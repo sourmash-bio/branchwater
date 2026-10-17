@@ -1417,9 +1417,9 @@ dependencies = [
 
 [[package]]
 name = "itertools"
-version = "0.14.0"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
 dependencies = [
  "either",
 ]
@@ -2940,8 +2940,7 @@ checksum = "bceb57dc07c92cdae60f5b27b3fa92ecaaa42fe36c55e22dbfb0b44893e0b1f7"
 [[package]]
 name = "sourmash"
 version = "0.23.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09561f460d339b98abc8bf5dbc11c10cdfae906ad16cae187f027310df2ecce6"
+source = "git+https://github.com/sourmash-bio/sourmash?branch=lirber%2Fdatasets_parsing#e1e5b7355595ad39be432ce5b840ea206e77cf4d"
 dependencies = [
  "az",
  "byteorder",
@@ -2956,7 +2955,7 @@ dependencies = [
  "getrandom 0.2.15",
  "getset",
  "histogram",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "js-sys",
  "log",
  "md5",
