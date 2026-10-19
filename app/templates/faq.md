@@ -31,7 +31,7 @@ There is a 5 MB file size limit for branchwater queries.
 ## What is the "Minimum Containment" box during search?
 
 By default, branchwater restricts matches to metagenomes with at least 10% of the k-mers in your query sketch present in the metagenome sketch.
-This corresponds to a "minimum containment" of 0.1 and an estimated ANI (Average Nucleotide Identity) of ~90%. You can filter the results table by containment or ANI
+This corresponds to a "minimum containment" of 0.1 and an estimated ANI (Average Nucleotide Identity) of ~90%, and results often contain matching genomes congeneric with the query. You can filter the results table by containment or ANI
 for increased specificity. For example, you may be interested in restricting ANI to 95% or higher to see ~species-level matches for microbial genome queries.
 Restricting the minimum containment during the search step can reduce the search time for queries with very large numbers of metagenome matches. This is particularly
 likely to occur for common human-associated microbes, such as those in the gut microbiome.
