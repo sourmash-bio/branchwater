@@ -330,8 +330,11 @@ version = "0.6.3"
 dependencies = [
  "camino",
  "clap",
+ "color-eyre",
+ "csv",
  "histogram",
  "numsep",
+ "rayon",
  "size",
  "sourmash",
  "tracing",
